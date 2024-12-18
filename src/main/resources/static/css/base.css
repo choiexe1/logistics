@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-mono bg-black text-white text-sm
+    }
+}
+
+@layer utilities {
+    label {
+        @apply font-bold
+    }
+
+    input {
+        @apply border-gray-light bg-black p-1 rounded-sm border
+    }
+
+    input:focus {
+        @apply outline-none border-blue
+    }
+
+    input:hover {
+        @apply border-blue
+    }
+
+    .highlight {
+        @apply border-l-2 pl-2 my-4 border-l-orange font-bold text-sm
+    }
+
+    .btn {
+        @apply w-full block border my-2 p-1 border-gray-light rounded-sm hover:text-black hover:bg-white text-center cursor-pointer
+    }
+
+    .error {
+        @apply text-red text-xs
+    }
+
+    .error-border {
+        @apply border-red focus:border-red hover:border-red
+    }
+}
