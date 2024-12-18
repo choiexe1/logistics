@@ -1,6 +1,7 @@
 package blog.devjay.logistics.repository.user;
 
 import blog.devjay.logistics.domain.user.User;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -11,5 +12,5 @@ public interface UserMapper {
 
     User findByUsername(String username);
 
-//    List<User> findAll();
+    List<User> findAll();
 }

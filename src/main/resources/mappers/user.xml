@@ -18,4 +18,9 @@
         FROM users
         WHERE username = #{username}
     </select>
+
+    <select id="findAll" resultType="List">
+        SELECT username, role, status
+        FROM users
+    </select>
 </mapper>

@@ -42,7 +42,6 @@ public class HomeController {
         return "views/login";
     }
 
-
     @PostMapping("/login")
     public String login(@RequestParam(defaultValue = "/") String redirectURL,
                         @Validated @ModelAttribute("form") LoginDTO form, BindingResult bindingResult,
