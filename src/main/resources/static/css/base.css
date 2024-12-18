@@ -4,7 +4,15 @@
 
 @layer base {
     body {
-        @apply font-mono bg-black text-white text-sm
+        @apply font-mono bg-black text-white text-sm h-screen;
+    }
+
+    nav > ul > li {
+        @apply link cursor-pointer p-0 m-0;
+    }
+
+    nav > ul > li > form {
+        @apply inline-block m-0 p-0;
     }
 }
 
@@ -35,6 +43,10 @@
 
     .error {
         @apply text-red text-xs
+    }
+
+    .link {
+        @apply hover:text-white text-gray-light transition
     }
 
     .error-border {

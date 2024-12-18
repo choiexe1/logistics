@@ -34,49 +34,47 @@ public class HomeController {
     @GetMapping("/")
     public String homeView(@CurrentUser User user, Model model) {
         model.addAttribute("user", user);
-        return "home";
+        return "views/home";
     }
 
     @GetMapping("/login")
     public String loginView(@ModelAttribute("form") LoginDTO form) {
-        return "login";
+        return "views/login";
     }
 
 
     @PostMapping("/login")
-    public String login(@RequestParam(defaultValue = "/login") String redirectURL,
+    public String login(@RequestParam(defaultValue = "/") String redirectURL,
                         @Validated @ModelAttribute("form") LoginDTO form, BindingResult bindingResult,
                         HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             log.warn("errors = {}", bindingResult);
-            return "/login";
+            return "views/login";
         }
 
         try {
-            // 사용자 인증 처리
             User user = userService.findByUsername(form.getUsername());
             boolean isMatched = BcryptUtils.checkPw(form.getPassword(), user.getPassword());
 
             if (!isMatched) {
                 bindingResult.rejectValue("password", "user.password");
-                return "/login";
+                return "views/login";
             }
 
-            // 기존 세션이 있으면 무효화하고 새 세션 생성
-            HttpSession existingSession = request.getSession(false);  // 기존 세션 가져오기
+            HttpSession existingSession = request.getSession(false);
             if (existingSession != null) {
-                existingSession.invalidate();  // 기존 세션 무효화
+                existingSession.invalidate();
             }
 
-            // 새로운 세션 생성
-            HttpSession newSession = request.getSession(true);  // 새로운 세션 생성
-            newSession.setAttribute(SESSION_ID, user);  // 세션에 사용자 정보 저장
+            HttpSession newSession = request.getSession(true);
+            newSession.setAttribute(SESSION_ID, user);
 
-            return "redirect:/";  // 로그인 후 리다이렉트
+            // TODO: Redirect 잘 되는지 테스트
+            return "redirect:" + redirectURL;
 
         } catch (UserNotFoundException e) {
             bindingResult.rejectValue("username", "user.username");
-            return "/login";
+            return "views/login";
         }
     }
 
@@ -91,7 +89,7 @@ public class HomeController {
 
     @GetMapping("/register")
     public String registerView(@ModelAttribute("form") RegisterDTO form) {
-        return "register";
+        return "views/register";
     }
 
     @PostMapping("/register")
@@ -99,7 +97,7 @@ public class HomeController {
                            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             log.warn("errors = {}", bindingResult);
-            return "/register";
+            return "views/register";
         }
 
         User user = new User(form.getUsername(), BcryptUtils.hashPw(form.getPassword()));
@@ -109,7 +107,7 @@ public class HomeController {
         } catch (DuplicateKeyException e) {
             bindingResult.rejectValue("username", "user.username.exist");
             log.warn("회원가입 실패: {}", e.getMessage());
-            return "/register";
+            return "views/register";
         }
 
         redirectAttributes.addFlashAttribute("status", true);

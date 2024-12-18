@@ -17,12 +17,15 @@ public class InitData {
         User user = new User("user", BcryptUtils.hashPw("user"));
         User editor = new User("editor", BcryptUtils.hashPw("editor"));
         User admin = new User("admin", BcryptUtils.hashPw("admin"));
+        User test = new User("test", BcryptUtils.hashPw("test"));
 
         editor.setRole(Role.EDITOR);
         admin.setRole(Role.ADMIN);
+        test.setRole(Role.ADMIN);
 
         userRepository.save(user);
         userRepository.save(editor);
         userRepository.save(admin);
+        userRepository.save(test);
     }
 }

@@ -1,10 +1,11 @@
 <nav th:fragment="nav">
-    <ul>
-        <li><a href=""></a></li>
-        <li><a href=""></a></li>
-        <li><a href=""></a></li>
-        <form action="logout" method="post">
-            <button class="btn" type="submit" th:text="#{button.logout}">로그아웃</button>
-        </form>
+    <ul class="flex gap-4">
+        <li><a href="" th:text="#{title.logistics}">물류 관리</a></li>
+        <li><a href="" th:text="#{title.warehouse}">창고 관리</a></li>
+        <li>
+            <form th:action="@{/logout}" method="POST">
+                <button class="link" type="submit" th:text="#{button.logout}">로그아웃</button>
+            </form>
+        </li>
     </ul>
 </nav>
