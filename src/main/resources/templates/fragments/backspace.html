@@ -1,0 +1,9 @@
+<a th:fragment="backspace (url, text)" th:href="${url}"
+   class="flex items-center text-gray-500 hover:text-blue-500 mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+         stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 5l-7 7 7 7"></path>
+    </svg>
+    <span th:text="${text}"></span>
+</a>
