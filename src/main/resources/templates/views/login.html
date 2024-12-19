@@ -5,10 +5,10 @@
 </head>
 <body>
     <main class="flex items-center justify-center h-screen">
-        <form class="flex gap-4 flex-col" action="/login" method="POST" th:object="${form}">
+        <form class="flex gap-4 flex-col" th:action method="POST" th:object="${form}">
             <h1 class="highlight">Dev Logistics - Sign in</h1>
-            <div th:if="${param.status}">
-                <p>Form submitted successfully!</p>
+            <div th:if="${status}">
+                <p class="text-blue" th:text="#{success.register}">회원가입 성공!</p>
             </div>
             <div class="flex flex-col gap-2">
                 <label for="username" th:text="#{label.username}">Username</label>
@@ -29,7 +29,7 @@
                 <p class="error" th:errors="*{password}">오류</p>
             </div>
             <div class="flex gap-4">
-                <a th:href="@{/register}" class="btn flex-grow">회원가입</a>
+                <a th:href="@{/register}" class="btn flex-grow" th:text="#{button.signup}">회원가입</a>
                 <button type="submit"
                         class="btn flex-grow"
                         th:text="#{button.signin}">

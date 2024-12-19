@@ -1,7 +1,15 @@
 <nav th:fragment="nav">
     <ul class="flex gap-4">
-        <li><a href="" th:text="#{title.logistics}">물류 관리</a></li>
-        <li><a href="" th:text="#{title.warehouse}">창고 관리</a></li>
+        <li><a th:href="@{/}"
+               th:class="${uri == '/s' ? 'selected' : ''}"
+               th:text="#{title.logistics}">물류 관리</a></li>
+        <li><a th:href="@{/}"
+               th:class="${uri == '/s' ? 'selected' : ''}"
+               th:text="#{title.warehouse}">창고 관리</a></li>
+        <li th:if="${isAdmin}"><a
+                th:class="${uri == '/admin' ? 'selected' : ''}"
+                th:href="@{/admin}"
+                th:text="#{title.admin}">관리자 패널</a></li>
         <li>
             <form th:action="@{/logout}" method="POST">
                 <button class="link" type="submit" th:text="#{button.logout}">로그아웃</button>

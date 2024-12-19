@@ -4,15 +4,19 @@
 
 @layer base {
     body {
-        @apply font-mono bg-black text-white text-sm h-screen;
+        @apply font-mono bg-black text-white text-sm h-screen p-8
     }
 
     nav > ul > li {
-        @apply link cursor-pointer p-0 m-0;
+        @apply link cursor-pointer p-0 m-0
     }
 
     nav > ul > li > form {
-        @apply inline-block m-0 p-0;
+        @apply inline-block m-0 p-0
+    }
+
+    nav > ul > li > form button {
+        @apply inline-block m-0 p-0
     }
 }
 
@@ -43,6 +47,10 @@
 
     .error {
         @apply text-red text-xs
+    }
+
+    .selected {
+        @apply text-blue
     }
 
     .link {

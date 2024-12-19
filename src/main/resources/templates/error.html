@@ -12,6 +12,10 @@
 
             <p class="text-lg mb-4" th:text="${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}">에러 시각</p>
 
+            <p th:if="${status} == 403" class="text-xl text-red-500 font-medium">
+                <span th:text="#{error.403}"></span>
+            </p>
+
             <p th:if="${status} == 404" class="text-xl text-red-500 font-medium">
                 <span th:text="#{error.404}"></span>
             </p>

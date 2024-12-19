@@ -32,13 +32,14 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String homeView(@CurrentUser User user, Model model) {
+    public String indexView(@CurrentUser User user, Model model) {
         model.addAttribute("user", user);
-        return "views/home";
+        return "views/index";
     }
 
     @GetMapping("/login")
-    public String loginView(@ModelAttribute("form") LoginDTO form) {
+    public String loginView(@RequestParam(defaultValue = "/") String redirectURL,
+                            @ModelAttribute("form") LoginDTO form) {
         return "views/login";
     }
 
@@ -60,15 +61,10 @@ public class HomeController {
                 return "views/login";
             }
 
-            HttpSession existingSession = request.getSession(false);
-            if (existingSession != null) {
-                existingSession.invalidate();
-            }
+            setSession(request, user);
 
-            HttpSession newSession = request.getSession(true);
-            newSession.setAttribute(SESSION_ID, user);
+            log.info("redirectURL = {}", redirectURL);
 
-            // TODO: Redirect 잘 되는지 테스트
             return "redirect:" + redirectURL;
 
         } catch (UserNotFoundException e) {
@@ -76,7 +72,6 @@ public class HomeController {
             return "views/login";
         }
     }
-
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request, @CurrentUser User user) {
@@ -111,5 +106,15 @@ public class HomeController {
 
         redirectAttributes.addFlashAttribute("status", true);
         return "redirect:/login";
+    }
+
+    private void setSession(HttpServletRequest request, User user) {
+        HttpSession existingSession = request.getSession(false);
+        if (existingSession != null) {
+            existingSession.invalidate();
+        }
+
+        HttpSession newSession = request.getSession(true);
+        newSession.setAttribute(SESSION_ID, user);
     }
 }
