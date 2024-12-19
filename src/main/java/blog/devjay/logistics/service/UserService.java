@@ -2,6 +2,7 @@ package blog.devjay.logistics.service;
 
 import blog.devjay.logistics.domain.exception.UserNotFoundException;
 import blog.devjay.logistics.domain.user.User;
+import blog.devjay.logistics.dto.SearchUserDTO;
 import blog.devjay.logistics.repository.user.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,8 @@ public class UserService {
         return user;
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<User> findAll(SearchUserDTO searchUserDTO) {
+        return userRepository.findAll(searchUserDTO);
     }
 
     public User findByUsername(String username) {
@@ -42,5 +43,9 @@ public class UserService {
         }
 
         return user;
+    }
+
+    public int findAllCount(SearchUserDTO searchUserDTO) {
+        return userRepository.findAllCount(searchUserDTO);
     }
 }

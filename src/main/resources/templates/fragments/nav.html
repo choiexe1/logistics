@@ -1,19 +1,33 @@
-<nav th:fragment="nav">
-    <ul class="flex gap-4">
+<nav th:fragment="nav (title)" class="container mx-auto">
+    <ul class="flex gap-4 flex-wrap">
+        <li>
+            <a th:href="@{/}"
+               th:class="${uri == '/' ? 'selected' : ''}"
+               th:text="#{title.home}">홈</a>
+        </li>
         <li><a th:href="@{/}"
                th:class="${uri == '/s' ? 'selected' : ''}"
-               th:text="#{title.logistics}">물류 관리</a></li>
+               th:text="#{title.logistics}">물류 관리</a>
+        </li>
         <li><a th:href="@{/}"
                th:class="${uri == '/s' ? 'selected' : ''}"
-               th:text="#{title.warehouse}">창고 관리</a></li>
+               th:text="#{title.warehouse}">창고 관리</a>
+        </li>
         <li th:if="${isAdmin}"><a
-                th:class="${uri == '/admin' ? 'selected' : ''}"
-                th:href="@{/admin}"
-                th:text="#{title.admin}">관리자 패널</a></li>
+                th:href="@{/admin/users}"
+                th:class="${#strings.startsWith(uri, '/admin') ? 'selected' : ''}"
+                th:text="#{title.admin}">관리자 패널</a>
+        </li>
         <li>
             <form th:action="@{/logout}" method="POST">
                 <button class="link" type="submit" th:text="#{button.logout}">로그아웃</button>
             </form>
         </li>
+    </ul>
+    <h1 class="highlight text-2xl" th:text="${title}">타이틀</h1>
+    <ul th:if="${#strings.startsWith(uri, '/admin')}" class="flex gap-4 my-4">
+        <li th:class="${uri == '/admin/users'} ? 'selected'"><a th:href="@{/admin/users}" class="list-item">사용자 관리</a>
+        </li>
+        <li><a th:href="@{/admin/log}">로그</a></li>
     </ul>
 </nav>

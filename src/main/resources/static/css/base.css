@@ -16,7 +16,12 @@
     }
 
     nav > ul > li > form button {
-        @apply inline-block m-0 p-0
+        @apply inline-block m-0 p-0;
+    }
+
+    select {
+        background-color: inherit;
+        color: inherit;
     }
 }
 
@@ -38,7 +43,7 @@
     }
 
     .highlight {
-        @apply border-l-2 pl-2 my-4 border-l-orange font-bold text-sm
+        @apply border-l-2 pl-2 my-4 border-l-orange font-bold
     }
 
     .btn {

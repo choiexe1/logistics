@@ -4,10 +4,11 @@
     <title th:text="#{title.admin}"></title>
 </head>
 <body>
-
-    <main>
-        <h1 class="highlight" th:text="#{title.admin}">어드민 패널</h1>
+    <nav th:replace="~{fragments/nav :: nav (#{title.admin})}"></nav>
+    <main class="container mx-auto">
+        <section>
+           
+        </section>
     </main>
-    <nav th:replace="~{fragments/nav}"></nav>
 </body>
 </html>

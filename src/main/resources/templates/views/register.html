@@ -4,7 +4,7 @@
     <title th:text="#{title.register}"></title>
 </head>
 <body>
-    <main class="flex justify-center items-center h-screen">
+    <div class="flex justify-center items-center h-screen">
         <form class="flex gap-4 flex-col" action="/register" method="POST" th:object="${form}">
             <a th:replace="~{/fragments/backspace :: backspace (@{/static}, #{back.login})}"></a>
             <h1 class="highlight">Dev Logistics - Register</h1>

@@ -5,10 +5,10 @@
     <title th:text=""></title>
 </head>
 <body>
-    <nav th:replace="~{fragments/nav}"></nav>
+    <nav th:replace="~{fragments/nav :: nav (#{title.})}"></nav>
 
 
-    <main>
+    <main class="container mx-auto my-4">
 
     </main>
 

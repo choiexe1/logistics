@@ -19,8 +19,35 @@
         WHERE username = #{username}
     </select>
 
-    <select id="findAll" resultType="List">
-        SELECT username, role, status
+    <select id="findAll" resultType="User">
+        SELECT id, username, role, status
         FROM users
+        <where>
+            <if test="username != null and username != ''">
+                AND LOWER(username) like concat('%', #{username}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="role != null">
+                AND role = #{role}
+            </if>
+        </where>
+        LIMIT #{size} OFFSET #{size} * (#{page} - 1)
+    </select>
+
+    <select id="findAllCount" resultType="int">
+        SELECT COUNT(*) FROM users
+        <where>
+            <if test="username != null and username != ''">
+                AND LOWER(username) like concat('%', #{username}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="role != null">
+                AND role = #{role}
+            </if>
+        </where>
     </select>
 </mapper>

@@ -1,6 +1,8 @@
 package blog.devjay.logistics.repository.user;
 
 import blog.devjay.logistics.domain.user.User;
+import blog.devjay.logistics.dto.SearchUserDTO;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,12 @@ public class MyBatisUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        return List.of();
+    public List<User> findAll(SearchUserDTO searchUserDTO) {
+        return new ArrayList<>(mapper.findAll(searchUserDTO));
+    }
+
+    @Override
+    public int findAllCount(SearchUserDTO searchUserDTO) {
+        return mapper.findAllCount(searchUserDTO);
     }
 }

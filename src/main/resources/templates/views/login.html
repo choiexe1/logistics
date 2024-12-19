@@ -4,7 +4,7 @@
     <title th:text="#{title.login}"></title>
 </head>
 <body>
-    <main class="flex items-center justify-center h-screen">
+    <div class="flex items-center justify-center h-screen">
         <form class="flex gap-4 flex-col" th:action method="POST" th:object="${form}">
             <h1 class="highlight">Dev Logistics - Sign in</h1>
             <div th:if="${status}">
@@ -37,6 +37,6 @@
                 </button>
             </div>
         </form>
-    </main>
+    </div>
 </body>
 </html>

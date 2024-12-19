@@ -4,9 +4,6 @@
     <title th:text="#{title.home}"></title>
 </head>
 <body>
-    <main>
-        <h1 class="highlight" th:text="#{title.home}">홈</h1>
-    </main>
-    <nav th:replace="~{fragments/nav}"></nav>
+    <nav th:replace="~{fragments/nav :: nav (#{title.home})}"></nav>
 </body>
 </html>

@@ -16,6 +16,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = Role.USER;
-        this.status = UserStatus.ACTIVE;
+        this.status = UserStatus.ACTIVATE;
     }
 }

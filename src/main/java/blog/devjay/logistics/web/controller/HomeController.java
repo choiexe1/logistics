@@ -63,8 +63,6 @@ public class HomeController {
 
             setSession(request, user);
 
-            log.info("redirectURL = {}", redirectURL);
-
             return "redirect:" + redirectURL;
 
         } catch (UserNotFoundException e) {
