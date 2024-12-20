@@ -4,6 +4,7 @@ import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.UserStatus;
 import blog.devjay.logistics.dto.SearchUserDTO;
 import blog.devjay.logistics.service.UserService;
+import blog.devjay.logistics.web.utils.PaginationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,13 +29,13 @@ public class AdminController {
         model.addAttribute("users", userService.findAll(dto));
 
         int totalPageCount = userService.findAllCount(dto);
-        int totalPages = (int) Math.ceil((double) totalPageCount / dto.getSize());
-        int startPage = ((dto.getPage() - 1) / 5) * 5 + 1; // 현재 페이지를 기준으로 시작 페이지 계산
-        int endPage = Math.min(startPage + 4, totalPages);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        int totalPages = PaginationUtil.getTotalPages(totalPageCount, dto.getSize());
+        int startPage = PaginationUtil.getStartPage(dto.getPage());
+        int endPage = PaginationUtil.getEndPage(startPage, totalPages);
 
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "views/admin/users";
     }
