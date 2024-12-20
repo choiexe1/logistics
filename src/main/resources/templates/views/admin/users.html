@@ -80,6 +80,19 @@
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{label.user.role}">역할
                     </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{label.createdAt}"
+                    >생성일
+                    </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{label.updatedAt}">수정일
+                    </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{label.recentLogin}">최근 접속
+                    </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{label.log}">로그
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,9 +125,23 @@
                             </option>
                         </select>
                     </td>
+                    <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <th:block>
+                        <td th:if="${user.updatedAt != null}"
+                            th:text="${#temporals.format(user.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:if="${user.updatedAt == null}" th:text="#{none}">
+                            없음
+                        </td>
+                    </th:block>
+                    <th:block>
+                        <td th:if="${user.recentLoginAt != null}"
+                            th:text="${#temporals.format(user.recentLoginAt, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:if="${user.recentLoginAt == null}" th:text="#{none}">
+                            없음
+                        </td>
+                    </th:block>
                     <td class="py-2 px-4 flex">
-                        <button class="btn">A</button>
-                        <button class="btn">B</button>
+                        <a class="btn" th:text="#{label.viewLog}">로그 확인</a>
                     </td>
                 </tr>
                 </tbody>
@@ -184,10 +211,12 @@
                     location.reload()
                 } else {
                     alert(message.fail);
+                    location.reload()
                 }
 
             } catch (error) {
                 alert(message.networkError);
+                location.reload()
             }
         }
 

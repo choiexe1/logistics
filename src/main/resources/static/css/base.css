@@ -47,7 +47,7 @@
     }
 
     .btn {
-        @apply w-full block border my-2 p-1 border-gray-light rounded-sm hover:text-black hover:bg-white text-center cursor-pointer
+        @apply block border my-2 p-1 border-gray-light rounded-sm hover:text-black hover:bg-white text-center cursor-pointer
     }
 
     .error {

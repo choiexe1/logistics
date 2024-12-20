@@ -62,6 +62,7 @@ public class HomeController {
             }
 
             setSession(request, user);
+            userService.updateRecentLoginAt(user.getId());
 
             return "redirect:" + redirectURL;
 

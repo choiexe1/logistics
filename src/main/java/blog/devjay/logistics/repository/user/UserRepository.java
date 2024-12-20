@@ -17,4 +17,6 @@ public interface UserRepository {
     int findAllCount(SearchUserDTO searchUserDTO);
 
     void updateUser(UpdateUserDTO updateUserDTO);
+
+    void updateRecentLoginAt(Long userId);
 }

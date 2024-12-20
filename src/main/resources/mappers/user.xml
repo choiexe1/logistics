@@ -20,7 +20,7 @@
     </select>
 
     <select id="findAll" resultType="User">
-        SELECT id, username, role, status
+        SELECT id, username, role, status, created_at, updated_at, recent_login_at
         FROM users
         <where>
             <if test="username != null and username != ''">
@@ -53,13 +53,19 @@
 
     <update id="updateUser">
         UPDATE users
-        SET
-        <trim prefix="role =" suffixOverrides=",">
-            <if test="role != null">#{role},</if>
-        </trim>
-        <trim prefix="status =" suffixOverrides=",">
-            <if test="status != null">#{status},</if>
-        </trim>
+        <set>
+            <if test="role != null">role = #{role},</if>
+            <if test="status != null">status = #{status},</if>
+            updated_at = CURRENT_TIMESTAMP
+        </set>
         WHERE id = #{id}
+    </update>
+
+    <update id="updateRecentLoginAt">
+        UPDATE users
+        <set>
+            recent_login_at = CURRENT_TIMESTAMP,
+        </set>
+        WHERE id = #{userId}
     </update>
 </mapper>

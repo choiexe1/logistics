@@ -53,4 +53,8 @@ public class UserService {
     public void updateUser(UpdateUserDTO updateUserDTO) {
         userRepository.updateUser(updateUserDTO);
     }
+
+    public void updateRecentLoginAt(Long userId) {
+        userRepository.updateRecentLoginAt(userId);
+    }
 }

@@ -6,5 +6,8 @@ CREATE TABLE users (
                       password VARCHAR,
                       role VARCHAR(10),
                       status VARCHAR(10),
+                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                      updated_at TIMESTAMP DEFAULT NULL,
+                      recent_login_at TIMESTAMP DEFAULT NULL,
                       PRIMARY KEY (id)
 );
