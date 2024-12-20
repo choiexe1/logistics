@@ -1,19 +1,33 @@
 package blog.devjay.logistics.web.utils;
 
+import blog.devjay.logistics.domain.AbstractPaginable;
+
 public class PaginationUtil {
     private static final int MAX_PAGE = 5;
     private static final int PAGE_OFFSET = 1;
     private static final int PAGE_RANGE = MAX_PAGE - 1;
+    
+    private final AbstractPaginable paginable;
+    private final int totalPageCount;
 
-    public static int getTotalPages(int totalPageCount, int size) {
-        return (int) Math.ceil((double) totalPageCount / size);
+    public int[] rowsPerPage() {
+        return new int[]{10, 20, 40};
     }
 
-    public static int getStartPage(int page) {
-        return ((page - PAGE_OFFSET) / MAX_PAGE) * MAX_PAGE + PAGE_OFFSET;
+    public PaginationUtil(AbstractPaginable paginable, int totalPageCount) {
+        this.paginable = paginable;
+        this.totalPageCount = totalPageCount;
     }
 
-    public static int getEndPage(int startPage, int totalPages) {
-        return Math.min(startPage + PAGE_RANGE, totalPages);
+    public int getTotalPages() {
+        return (int) Math.ceil((double) totalPageCount / paginable.getSize());
+    }
+
+    public int getStartPage() {
+        return ((paginable.getPage() - PAGE_OFFSET) / MAX_PAGE) * MAX_PAGE + PAGE_OFFSET;
+    }
+
+    public int getEndPage() {
+        return Math.min(getStartPage() + PAGE_RANGE, getTotalPages());
     }
 }

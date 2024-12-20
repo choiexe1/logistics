@@ -1,14 +1,15 @@
 package blog.devjay.logistics.dto;
 
+import blog.devjay.logistics.domain.AbstractPaginable;
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.UserStatus;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class SearchUserDTO {
+@Getter
+@Setter
+public class SearchUserDTO extends AbstractPaginable {
     private String username;
     private UserStatus status;
     private Role role;
-    private int size = 10;
-    private int page = 1;
 }

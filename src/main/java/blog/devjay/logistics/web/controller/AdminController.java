@@ -25,17 +25,15 @@ public class AdminController {
                             @ModelAttribute("searchUserForm") SearchUserDTO dto) {
         model.addAttribute("userStatus", UserStatus.values());
         model.addAttribute("userRole", Role.values());
-        model.addAttribute("rowsPerPage", new int[]{10, 20, 40});
         model.addAttribute("users", userService.findAll(dto));
 
         int totalPageCount = userService.findAllCount(dto);
-        int totalPages = PaginationUtil.getTotalPages(totalPageCount, dto.getSize());
-        int startPage = PaginationUtil.getStartPage(dto.getPage());
-        int endPage = PaginationUtil.getEndPage(startPage, totalPages);
 
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        PaginationUtil paginationUtil = new PaginationUtil(dto, totalPageCount);
+        model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
+        model.addAttribute("totalPages", paginationUtil.getTotalPages());
+        model.addAttribute("startPage", paginationUtil.getStartPage());
+        model.addAttribute("endPage", paginationUtil.getEndPage());
 
         return "views/admin/users";
     }
