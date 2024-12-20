@@ -16,7 +16,10 @@
     <select id="findByUsername" resultType="User">
         SELECT *
         FROM users
-        WHERE username = #{username}
+        <where>
+            username = #{username}
+            AND status != 'DELETED'
+        </where>
     </select>
 
     <select id="findAll" resultType="User">

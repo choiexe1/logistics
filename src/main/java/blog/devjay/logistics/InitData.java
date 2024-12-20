@@ -37,7 +37,7 @@ public class InitData {
             User testUser = new User("testUser" + i, BcryptUtils.hashPw("testUser" + i));
             testUser.setRole(Role.USER);
             if (i % 2 == 0) {
-                testUser.setStatus(UserStatus.INACTIVATE);
+                testUser.setStatus(UserStatus.DEACTIVATE);
             }
 
             testUserList.add(testUser);
