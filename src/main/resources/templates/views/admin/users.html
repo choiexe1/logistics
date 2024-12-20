@@ -84,10 +84,14 @@
                 </thead>
                 <tbody>
                 <tr th:each="user : ${users}" class="border-t border-gray hover:bg-gray">
-                    <td th:text="${user.id}" class="py-2 px-4 hover:text-blue"></td>
-                    <td th:text="${user.username}" class="py-2 px-4 hover:text-blue"></td>
+                    <td th:data-user-id="${user.id}" th:text="${user.id}" class="py-2 px-4 hover:text-blue"></td>
+                    <td th:data-username="${user.username}" th:text="${user.username}"
+                        class="py-2 px-4 hover:text-blue"></td>
                     <td class="py-2 px-4">
-                        <select class="bg-transparent text-white">
+                        <select class="bg-transparent text-white"
+                                onchange="changeUserStatus(this)"
+                                th:disabled="${user.id == currentUser.id}"
+                                th:class="${user.id == currentUser.id} ? 'text-gray-light'">
                             <option th:each="status : ${userStatus}"
                                     th:value="${status}"
                                     th:text="${status}"
@@ -96,7 +100,11 @@
                         </select>
                     </td>
                     <td class="py-2 px-4">
-                        <select class="bg-transparent text-white">
+                        <select class="bg-transparent text-white"
+                                onchange="changeUserRole(this)"
+                                th:disabled="${user.id == currentUser.id}"
+                                th:class="${user.id == currentUser.id} ? 'text-gray-light'"
+                        >
                             <option th:each="role : ${userRole}"
                                     th:value="${role}"
                                     th:text="${role}"
@@ -137,5 +145,104 @@
             </div>
         </div>
     </main>
+    <script th:inline="javascript">
+        const fetchMessageResolver = () => {
+            const language = navigator.language;
+            const messages = {
+                fetch: {
+                    ko: {
+                        success: "변경사항이 성공적으로 저장되었습니다.",
+                        fail: "변경 중 오류가 발생했습니다. 다시 시도해주세요.",
+                        networkError: "네트워크 오류가 발생했습니다. 다시 시도해주세요."
+                    },
+                    en: {
+                        success: "Your changes have been successfully saved.",
+                        fail: "An error occurred during the change, please try again.",
+                        networkError: "There was a network error, please try again."
+                    }
+                }
+            }
+
+            if (language === "ko") return messages.fetch.ko;
+            else return messages.fetch.en;
+        }
+
+        const fetchUserChange = async (body, lang) => {
+            const message = fetchMessageResolver()
+
+            try {
+                const response = await fetch(`/admin/users/${body.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (response.ok) {
+                    alert(message.success);
+                    location.reload()
+                } else {
+                    alert(message.fail);
+                }
+
+            } catch (error) {
+                alert(message.networkError);
+            }
+        }
+
+        const changeUserStatus = async (element) => {
+            const row = element.closest('tr');
+            const status = element.value;
+            const userIdElement = row.querySelector('[data-user-id]');
+            const usernameElement = row.querySelector('[data-username]');
+            const username = usernameElement.dataset.username;
+            const acceptLanguage = navigator.language
+            let confirmMessage;
+
+            if (navigator.language === "ko") {
+                confirmMessage = confirm(`${username}의 상태를 ${status}로 변경하시겠습니까?`)
+            }
+
+            if (navigator.language.startsWith("en")) {
+                confirmMessage = confirm(`Do you want to change the status of ${username} to ${status}?`)
+            }
+
+            const body = {
+                id: userIdElement.dataset.userId,
+                status,
+            };
+
+            if (confirmMessage) return fetchUserChange(body);
+            else {
+                location.reload();
+            }
+        }
+
+        const changeUserRole = async (element) => {
+            const row = element.closest('tr');
+            const role = element.value;
+            const userIdElement = row.querySelector('[data-user-id]');
+            const usernameElement = row.querySelector('[data-username]');
+            const username = usernameElement.dataset.username;
+            let confirmMessage;
+
+            if (navigator.language === "ko") {
+                confirmMessage = confirm(`${username}의 역할을 ${role}로 변경하시겠습니까?`)
+            }
+
+            if (navigator.language.startsWith("en")) {
+                confirmMessage = confirm(`Do you want to change the role of ${username} to ${role}?`)
+            }
+
+            const body = {
+                id: userIdElement.dataset.userId,
+                role: role,
+            }
+
+            if (confirmMessage) return fetchUserChange(body);
+            else return location.reload();
+        }
+    </script>
 </body>
 </html>

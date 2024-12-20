@@ -50,4 +50,16 @@
             </if>
         </where>
     </select>
+
+    <update id="updateUser">
+        UPDATE users
+        SET
+        <trim prefix="role =" suffixOverrides=",">
+            <if test="role != null">#{role},</if>
+        </trim>
+        <trim prefix="status =" suffixOverrides=",">
+            <if test="status != null">#{status},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
 </mapper>

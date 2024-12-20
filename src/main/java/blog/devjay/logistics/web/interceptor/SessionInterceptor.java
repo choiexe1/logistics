@@ -46,7 +46,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     }
 
     private void setModelAndView(User user, HttpServletRequest request, ModelAndView modelAndView) {
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("currentUser", user);
         modelAndView.addObject("isEditor", user.getRole() == Role.EDITOR);
         modelAndView.addObject("isAdmin", user.getRole() == Role.ADMIN);
         modelAndView.addObject("uri", request.getRequestURI());

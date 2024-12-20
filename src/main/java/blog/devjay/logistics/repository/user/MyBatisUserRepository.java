@@ -2,6 +2,7 @@ package blog.devjay.logistics.repository.user;
 
 import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.dto.SearchUserDTO;
+import blog.devjay.logistics.dto.UpdateUserDTO;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,10 @@ public class MyBatisUserRepository implements UserRepository {
     @Override
     public int findAllCount(SearchUserDTO searchUserDTO) {
         return mapper.findAllCount(searchUserDTO);
+    }
+
+    @Override
+    public void updateUser(UpdateUserDTO updateUserDTO) {
+        mapper.updateUser(updateUserDTO);
     }
 }
