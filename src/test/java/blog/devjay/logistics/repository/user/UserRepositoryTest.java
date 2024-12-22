@@ -7,7 +7,6 @@ import blog.devjay.logistics.dto.user.UpdateUserDTO;
 import blog.devjay.logistics.web.utils.BcryptUtils;
 import java.util.List;
 import java.util.Optional;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-@Slf4j
 class UserRepositoryTest {
     @Autowired
     private UserMapper userMapper;
