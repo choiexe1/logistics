@@ -1,6 +1,7 @@
 package blog.devjay.logistics.repository.warehouse;
 
 import blog.devjay.logistics.domain.warehouse.Warehouse;
+import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,11 @@ public class MyBatisWarehouseRepository implements WarehouseRepository {
     }
 
     @Override
+    public int findAllCount(SearchWarehouseDTO searchWarehouseDTO) {
+        return mapper.findAllCount(searchWarehouseDTO);
+    }
+
+    @Override
     public Optional<Warehouse> findByName(String name) {
         return mapper.findByName(name);
     }
@@ -37,8 +43,8 @@ public class MyBatisWarehouseRepository implements WarehouseRepository {
     }
 
     @Override
-    public List<Warehouse> findAll() {
-        return new ArrayList<>(mapper.findAll());
+    public List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO) {
+        return new ArrayList<>(mapper.findAll(searchWarehouseDTO));
     }
 
     @Override

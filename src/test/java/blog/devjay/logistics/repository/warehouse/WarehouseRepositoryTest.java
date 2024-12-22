@@ -1,6 +1,7 @@
 package blog.devjay.logistics.repository.warehouse;
 
 import blog.devjay.logistics.domain.warehouse.Warehouse;
+import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -82,7 +83,27 @@ class WarehouseRepositoryTest {
         warehouseRepository.save(warehouse2);
 
         // WHEN
-        List<Warehouse> warehouses = warehouseRepository.findAll();
+        SearchWarehouseDTO searchWarehouseDTO = new SearchWarehouseDTO();
+        List<Warehouse> warehouses = warehouseRepository.findAll(searchWarehouseDTO);
+
+        // THEN
+        Assertions.assertThat(warehouses.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("특정 조건으로 검색 시 해당하는 창고가 리스트로 반환되어야 한다.")
+    void findAllWithCondition() {
+        // GIVEN
+        Warehouse warehouse1 = createWarehouse("POA");
+        Warehouse warehouse2 = createWarehouse("DAL");
+        warehouseRepository.save(warehouse1);
+        warehouseRepository.save(warehouse2);
+
+        // WHEN
+        SearchWarehouseDTO searchWarehouseDTO = new SearchWarehouseDTO();
+        searchWarehouseDTO.setName("a");
+
+        List<Warehouse> warehouses = warehouseRepository.findAll(searchWarehouseDTO);
 
         // THEN
         Assertions.assertThat(warehouses.size()).isEqualTo(2);
