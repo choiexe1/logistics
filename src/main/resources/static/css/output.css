@@ -601,6 +601,42 @@ select {
   color: inherit;
 }
 
+label {
+  font-weight: 700;
+}
+
+input {
+  border-radius: 0.125rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(161 161 161 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 17 17 / var(--tw-bg-opacity, 1));
+  padding: 0.25rem;
+}
+
+input:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 183 248 / var(--tw-border-opacity, 1));
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+input:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 183 248 / var(--tw-border-opacity, 1));
+}
+
+input:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(161 161 161 / var(--tw-text-opacity, 1));
+}
+
+input:disabled:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(161 161 161 / var(--tw-border-opacity, 1));
+}
+
 .container {
   width: 100%;
 }
@@ -706,6 +742,10 @@ select {
   width: 100%;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -750,6 +790,10 @@ select {
   gap: 1rem;
 }
 
+.gap-8 {
+  gap: 2rem;
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -766,6 +810,12 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+.space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .overflow-x-auto {
@@ -879,32 +929,6 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(250 250 250 / var(--tw-text-opacity, 1));
-}
-
-label {
-  font-weight: 700;
-}
-
-input {
-  border-radius: 0.125rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(161 161 161 / var(--tw-border-opacity, 1));
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 17 17 / var(--tw-bg-opacity, 1));
-  padding: 0.25rem;
-}
-
-input:focus {
-  --tw-border-opacity: 1;
-  border-color: rgb(71 183 248 / var(--tw-border-opacity, 1));
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-input:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(71 183 248 / var(--tw-border-opacity, 1));
 }
 
 .highlight {

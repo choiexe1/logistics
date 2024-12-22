@@ -1,6 +1,6 @@
 package blog.devjay.logistics.service;
 
-import blog.devjay.logistics.domain.exception.UserNotFoundException;
+import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.dto.user.SearchUserDTO;
 import blog.devjay.logistics.dto.user.UpdateUserDTO;
@@ -30,7 +30,7 @@ public class UserService {
             return user.get();
         }
 
-        throw new UserNotFoundException();
+        throw new NotFoundException("유저를 찾을 수 없습니다.");
     }
 
     public List<User> findAll(SearchUserDTO searchUserDTO) {
@@ -44,7 +44,7 @@ public class UserService {
             return user.get();
         }
 
-        throw new UserNotFoundException();
+        throw new NotFoundException("유저를 찾을 수 없습니다.");
     }
 
     public int findAllCount(SearchUserDTO searchUserDTO) {

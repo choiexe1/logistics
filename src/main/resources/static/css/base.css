@@ -23,9 +23,7 @@
         background-color: inherit;
         color: inherit;
     }
-}
 
-@layer utilities {
     label {
         @apply font-bold
     }
@@ -41,6 +39,14 @@
     input:hover {
         @apply border-blue
     }
+
+    input:disabled {
+        @apply text-gray-light hover:border-gray-light
+    }
+}
+
+@layer utilities {
+
 
     .highlight {
         @apply border-l-2 pl-2 my-4 border-l-orange font-bold

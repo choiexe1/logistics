@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head(~{::title})}">
+    <title th:text="${warehouse.name}"></title>
+</head>
+<body>
+    <nav th:replace="~{fragments/nav :: nav (${warehouse.name})}"></nav>
+    <main class="container mx-auto my-4">
+        <div>
+            <form th:action method="post" th:object="${warehouse}" class="flex flex-col gap-8">
+                <div class="flex gap-4">
+                    <div>
+                        <div class="flex flex-col gap-2 gap-2">
+                            <label for="name" th:text="#{label.name}"></label>
+                            <input type="text" id="name" th:field="*{name}" disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex flex-col gap-2">
+                            <label for="location" th:text="#{label.location}"></label>
+                            <input type="text" id="location" th:field="*{location}">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex gap-4">
+                    <div>
+                        <div class="flex flex-col gap-2">
+                            <label for="createdAt" th:text="#{label.createdAt}"></label>
+                            <input type="text" id="createdAt" th:field="*{createdAt}" disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex flex-col gap-2">
+                            <label for="updatedAt" th:text="#{label.updatedAt}"></label>
+                            <input type="text" id="updatedAt" th:field="*{updatedAt}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col gap-2">
+                        <label for="racks" th:text="#{label.racks}"></label>
+                        <input type="text" id="racks" th:field="*{racks}">
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn" th:text="#{button.edit}">수정</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

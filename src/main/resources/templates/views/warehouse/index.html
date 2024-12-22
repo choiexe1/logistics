@@ -65,7 +65,7 @@
                         th:text="#{label.updatedAt}">수정일
                     </th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.log}">로그
+                        th:text="#{label.viewWarehouse}">창고 확인
                     </th>
                 </tr>
                 </thead>
@@ -86,7 +86,8 @@
                         </td>
                     </th:block>
                     <td class="py-2 px-4 flex">
-                        <a class="btn" th:text="#{label.viewLog}">로그 확인</a>
+                        <a class="btn" th:href="@{/warehouse/{id}(id=${warehouse.id})}"
+                           th:text="#{label.viewWarehouse}">창고 확인</a>
                     </td>
                 </tr>
                 </tbody>

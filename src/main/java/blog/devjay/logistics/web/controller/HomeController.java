@@ -3,7 +3,7 @@ package blog.devjay.logistics.web.controller;
 
 import static blog.devjay.logistics.web.SessionConst.SESSION_ID;
 
-import blog.devjay.logistics.domain.exception.UserNotFoundException;
+import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.dto.user.LoginDTO;
 import blog.devjay.logistics.dto.user.RegisterDTO;
@@ -66,7 +66,7 @@ public class HomeController {
 
             return "redirect:" + redirectURL;
 
-        } catch (UserNotFoundException e) {
+        } catch (NotFoundException e) {
             bindingResult.rejectValue("username", "user.username");
             return "views/login";
         }
