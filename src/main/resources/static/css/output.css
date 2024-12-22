@@ -635,10 +635,6 @@ select {
   }
 }
 
-.static {
-  position: static;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -678,10 +674,6 @@ select {
   margin-top: auto;
 }
 
-.block {
-  display: block;
-}
-
 .flex {
   display: flex;
 }
@@ -708,11 +700,6 @@ select {
 
 .w-auto {
   width: auto;
-}
-
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .w-full {
@@ -814,11 +801,6 @@ select {
 .bg-blue {
   --tw-bg-opacity: 1;
   background-color: rgb(71 183 248 / var(--tw-bg-opacity, 1));
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(250 250 250 / var(--tw-bg-opacity, 1));
 }
 
 .p-1 {

@@ -5,6 +5,7 @@ import blog.devjay.logistics.dto.SearchUserDTO;
 import blog.devjay.logistics.dto.UpdateUserDTO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -16,17 +17,18 @@ public class MyBatisUserRepository implements UserRepository {
     private final UserMapper mapper;
 
     @Override
-    public void save(User user) {
+    public Long save(User user) {
         mapper.save(user);
+        return user.getId();
     }
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         return mapper.findById(id);
     }
 
     @Override
-    public User findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return mapper.findByUsername(username);
     }
 
@@ -41,8 +43,8 @@ public class MyBatisUserRepository implements UserRepository {
     }
 
     @Override
-    public void updateUser(UpdateUserDTO updateUserDTO) {
-        mapper.updateUser(updateUserDTO);
+    public void update(UpdateUserDTO updateUserDTO) {
+        mapper.update(updateUserDTO);
     }
 
     @Override

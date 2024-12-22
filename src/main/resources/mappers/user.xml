@@ -54,7 +54,7 @@
         </where>
     </select>
 
-    <update id="updateUser">
+    <update id="update">
         UPDATE users
         <set>
             <if test="role != null">role = #{role},</if>

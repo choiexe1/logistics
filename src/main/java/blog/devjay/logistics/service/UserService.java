@@ -6,6 +6,7 @@ import blog.devjay.logistics.dto.SearchUserDTO;
 import blog.devjay.logistics.dto.UpdateUserDTO;
 import blog.devjay.logistics.repository.user.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,13 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        User user = userRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
 
-        if (user == null) {
-            throw new UserNotFoundException();
+        if (user.isPresent()) {
+            return user.get();
         }
 
-        return user;
+        throw new UserNotFoundException();
     }
 
     public List<User> findAll(SearchUserDTO searchUserDTO) {
@@ -37,13 +38,13 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
 
-        if (user == null) {
-            throw new UserNotFoundException();
+        if (user.isPresent()) {
+            return user.get();
         }
 
-        return user;
+        throw new UserNotFoundException();
     }
 
     public int findAllCount(SearchUserDTO searchUserDTO) {
@@ -51,7 +52,7 @@ public class UserService {
     }
 
     public void updateUser(UpdateUserDTO updateUserDTO) {
-        userRepository.updateUser(updateUserDTO);
+        userRepository.update(updateUserDTO);
     }
 
     public void updateRecentLoginAt(Long userId) {
