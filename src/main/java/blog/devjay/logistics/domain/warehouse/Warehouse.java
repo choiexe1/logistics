@@ -1,6 +1,6 @@
 package blog.devjay.logistics.domain.warehouse;
 
-import blog.devjay.logistics.domain.rack.Rack;
+import blog.devjay.logistics.domain.item.Item;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class Warehouse {
     private Long id;
     private String name;
     private String location;
-    private List<Rack> racks;
+    private List<Item> items;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -23,6 +23,6 @@ public class Warehouse {
     public Warehouse(String name, String location) {
         this.name = name;
         this.location = location;
-        this.racks = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
 }
