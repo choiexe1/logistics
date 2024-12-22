@@ -10,7 +10,7 @@
             <form th:action method="post" th:object="${warehouse}" class="flex flex-col gap-8">
                 <div class="flex gap-4">
                     <div>
-                        <div class="flex flex-col gap-2 gap-2">
+                        <div class="flex flex-col gap-2">
                             <label for="name" th:text="#{label.name}"></label>
                             <input type="text" id="name" th:field="*{name}" disabled>
                         </div>
