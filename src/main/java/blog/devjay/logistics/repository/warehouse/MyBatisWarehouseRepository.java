@@ -2,6 +2,8 @@ package blog.devjay.logistics.repository.warehouse;
 
 import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -32,6 +34,11 @@ public class MyBatisWarehouseRepository implements WarehouseRepository {
     @Override
     public Optional<Warehouse> findByLocation(String location) {
         return mapper.findByLocation(location);
+    }
+
+    @Override
+    public List<Warehouse> findAll() {
+        return new ArrayList<>(mapper.findAll());
     }
 
     @Override

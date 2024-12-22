@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 class UserRepositoryTest {
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private UserRepository userRepository;
 
     @Test

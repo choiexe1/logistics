@@ -56,8 +56,8 @@
     <update id="update">
         UPDATE warehouses
         <set>
-            <if test="role != null">role = #{role},</if>
-            <if test="status != null">status = #{status},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="location != null">location = #{location},</if>
             updated_at = CURRENT_TIMESTAMP
         </set>
         WHERE id = #{id}
