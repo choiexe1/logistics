@@ -5,8 +5,8 @@ import static blog.devjay.logistics.web.SessionConst.SESSION_ID;
 
 import blog.devjay.logistics.domain.exception.UserNotFoundException;
 import blog.devjay.logistics.domain.user.User;
-import blog.devjay.logistics.dto.LoginDTO;
-import blog.devjay.logistics.dto.RegisterDTO;
+import blog.devjay.logistics.dto.user.LoginDTO;
+import blog.devjay.logistics.dto.user.RegisterDTO;
 import blog.devjay.logistics.service.UserService;
 import blog.devjay.logistics.web.argumentresolver.CurrentUser;
 import blog.devjay.logistics.web.utils.BcryptUtils;

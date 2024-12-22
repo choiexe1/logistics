@@ -1,17 +1,19 @@
 package blog.devjay.logistics.repository.user;
 
 import blog.devjay.logistics.domain.user.User;
-import blog.devjay.logistics.dto.SearchUserDTO;
-import blog.devjay.logistics.dto.UpdateUserDTO;
+import blog.devjay.logistics.dto.user.SearchUserDTO;
+import blog.devjay.logistics.dto.user.UpdateUserDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
+@Primary
 @Slf4j
 public class MyBatisUserRepository implements UserRepository {
     private final UserMapper mapper;

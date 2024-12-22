@@ -1,8 +1,8 @@
 package blog.devjay.logistics.repository.user;
 
 import blog.devjay.logistics.domain.user.User;
-import blog.devjay.logistics.dto.SearchUserDTO;
-import blog.devjay.logistics.dto.UpdateUserDTO;
+import blog.devjay.logistics.dto.user.SearchUserDTO;
+import blog.devjay.logistics.dto.user.UpdateUserDTO;
 import java.util.List;
 import java.util.Optional;
 

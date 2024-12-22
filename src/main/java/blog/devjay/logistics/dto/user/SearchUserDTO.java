@@ -1,4 +1,4 @@
-package blog.devjay.logistics.dto;
+package blog.devjay.logistics.dto.user;
 
 import blog.devjay.logistics.domain.AbstractPaginable;
 import blog.devjay.logistics.domain.user.Role;

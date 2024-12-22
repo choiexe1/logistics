@@ -9,6 +9,7 @@ import lombok.Getter;
 public class Rack {
     private Long id;
     private Warehouse warehouse;
-    private int level;
+    private int height;
+    private int width;
     private List<Item> items;
 }

@@ -2,8 +2,8 @@ package blog.devjay.logistics.service;
 
 import blog.devjay.logistics.domain.exception.UserNotFoundException;
 import blog.devjay.logistics.domain.user.User;
-import blog.devjay.logistics.dto.SearchUserDTO;
-import blog.devjay.logistics.dto.UpdateUserDTO;
+import blog.devjay.logistics.dto.user.SearchUserDTO;
+import blog.devjay.logistics.dto.user.UpdateUserDTO;
 import blog.devjay.logistics.repository.user.UserRepository;
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public void register(User user) {
-        userRepository.save(user);
+    public Long register(User user) {
+        return userRepository.save(user);
     }
 
     public User findById(Long id) {

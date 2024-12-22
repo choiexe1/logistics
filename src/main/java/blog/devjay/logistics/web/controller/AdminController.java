@@ -2,8 +2,8 @@ package blog.devjay.logistics.web.controller;
 
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.UserStatus;
-import blog.devjay.logistics.dto.SearchUserDTO;
-import blog.devjay.logistics.dto.UpdateUserDTO;
+import blog.devjay.logistics.dto.user.SearchUserDTO;
+import blog.devjay.logistics.dto.user.UpdateUserDTO;
 import blog.devjay.logistics.service.UserService;
 import blog.devjay.logistics.web.utils.PaginationUtil;
 import lombok.RequiredArgsConstructor;

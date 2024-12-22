@@ -1,4 +1,4 @@
-package blog.devjay.logistics.dto;
+package blog.devjay.logistics.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
