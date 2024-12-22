@@ -23,10 +23,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new AuthInterceptor())
                 .excludePathPatterns(AUTH_WHITELIST)
                 .order(1);
-        registry.addInterceptor(new SessionInterceptor(messageSource))
+        registry.addInterceptor(new SessionInterceptor())
                 .excludePathPatterns(AUTH_WHITELIST)
                 .order(2);
     }
+
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

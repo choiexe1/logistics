@@ -12,10 +12,10 @@
 
             <p class="text-lg mb-4" th:text="${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}">에러 시각</p>
 
-            <p th:if="${status} == 403" class="text-xl text-red-500 font-medium">
-                <th:block>
+                <th:block th:if="${errorMessage}">
+                <p class="text-xl text-red-500 font-medium">
                     <span th="${message == null}" th:text="#{error.403}"></span>
-                    <p th:if="${message != null}" th:text="${message}"></p>
+                    <p th:text="${errorMessage}"></p>
                 </th:block>
             </p>
 
@@ -27,12 +27,12 @@
                 <span th:text="#{error.500}"></span>
             </p>
 
-            <th:block th:with="suspended=#{user.suspended},deactivate=#{user.deactivate}">
-                <a href="/" class="btn" th:if="${message != suspended and message != deactivate}">
+            <th:block>
+                <a href="/" class="btn" th:if="${logoutBtn != true}">
                     <span th:text="#{back.home}">홈으로 이동</span>
                 </a>
 
-                <form th:action="@{/logout}" method="POST" th:if="${message == suspended or message == deactivate}">
+                <form th:action="@{/logout}" method="POST" th:if="${logoutBtn == true}">
                     <button type="submit" th:text="#{button.logout}" class="btn w-full"></button>
                 </form>
             </th:block>
