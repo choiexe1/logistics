@@ -27,7 +27,7 @@
         FROM users
         <where>
             <if test="username != null and username != ''">
-                AND LOWER(username) like concat('%', #{username}, '%')
+                AND LOWER(username) like concat('%', LOWER(#{username}), '%')
             </if>
             <if test="status != null">
                 AND status = #{status}
@@ -43,7 +43,7 @@
         SELECT COUNT(*) FROM users
         <where>
             <if test="username != null and username != ''">
-                AND LOWER(username) like concat('%', #{username}, '%')
+                AND LOWER(username) like concat('%', LOWER(#{username}), '%')
             </if>
             <if test="status != null">
                 AND status = #{status}
