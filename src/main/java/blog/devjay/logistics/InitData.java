@@ -3,7 +3,9 @@ package blog.devjay.logistics;
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.domain.user.UserStatus;
+import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.repository.user.UserRepository;
+import blog.devjay.logistics.repository.warehouse.WarehouseRepository;
 import blog.devjay.logistics.web.utils.BcryptUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.context.event.EventListener;
 @RequiredArgsConstructor
 public class InitData {
     private final UserRepository userRepository;
+    private final WarehouseRepository warehouseRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     void initUsers() {
@@ -46,6 +49,14 @@ public class InitData {
         for (User testUser : testUserList) {
             userRepository.save(testUser);
         }
+    }
 
+    @EventListener(ApplicationReadyEvent.class)
+    void initWarehouses() {
+        Warehouse warehouse1 = new Warehouse("Warehouse 1", "Seoul");
+        Warehouse warehouse2 = new Warehouse("Warehouse 2", "Paju");
+
+        warehouseRepository.save(warehouse1);
+        warehouseRepository.save(warehouse2);
     }
 }

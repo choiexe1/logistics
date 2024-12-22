@@ -26,10 +26,10 @@
         FROM warehouses
         <where>
             <if test="name != null and name != ''">
-                AND LOWER(name) like concat('%', #{name}, '%')
+                AND LOWER(name) like concat('%', LOWER(#{name}), '%')
             </if>
-            <if test="location != null">
-                AND LOWER(location) like concat('%', #{location}, '%')
+            <if test="location != null and location != ''">
+                AND LOWER(location) like concat('%', LOWER(#{location}), '%')
             </if>
         </where>
         LIMIT #{size} OFFSET #{size} * (#{page} - 1)
@@ -38,14 +38,11 @@
     <select id="findAllCount" resultType="int">
         SELECT COUNT(*) FROM warehouses
         <where>
-            <if test="username != null and username != ''">
-                AND LOWER(username) like concat('%', #{username}, '%')
+            <if test="name != null and name != ''">
+                AND LOWER(name) like concat('%', LOWER(#{name}), '%')
             </if>
-            <if test="status != null">
-                AND status = #{status}
-            </if>
-            <if test="role != null">
-                AND role = #{role}
+            <if test="location != null and location != ''">
+                AND LOWER(location) like concat('%', LOWER(#{location}), '%')
             </if>
         </where>
     </select>

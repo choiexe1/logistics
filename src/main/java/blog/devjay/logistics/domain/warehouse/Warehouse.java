@@ -1,6 +1,7 @@
 package blog.devjay.logistics.domain.warehouse;
 
 import blog.devjay.logistics.domain.rack.Rack;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -13,6 +14,8 @@ public class Warehouse {
     private String name;
     private String location;
     private List<Rack> racks;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Warehouse(String name, String location) {
         this.name = name;

@@ -1,6 +1,7 @@
 package blog.devjay.logistics;
 
 import blog.devjay.logistics.repository.user.UserRepository;
+import blog.devjay.logistics.repository.warehouse.WarehouseRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +15,8 @@ public class LogisticsApplication {
 
     @Bean
     @Profile("local")
-    public InitData initData(UserRepository userRepository) {
-        return new InitData(userRepository);
+    public InitData initData(UserRepository userRepository, WarehouseRepository warehouseRepository) {
+        return new InitData(userRepository, warehouseRepository);
     }
+    
 }
