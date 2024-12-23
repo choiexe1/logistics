@@ -19,7 +19,7 @@ public interface UserMapper extends UserRepository {
 
     int findAllCount(SearchUserDTO searchUserDTO);
 
-    void update(UpdateUserDTO updateUserDTO);
+    void update(Long id, UpdateUserDTO updateUserDTO);
 
     void updateRecentLoginAt(Long userId);
 }

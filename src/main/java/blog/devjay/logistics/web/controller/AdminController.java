@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,7 @@ public class AdminController {
 
     @PutMapping("/users/{userId}")
     @ResponseBody
-    public void updateUser(@RequestBody UpdateUserDTO dto) {
-        userService.updateUser(dto);
+    public void updateUser(@PathVariable("userId") Long userId, @RequestBody UpdateUserDTO dto) {
+        userService.updateUser(userId, dto);
     }
 }

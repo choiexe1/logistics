@@ -45,8 +45,8 @@ public class MyBatisUserRepository implements UserRepository {
     }
 
     @Override
-    public void update(UpdateUserDTO updateUserDTO) {
-        mapper.update(updateUserDTO);
+    public void update(Long id, UpdateUserDTO updateUserDTO) {
+        mapper.update(id, updateUserDTO);
     }
 
     @Override

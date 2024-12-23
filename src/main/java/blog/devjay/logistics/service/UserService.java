@@ -51,8 +51,8 @@ public class UserService {
         return userRepository.findAllCount(searchUserDTO);
     }
 
-    public void updateUser(UpdateUserDTO updateUserDTO) {
-        userRepository.update(updateUserDTO);
+    public void updateUser(Long id, UpdateUserDTO updateUserDTO) {
+        userRepository.update(id, updateUserDTO);
     }
 
     public void updateRecentLoginAt(Long userId) {

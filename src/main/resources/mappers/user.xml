@@ -57,8 +57,8 @@
     <update id="update">
         UPDATE users
         <set>
-            <if test="role != null">role = #{role},</if>
-            <if test="status != null">status = #{status},</if>
+            <if test="updateUserDTO.role != null">role = #{updateUserDTO.role},</if>
+            <if test="updateUserDTO.status != null">status = #{updateUserDTO.status},</if>
             updated_at = CURRENT_TIMESTAMP
         </set>
         WHERE id = #{id}
