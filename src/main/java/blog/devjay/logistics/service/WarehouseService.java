@@ -3,6 +3,7 @@ package blog.devjay.logistics.service;
 import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
+import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
 import blog.devjay.logistics.repository.warehouse.WarehouseMapper;
 import java.util.List;
 import java.util.Optional;
@@ -37,5 +38,9 @@ public class WarehouseService {
 
     public int findAllCount(SearchWarehouseDTO searchWarehouseDTO) {
         return mapper.findAllCount(searchWarehouseDTO);
+    }
+
+    public void update(Long id, UpdateWarehouseDTO updateWarehouseDTO) {
+        mapper.update(id, updateWarehouseDTO);
     }
 }

@@ -3,6 +3,7 @@ package blog.devjay.logistics.web.controller;
 import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
+import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
 import blog.devjay.logistics.service.WarehouseService;
 import blog.devjay.logistics.web.utils.PaginationUtil;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/warehouse")
@@ -47,5 +51,12 @@ public class WarehouseController {
         } catch (NotFoundException e) {
             return "/warehouse";
         }
+    }
+
+    @PutMapping("/{warehouseId}")
+    @ResponseBody
+    public void updateWarehouse(@PathVariable("warehouseId") Long warehouseId, @RequestBody
+    UpdateWarehouseDTO dto) {
+        warehouseService.update(warehouseId, dto);
     }
 }

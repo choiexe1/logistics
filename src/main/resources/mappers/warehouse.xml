@@ -50,8 +50,8 @@
     <update id="update">
         UPDATE warehouses
         <set>
-            <if test="name != null">name = #{name},</if>
-            <if test="location != null">location = #{location},</if>
+            <if test="updateWarehouseDTO.name != null">name = #{updateWarehouseDTO.name},</if>
+            <if test="updateWarehouseDTO.location != null">location = #{updateWarehouseDTO.location},</if>
             updated_at = CURRENT_TIMESTAMP
         </set>
         WHERE id = #{id}

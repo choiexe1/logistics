@@ -6,42 +6,75 @@
 <body>
     <nav th:replace="~{fragments/nav :: nav (${warehouse.name})}"></nav>
     <main class="container mx-auto my-4">
-        <div>
-            <form th:action method="post" th:object="${warehouse}" class="flex flex-col gap-8">
-                <div class="flex gap-4">
-                    <div>
-                        <div class="flex flex-col gap-2">
-                            <label for="name" th:text="#{label.name}"></label>
-                            <input type="text" id="name" th:field="*{name}" disabled>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex flex-col gap-2">
-                            <label for="location" th:text="#{label.location}"></label>
-                            <input type="text" id="location" th:field="*{location}">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex gap-4">
-                    <div>
-                        <div class="flex flex-col gap-2">
-                            <label for="createdAt" th:text="#{label.createdAt}"></label>
-                            <input type="text" id="createdAt" th:field="*{createdAt}" disabled>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex flex-col gap-2">
-                            <label for="updatedAt" th:text="#{label.updatedAt}"></label>
-                            <input type="text" id="updatedAt" th:field="*{updatedAt}" disabled>
-                        </div>
+        <div th:object="${warehouse}" class="flex flex-col gap-8">
+            <input type="hidden" th:field="*{id}">
+            <div class="flex gap-4">
+                <div>
+                    <div class="flex flex-col gap-2">
+                        <label for="name" th:text="#{label.name}"></label>
+                        <input type="text" id="name" th:field="*{name}">
                     </div>
                 </div>
                 <div>
-                    <button type="submit" class="btn" th:text="#{button.edit}">수정</button>
+                    <div class="flex flex-col gap-2">
+                        <label for="location" th:text="#{label.location}"></label>
+                        <input type="text" id="location" th:field="*{location}">
+                    </div>
                 </div>
-            </form>
+            </div>
+
+            <div class="flex gap-4">
+                <div>
+                    <div class="flex flex-col gap-2">
+                        <label for="createdAt" th:text="#{label.createdAt}"></label>
+                        <input type="text" id="createdAt" th:field="*{createdAt}" disabled>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col gap-2">
+                        <label th:for="updatedAt" th:text="#{label.updatedAt}"></label>
+                        <th:block>
+                            <input type="text" th:if="${warehouse.updatedAt == null}" th:value="#{none}" disabled>
+                            <input type="text" th:if="${warehouse.updatedAt != null}" th:field="*{updatedAt}" disabled>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" onclick="updateWarehouse()" class="btn" th:text="#{button.edit}">수정</button>
+            </div>
         </div>
     </main>
 </body>
+<script>
+    const updateWarehouse = async () => {
+        const body = {
+            id: document.querySelector("#id").value,
+            name: document.querySelector("#name").value,
+            location: document.querySelector("#location").value,
+        }
+
+        try {
+            const response = await fetch(`/warehouse/${body.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (response.ok) {
+                alert(fetchMessageResolver().success);
+                location.reload()
+            } else {
+                alert(fetchMessageResolver().fail);
+                location.reload()
+            }
+
+        } catch (error) {
+            alert(fetchMessageResolver().networkError);
+            location.reload()
+        }
+    }
+</script>
 </html>

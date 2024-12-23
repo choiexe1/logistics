@@ -19,5 +19,5 @@ public interface WarehouseRepository {
 
     int findAllCount(SearchWarehouseDTO searchWarehouseDTO);
 
-    void update(UpdateWarehouseDTO updateWarehouseDTO);
+    void update(Long id, UpdateWarehouseDTO updateWarehouseDTO);
 }

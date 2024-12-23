@@ -80,7 +80,7 @@
                     <td th:text="${#temporals.format(warehouse.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                     <th:block>
                         <td th:if="${warehouse.updatedAt != null}"
-                            th:text="${#temporals.format(user.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                            th:text="${#temporals.format(warehouse.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:if="${warehouse.updatedAt == null}" th:text="#{none}">
                             없음
                         </td>
