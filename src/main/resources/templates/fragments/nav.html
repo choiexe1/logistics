@@ -27,8 +27,9 @@
     <h1 class="highlight text-2xl" th:text="${title}">타이틀</h1>
     <th:block th:if="${#strings.startsWith(uri, '/admin')}">
         <ul class="flex gap-4 my-4">
-            <li th:class="${uri == '/admin/users'} ? 'selected'"><a th:href="@{/admin/users}" class="list-item"
-                                                                    th:text="#{title.admin.users}">사용자 관리</a>
+            <li th:class="${uri == '/admin/users'} ? 'selected'">
+                <a th:href="@{/admin/users}" class="list-item"
+                   th:text="#{title.admin.users}">사용자 관리</a>
             </li>
             <li><a th:href="@{/admin/log}" th:text="#{title.admin.log}">로그</a></li>
         </ul>
@@ -36,12 +37,14 @@
 
     <th:block th:if="${#strings.startsWith(uri, '/warehouse')}">
         <ul class="flex gap-4 my-4">
-            <li th:class="${uri == '/warehouse'} ? 'selected'"><a th:href="@{/warehouse}" class="list-item"
-                                                                  th:text="#{title.warehouse.list}">창고 목록</a>
+            <li th:class="${uri == '/warehouse'} ? 'selected'">
+                <a th:href="@{/warehouse}" class="list-item"
+                   th:text="#{title.warehouse.list}">창고 목록</a>
             </li>
-            <li th:class="${uri == '/warehouse/create'} ? 'selected'"><a th:href="@{/warehouse/create}"
-                                                                         class="list-item"
-                                                                         th:text="#{title.warehouse.create}">창고 목록</a>
+            <li th:class="${uri == '/warehouse/create'} ? 'selected'">
+                <a th:href="@{/warehouse/create}"
+                   class="list-item"
+                   th:text="#{title.warehouse.create}">창고 생성</a>
             </li>
         </ul>
     </th:block>

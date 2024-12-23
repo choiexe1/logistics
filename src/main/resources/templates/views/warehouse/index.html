@@ -12,14 +12,15 @@
                       class="flex items-center space-x-4 mb-6">
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="flex flex-col flex-grow">
-                            <label class="text-white font-semibold mb-2" th:text="#{label.name}">이름</label>
-                            <input type="text" placeholder="검색" th:placeholder="#{placeholder.search}"
+                            <label th:for="name" class="text-white font-semibold mb-2"
+                                   th:text="#{label.name}">이름</label>
+                            <input type="text" th:placeholder="#{placeholder.search}"
                                    th:field="*{name}" class="p-2">
                         </div>
 
                         <div class="flex flex-col flex-grow">
-                            <label class="text-white font-semibold mb-2" th:text="#{label.location}">이름</label>
-                            <input type="text" placeholder="검색" th:placeholder="#{placeholder.search}"
+                            <label th:for="location" class="text-white font-semibold mb-2" th:text="#{label.location}">이름</label>
+                            <input type="text" th:placeholder="#{placeholder.search}"
                                    th:field="*{location}" class="p-2">
                         </div>
 

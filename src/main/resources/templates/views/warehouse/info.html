@@ -6,24 +6,26 @@
 <body>
     <nav th:replace="~{fragments/nav :: nav (${warehouse.name})}"></nav>
     <main class="container mx-auto my-4">
-        <div th:object="${warehouse}" class="flex flex-col gap-8">
-            <input type="hidden" th:field="*{id}">
-            <div class="flex gap-4">
+        <form th:method="POST" th:action="@{/warehouse/update/{id}(id=${warehouse.id})}" class="flex flex-col gap-8">
+            <input type="hidden" th:field="${warehouse.id}">
+            <div class="flex gap-4" th:object="${updateWarehouseDTO}">
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="name" th:text="#{label.name}"></label>
                         <input type="text" id="name" th:field="*{name}">
+                        <p class="error" th:errors="*{name}">오류</p>
                     </div>
                 </div>
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="location" th:text="#{label.location}"></label>
                         <input type="text" id="location" th:field="*{location}">
+                        <p class="error" th:errors="*{location}">오류</p>
                     </div>
                 </div>
             </div>
 
-            <div class="flex gap-4">
+            <div class="flex gap-4" th:object="${warehouse}">
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="createdAt" th:text="#{label.createdAt}"></label>
@@ -41,40 +43,9 @@
                 </div>
             </div>
             <div>
-                <button type="button" onclick="updateWarehouse()" class="btn" th:text="#{button.edit}">수정</button>
+                <button type="submit" class="btn" th:text="#{button.edit}">수정</button>
             </div>
-        </div>
+        </form>
     </main>
 </body>
-<script>
-    const updateWarehouse = async () => {
-        const body = {
-            id: document.querySelector("#id").value,
-            name: document.querySelector("#name").value,
-            location: document.querySelector("#location").value,
-        }
-
-        try {
-            const response = await fetch(`/warehouse/${body.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            });
-
-            if (response.ok) {
-                alert(fetchMessageResolver().success);
-                location.reload()
-            } else {
-                alert(fetchMessageResolver().fail);
-                location.reload()
-            }
-
-        } catch (error) {
-            alert(fetchMessageResolver().networkError);
-            location.reload()
-        }
-    }
-</script>
 </html>
