@@ -1,8 +1,8 @@
 package blog.devjay.logistics.dto.user;
 
-import blog.devjay.logistics.domain.AbstractPaginable;
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.UserStatus;
+import blog.devjay.logistics.dto.AbstractPaginable;
 import lombok.Getter;
 import lombok.Setter;
 

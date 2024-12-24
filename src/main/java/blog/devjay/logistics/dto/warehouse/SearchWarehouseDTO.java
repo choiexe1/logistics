@@ -1,6 +1,6 @@
 package blog.devjay.logistics.dto.warehouse;
 
-import blog.devjay.logistics.domain.AbstractPaginable;
+import blog.devjay.logistics.dto.AbstractPaginable;
 import lombok.Getter;
 import lombok.Setter;
 
