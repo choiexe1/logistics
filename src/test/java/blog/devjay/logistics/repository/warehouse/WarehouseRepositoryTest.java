@@ -120,9 +120,8 @@ class WarehouseRepositoryTest {
         UpdateWarehouseDTO updateWarehouseDTO = new UpdateWarehouseDTO();
         updateWarehouseDTO.setName("ABC");
         updateWarehouseDTO.setLocation("DEF");
-        updateWarehouseDTO.setId(id);
 
-        warehouseRepository.update(updateWarehouseDTO);
+        warehouseRepository.update(id, updateWarehouseDTO);
 
         Warehouse findWarehouse = warehouseRepository.findById(id).get();
 

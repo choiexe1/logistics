@@ -166,11 +166,10 @@ class UserRepositoryTest {
         User user = createUser("t1");
         Long id = userRepository.save(user);
         UpdateUserDTO updateUserDTO = new UpdateUserDTO();
-        updateUserDTO.setId(id);
         updateUserDTO.setRole(Role.ADMIN);
 
         // WHEN
-        userRepository.update(updateUserDTO);
+        userRepository.update(id, updateUserDTO);
         User findUser = userRepository.findById(id).get();
 
         // THEN
@@ -184,11 +183,10 @@ class UserRepositoryTest {
         User user = createUser("t1");
         Long id = userRepository.save(user);
         UpdateUserDTO updateUserDTO = new UpdateUserDTO();
-        updateUserDTO.setId(id);
         updateUserDTO.setRole(Role.ADMIN);
 
         // WHEN
-        userRepository.update(updateUserDTO);
+        userRepository.update(id, updateUserDTO);
         User findUser = userRepository.findById(id).get();
 
         // THEN
