@@ -100,4 +100,15 @@ public class WarehouseController {
 
         return "redirect:/warehouse";
     }
+
+    @PostMapping("/delete/{warehouseId}")
+    public String delete(@PathVariable("warehouseId") Long warehouseId) {
+        try {
+            warehouseService.delete(warehouseId);
+        } catch (RuntimeException e) {
+            log.error("e", e);
+        }
+
+        return "redirect:/warehouse";
+    }
 }

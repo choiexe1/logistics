@@ -68,6 +68,8 @@
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{label.viewWarehouse}">창고 확인
                     </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">창고 삭제
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,17 +80,25 @@
                         class="py-2 px-4 hover:text-blue"></td>
                     <td th:data-name="${warehouse.location}" th:text="${warehouse.location}"
                         class="py-2 px-4 hover:text-blue"></td>
-                    <td th:text="${#temporals.format(warehouse.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td class="py-2 px-4 hover:text-blue"
+                        th:text="${#temporals.format(warehouse.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                     <th:block>
-                        <td th:if="${warehouse.updatedAt != null}"
+                        <td class="py-2 px-4 hover:text-blue" th:if="${warehouse.updatedAt != null}"
                             th:text="${#temporals.format(warehouse.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td th:if="${warehouse.updatedAt == null}" th:text="#{none}">
+                        <td class="py-2 px-4 hover:text-blue" th:if="${warehouse.updatedAt == null}" th:text="#{none}">
                             없음
                         </td>
                     </th:block>
                     <td class="py-2 px-4 flex">
                         <a class="btn" th:href="@{/warehouse/{id}(id=${warehouse.id})}"
                            th:text="#{label.viewWarehouse}">창고 확인</a>
+                    </td>
+                    <td class="py-2 px-4">
+                        <form
+                                th:action="@{/warehouse/delete/{id}(id=${warehouse.id})}"
+                                method="POST">
+                            <button type="submit" class="btn" onclick="return confirm('창고를 삭제 하시겠습니까?')">창고 삭제</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

@@ -43,4 +43,8 @@ public class WarehouseService {
     public void update(Long id, UpdateWarehouseDTO updateWarehouseDTO) {
         mapper.update(id, updateWarehouseDTO);
     }
+
+    public void delete(Long id) {
+        mapper.delete(id);
+    }
 }

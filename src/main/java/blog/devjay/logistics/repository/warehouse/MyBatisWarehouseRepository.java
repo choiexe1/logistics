@@ -51,4 +51,9 @@ public class MyBatisWarehouseRepository implements WarehouseRepository {
     public void update(Long id, UpdateWarehouseDTO updateWarehouseDTO) {
         mapper.update(id, updateWarehouseDTO);
     }
+
+    @Override
+    public void delete(Long id) {
+        mapper.delete(id);
+    }
 }

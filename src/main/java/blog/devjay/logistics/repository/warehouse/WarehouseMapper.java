@@ -22,4 +22,6 @@ public interface WarehouseMapper extends WarehouseRepository {
     int findAllCount(SearchWarehouseDTO searchWarehouseDTO);
 
     void update(Long id, UpdateWarehouseDTO updateWarehouseDTO);
+
+    void delete(Long id);
 }
