@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blog.devjay.logistics.repository.item.ItemMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO items (name, price, quantity<if test="warehouseId != null">, warehouse_id</if>)
+        VALUES (#{name}, #{price}, #{quantity}<if test="warehouseId != null">, #{warehouseId}</if>)
+    </insert>
+
+    <select id="findById" resultType="Item">
+        SELECT *
+        FROM items
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultType="Item">
+        SELECT *
+        FROM items
+        <where>
+            <if test="name != null and name != ''">
+                AND LOWER(name) like concat('%', LOWER(#{name}), '%')
+            </if>
+            <if test="price != null">
+                AND price >= #{price}
+            </if>
+            <if test="warehouseId != null">
+                AND warehouse_id = #{warehouseId}
+            </if>
+        </where>
+    </select>
+
+    <update id="update">
+        UPDATE items
+        <set>
+            <if test="price != null">price = #{price},</if>
+            <if test="warehouseId != null">warehouse_id = #{warehouseId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            updated_at = CURRENT_TIMESTAMP
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>
