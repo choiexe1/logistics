@@ -1,12 +1,12 @@
 package blog.devjay.logistics.web.utils;
 
-import blog.devjay.logistics.domain.AbstractPaginable;
+import blog.devjay.logistics.dto.AbstractPaginable;
 
 public class PaginationUtil {
     private static final int MAX_PAGE = 5;
     private static final int PAGE_OFFSET = 1;
     private static final int PAGE_RANGE = MAX_PAGE - 1;
-    
+
     private final AbstractPaginable paginable;
     private final int totalPageCount;
 
