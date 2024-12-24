@@ -19,7 +19,11 @@ public interface WarehouseMapper extends WarehouseRepository {
 
     List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO);
 
+    List<Warehouse> findAll();
+
     int findAllCount(SearchWarehouseDTO searchWarehouseDTO);
+
+    int findAllCount();
 
     void update(Long id, UpdateWarehouseDTO updateWarehouseDTO);
 

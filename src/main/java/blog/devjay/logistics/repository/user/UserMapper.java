@@ -15,10 +15,14 @@ public interface UserMapper extends UserRepository {
 
     Optional<User> findByUsername(String username);
 
+    List<User> findAll();
+
     List<User> findAll(SearchUserDTO searchUserDTO);
 
-    int findAllCount(SearchUserDTO searchUserDTO);
+    int findAllCount();
 
+    int findAllCount(SearchUserDTO searchUserDTO);
+    
     void update(Long id, UpdateUserDTO updateUserDTO);
 
     void updateRecentLoginAt(Long userId);
