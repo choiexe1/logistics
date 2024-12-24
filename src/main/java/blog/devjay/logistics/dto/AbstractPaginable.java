@@ -1,4 +1,4 @@
-package blog.devjay.logistics.domain;
+package blog.devjay.logistics.dto;
 
 import lombok.Data;
 
