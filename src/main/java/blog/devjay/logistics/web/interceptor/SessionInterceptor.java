@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 public class SessionInterceptor implements HandlerInterceptor {
     private final static String[] ADMIN_AUTH_LIST = {"/admin"};
+    private final static String[] EDITOR_AUTH_LIST = {"/warehouse"};
 
 
     @Override
@@ -39,9 +40,16 @@ public class SessionInterceptor implements HandlerInterceptor {
         request.setAttribute("user", user);
         String requestURI = request.getRequestURI();
 
+        boolean isEditorPath = PatternMatchUtils.simpleMatch(EDITOR_AUTH_LIST, requestURI);
         boolean isAdminPath = PatternMatchUtils.simpleMatch(ADMIN_AUTH_LIST, requestURI);
+        Role role = user.getRole();
 
-        if (isAdminPath && user.getRole() != Role.ADMIN) {
+        if (isAdminPath && role != Role.ADMIN) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+            return false;
+        }
+
+        if (isEditorPath && role == Role.USER) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
             return false;
         }

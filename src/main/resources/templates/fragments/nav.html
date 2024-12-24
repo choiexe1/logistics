@@ -9,7 +9,8 @@
                th:class="${uri == '/s' ? 'selected' : ''}"
                th:text="#{title.logistics}">물류 관리</a>
         </li>
-        <li><a th:href="@{/warehouse}"
+        <li th:if="${isEditor || isAdmin}">
+            <a th:href="@{/warehouse}"
                th:class="${uri == '/warehouse' ? 'selected' : ''}"
                th:text="#{title.warehouse}">창고 관리</a>
         </li>
