@@ -29,14 +29,10 @@ public class InitData {
     }
 
     void initUsers() {
-        User user = new User("user", BcryptUtils.hashPw("user"));
-        User editor = new User("editor", BcryptUtils.hashPw("editor"));
-        User admin = new User("admin", BcryptUtils.hashPw("admin"));
-        User test = new User("test", BcryptUtils.hashPw("test"));
-
-        editor.setRole(Role.EDITOR);
-        admin.setRole(Role.ADMIN);
-        test.setRole(Role.ADMIN);
+        User user = new User("user", BcryptUtils.hashPw("user"), Role.USER);
+        User editor = new User("editor", BcryptUtils.hashPw("editor"), Role.EDITOR);
+        User admin = new User("admin", BcryptUtils.hashPw("admin"), Role.ADMIN);
+        User test = new User("test", BcryptUtils.hashPw("test"), Role.ADMIN);
 
         userRepository.save(user);
         userRepository.save(editor);
@@ -61,11 +57,17 @@ public class InitData {
     }
 
     void initWarehouses() {
-        Warehouse warehouse1 = new Warehouse("Warehouse 1", "Seoul");
-        Warehouse warehouse2 = new Warehouse("Warehouse 2", "Paju");
+        List<Warehouse> warehouses = new ArrayList<>();
 
-        warehouseRepository.save(warehouse1);
-        warehouseRepository.save(warehouse2);
+        for (int i = 1; i <= 10; i++) {
+            Warehouse warehouse = new Warehouse("Warehouse " + i,
+                    i % 2 == 0 ? "Seoul" : "Paju");
+            warehouses.add(warehouse);
+        }
+
+        for (Warehouse warehouse : warehouses) {
+            warehouseRepository.save(warehouse);
+        }
     }
 
     void initItems() {
