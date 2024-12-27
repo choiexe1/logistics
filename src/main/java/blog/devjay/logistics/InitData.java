@@ -59,7 +59,7 @@ public class InitData {
     void initWarehouses() {
         List<Warehouse> warehouses = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 2; i++) {
             Warehouse warehouse = new Warehouse("Warehouse " + i,
                     i % 2 == 0 ? "Seoul" : "Paju");
             warehouses.add(warehouse);
