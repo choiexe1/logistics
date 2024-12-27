@@ -74,7 +74,7 @@ public class InitData {
         List<Item> items = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            Item item = new Item("item" + i, i * 1000, 10);
+            Item item = new Item(i % 2 == 0 ? 1L : 2L, "item" + i, i * 1000, 10);
             items.add(item);
         }
 

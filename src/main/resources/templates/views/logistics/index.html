@@ -10,7 +10,21 @@
             <div class="flex items-center">
                 <form th:object="${search}" th:action method="GET"
                       class="flex items-center space-x-4 mb-6">
+
                     <div class="flex items-center space-x-4 mb-6">
+                        <div class="flex flex-col flex-grow">
+                            <label th:for="orderBy" class="text-white font-semibold mb-2"
+                            >창고로 검색</label>
+                            <select th:field="*{warehouseId}"
+                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                                <option value="" selected>창고 선택</option>
+                                <option th:each="warehouse : ${warehouses}"
+                                        th:value="${warehouse.id}"
+                                        th:text="${warehouse.name}">창고
+                                </option>
+                            </select>
+                        </div>
+
                         <div class="flex flex-col flex-grow">
                             <label th:for="name" class="text-white font-semibold mb-2"
                                    th:text="#{label.name}">이름</label>
@@ -20,9 +34,19 @@
 
                         <div class="flex flex-col flex-grow">
                             <label th:for="price" class="text-white font-semibold mb-2"
-                                   th:text="#{label.price}">이름</label>
+                                   th:text="#{label.min.price}">최소 가격</label>
                             <input type="text" th:placeholder="#{placeholder.search}"
                                    th:field="*{price}" class="p-2">
+                        </div>
+
+                        <div class="flex flex-col flex-grow">
+                            <label th:for="orderBy" class="text-white font-semibold mb-2"
+                                   th:text="#{label.item.price.orderby}">가격 기준 정렬</label>
+                            <select th:field="*{orderBy}"
+                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                                <option value="ASC" selected th:text="#{label.item.price.order.lower}">가격 낮은 순</option>
+                                <option value="DESC" th:text="#{label.item.price.order.higher}">가격 높은 순</option>
+                            </select>
                         </div>
 
                         <div class="flex flex-col flex-grow">
@@ -57,7 +81,10 @@
                         th:text="#{label.name}">이름
                     </th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.location}">위치
+                        th:text="#{label.price}">가격
+                    </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{label.quantity}">수량
                     </th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{label.createdAt}"
@@ -67,9 +94,9 @@
                         th:text="#{label.updatedAt}">수정일
                     </th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.viewWarehouse}">창고 확인
+                        th:text="#{label.warehouse}">창고
                     </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">창고 삭제
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">품목 삭제
                     </th>
                 </tr>
                 </thead>
@@ -79,7 +106,9 @@
                         class="py-2 px-4 hover:text-blue"></td>
                     <td th:data-name="${item.name}" th:text="${item.name}"
                         class="py-2 px-4 hover:text-blue"></td>
-                    <td th:data-name="${item.price}" th:text="${item.price}"
+                    <td th:data-name="${item.price}" th:text="${#numbers.formatInteger(item.price, 0, 'COMMA')}"
+                        class="py-2 px-4 hover:text-blue"></td>
+                    <td th:data-name="${item.quantity}" th:text="${#numbers.formatInteger(item.quantity, 0, 'COMMA')}"
                         class="py-2 px-4 hover:text-blue"></td>
                     <td class="py-2 px-4 hover:text-blue"
                         th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
@@ -90,6 +119,8 @@
                             없음
                         </td>
                     </th:block>
+                    <td th:text="${item.warehouseId == null ? '없음' : item.warehouseId}"
+                        class="py-2 px-4 hover:text-blue"></td>
                     <td class="py-2 px-4">
                         <form
                                 th:action="@{/logistics/delete/{id}(id=${item.id})}"
@@ -113,7 +144,7 @@
                     <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
                        th:text="${page}"
                        th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price})}"
-                       th:class="${page == searchForm.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
+                       th:class="${page == search.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
                     </a>
 
                     <a th:if="${endPage < totalPages}"

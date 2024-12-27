@@ -1,7 +1,9 @@
 package blog.devjay.logistics.web.utils;
 
 import blog.devjay.logistics.dto.AbstractPaginable;
+import lombok.Data;
 
+@Data
 public class PaginationUtil {
     private static final int MAX_PAGE = 5;
     private static final int PAGE_OFFSET = 1;

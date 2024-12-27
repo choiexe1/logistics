@@ -27,6 +27,23 @@
                 AND warehouse_id = #{warehouseId}
             </if>
         </where>
+        ORDER BY price ${orderBy}
+        LIMIT #{size} OFFSET #{size} * (#{page} - 1)
+    </select>
+
+    <select id="findAllCount" resultType="int">
+        SELECT COUNT(*) FROM items
+        <where>
+            <if test="name != null and name != ''">
+                AND LOWER(name) like concat('%', LOWER(#{name}), '%')
+            </if>
+            <if test="price != null">
+                AND price >= #{price}
+            </if>
+            <if test="warehouseId != null">
+                AND warehouse_id = #{warehouseId}
+            </if>
+        </where>
     </select>
 
     <update id="update">

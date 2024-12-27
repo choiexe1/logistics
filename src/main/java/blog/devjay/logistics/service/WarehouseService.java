@@ -36,6 +36,10 @@ public class WarehouseService {
         return mapper.findAll(searchWarehouseDTO);
     }
 
+    public List<Warehouse> findAll() {
+        return mapper.findAll();
+    }
+
     public int findAllCount(SearchWarehouseDTO searchWarehouseDTO) {
         return mapper.findAllCount(searchWarehouseDTO);
     }

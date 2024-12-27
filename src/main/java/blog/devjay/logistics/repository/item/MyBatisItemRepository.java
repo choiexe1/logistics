@@ -40,12 +40,12 @@ public class MyBatisItemRepository implements ItemRepository {
 
     @Override
     public int findAllCount() {
-        return 0;
+        return mapper.findAllCount();
     }
 
     @Override
     public int findAllCount(SearchItemDTO searchItemDTO) {
-        return 0;
+        return mapper.findAllCount(searchItemDTO);
     }
 
     @Override

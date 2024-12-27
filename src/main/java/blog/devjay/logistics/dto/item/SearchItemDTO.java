@@ -10,4 +10,5 @@ public class SearchItemDTO extends AbstractPaginable {
     private Long warehouseId;
     private String name;
     private Integer price;
+    private String orderBy = "ASC";
 }
