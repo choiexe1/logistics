@@ -10,6 +10,7 @@ import blog.devjay.logistics.domain.user.UserStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         User user = (User) session.getAttribute(SESSION_ID);
         UserStatus status = user.getStatus();
 
-        if (!isActivateUser(status)) {
+        if (!isActivateUser(request, response, status)) {
             return false;
         }
 
@@ -56,7 +57,8 @@ public class SessionInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private boolean isActivateUser(UserStatus status) {
+    private boolean isActivateUser(HttpServletRequest request, HttpServletResponse response, UserStatus status)
+            throws IOException {
 
         if (status == UserStatus.SUSPENDED) {
             throw new UserSuspendedException();
@@ -75,11 +77,11 @@ public class SessionInterceptor implements HandlerInterceptor {
         User user = (User) request.getAttribute("user");
 
         if (modelAndView != null) {
-            setRequestAttribute(user, request);
+            setModelAndView(user, request);
         }
     }
 
-    private void setRequestAttribute(User user, HttpServletRequest request) {
+    private void setModelAndView(User user, HttpServletRequest request) {
         request.setAttribute("currentUser", user);
         request.setAttribute("isEditor", user.getRole() == Role.EDITOR);
         request.setAttribute("isAdmin", user.getRole() == Role.ADMIN);

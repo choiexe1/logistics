@@ -1,9 +1,11 @@
 package blog.devjay.logistics;
 
+import blog.devjay.logistics.domain.item.Item;
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.domain.user.UserStatus;
 import blog.devjay.logistics.domain.warehouse.Warehouse;
+import blog.devjay.logistics.repository.item.ItemRepository;
 import blog.devjay.logistics.repository.user.UserRepository;
 import blog.devjay.logistics.repository.warehouse.WarehouseRepository;
 import blog.devjay.logistics.web.utils.BcryptUtils;
@@ -17,8 +19,15 @@ import org.springframework.context.event.EventListener;
 public class InitData {
     private final UserRepository userRepository;
     private final WarehouseRepository warehouseRepository;
+    private final ItemRepository itemRepository;
 
     @EventListener(ApplicationReadyEvent.class)
+    void init() {
+        initUsers();
+        initWarehouses();
+        initItems();
+    }
+
     void initUsers() {
         User user = new User("user", BcryptUtils.hashPw("user"));
         User editor = new User("editor", BcryptUtils.hashPw("editor"));
@@ -51,12 +60,24 @@ public class InitData {
         }
     }
 
-    @EventListener(ApplicationReadyEvent.class)
     void initWarehouses() {
         Warehouse warehouse1 = new Warehouse("Warehouse 1", "Seoul");
         Warehouse warehouse2 = new Warehouse("Warehouse 2", "Paju");
 
         warehouseRepository.save(warehouse1);
         warehouseRepository.save(warehouse2);
+    }
+
+    void initItems() {
+        List<Item> items = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++) {
+            Item item = new Item("item" + i, i * 1000, 10);
+            items.add(item);
+        }
+
+        for (Item item : items) {
+            itemRepository.save(item);
+        }
     }
 }
