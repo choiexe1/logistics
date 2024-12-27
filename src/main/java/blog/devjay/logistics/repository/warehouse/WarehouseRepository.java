@@ -13,7 +13,7 @@ public interface WarehouseRepository {
 
     Optional<Warehouse> findByName(String name);
 
-    Optional<Warehouse> findByLocation(String location);
+    List<Warehouse> findAll();
 
     List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO);
 

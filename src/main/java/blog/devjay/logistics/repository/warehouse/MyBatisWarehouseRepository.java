@@ -38,8 +38,8 @@ public class MyBatisWarehouseRepository implements WarehouseRepository {
     }
 
     @Override
-    public Optional<Warehouse> findByLocation(String location) {
-        return mapper.findByLocation(location);
+    public List<Warehouse> findAll() {
+        return mapper.findAll();
     }
 
     @Override

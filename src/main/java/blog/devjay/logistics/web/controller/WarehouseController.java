@@ -5,6 +5,7 @@ import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.dto.warehouse.CreateWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
+import blog.devjay.logistics.service.ItemService;
 import blog.devjay.logistics.service.WarehouseService;
 import blog.devjay.logistics.web.utils.PaginationUtil;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class WarehouseController {
     private final WarehouseService warehouseService;
+    private final ItemService itemService;
 
     @GetMapping
     public String indexView(Model model, @ModelAttribute("searchForm") SearchWarehouseDTO dto,
@@ -50,6 +52,7 @@ public class WarehouseController {
             dto.setName(warehouse.getName());
             dto.setLocation(warehouse.getLocation());
 
+            model.addAttribute("items", itemService.findItemsByWarehouseId(warehouseId));
             model.addAttribute("warehouse", warehouse);
             model.addAttribute("updateWarehouseDTO", dto);
             return "views/warehouse/info";

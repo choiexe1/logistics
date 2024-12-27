@@ -14,42 +14,47 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class MyBatisItemRepository implements ItemRepository {
-    private final ItemMapper mapper;
+    private final ItemMapper itemMapper;
 
     @Override
     public Long save(Item item) {
-        mapper.save(item);
+        itemMapper.save(item);
 
         return item.getId();
     }
 
     @Override
+    public List<Item> findItemsByWarehouseId(Long warehouseId) {
+        return itemMapper.findItemsByWarehouseId(warehouseId);
+    }
+
+    @Override
     public Optional<Item> findById(Long id) {
-        return mapper.findById(id);
+        return itemMapper.findById(id);
     }
 
     @Override
     public List<Item> findAll() {
-        return new ArrayList<>(mapper.findAll());
+        return new ArrayList<>(itemMapper.findAll());
     }
 
     @Override
     public List<Item> findAll(SearchItemDTO searchItemDTO) {
-        return new ArrayList<>(mapper.findAll(searchItemDTO));
+        return new ArrayList<>(itemMapper.findAll(searchItemDTO));
     }
 
     @Override
     public int findAllCount() {
-        return mapper.findAllCount();
+        return itemMapper.findAllCount();
     }
 
     @Override
     public int findAllCount(SearchItemDTO searchItemDTO) {
-        return mapper.findAllCount(searchItemDTO);
+        return itemMapper.findAllCount(searchItemDTO);
     }
 
     @Override
     public void update(UpdateItemDTO updateItemDTO) {
-        mapper.update(updateItemDTO);
+        itemMapper.update(updateItemDTO);
     }
 }

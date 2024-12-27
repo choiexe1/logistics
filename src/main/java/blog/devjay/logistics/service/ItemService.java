@@ -29,6 +29,10 @@ public class ItemService {
         return itemRepository.findAll(searchItemDTO);
     }
 
+    public List<Item> findItemsByWarehouseId(Long warehouseId) {
+        return itemRepository.findItemsByWarehouseId(warehouseId);
+    }
+
     public int findAllCount(SearchItemDTO searchItemDTO) {
         return itemRepository.findAllCount(searchItemDTO);
     }

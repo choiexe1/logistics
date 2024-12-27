@@ -19,5 +19,7 @@ public interface ItemRepository {
 
     int findAllCount(SearchItemDTO searchItemDTO);
 
+    List<Item> findItemsByWarehouseId(Long warehouseId);
+
     void update(UpdateItemDTO updateItemDTO);
 }

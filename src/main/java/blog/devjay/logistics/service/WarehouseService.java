@@ -4,7 +4,7 @@ import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
-import blog.devjay.logistics.repository.warehouse.WarehouseMapper;
+import blog.devjay.logistics.repository.warehouse.WarehouseRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class WarehouseService {
-    private final WarehouseMapper mapper;
+    private final WarehouseRepository warehouseRepository;
 
     public Long create(Warehouse warehouse) {
-        return mapper.save(warehouse);
+        return warehouseRepository.save(warehouse);
     }
 
     public Warehouse findById(Long id) {
-        Optional<Warehouse> optional = mapper.findById(id);
+        Optional<Warehouse> optional = warehouseRepository.findById(id);
 
         if (optional.isEmpty()) {
             throw new NotFoundException("창고를 찾을 수 없습니다.");
@@ -31,24 +31,23 @@ public class WarehouseService {
         return optional.get();
     }
 
-
     public List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO) {
-        return mapper.findAll(searchWarehouseDTO);
+        return warehouseRepository.findAll(searchWarehouseDTO);
     }
 
     public List<Warehouse> findAll() {
-        return mapper.findAll();
+        return warehouseRepository.findAll();
     }
 
     public int findAllCount(SearchWarehouseDTO searchWarehouseDTO) {
-        return mapper.findAllCount(searchWarehouseDTO);
+        return warehouseRepository.findAllCount(searchWarehouseDTO);
     }
 
     public void update(Long id, UpdateWarehouseDTO updateWarehouseDTO) {
-        mapper.update(id, updateWarehouseDTO);
+        warehouseRepository.update(id, updateWarehouseDTO);
     }
 
     public void delete(Long id) {
-        mapper.delete(id);
+        warehouseRepository.delete(id);
     }
 }

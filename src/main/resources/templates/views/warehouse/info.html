@@ -6,7 +6,8 @@
 <body>
     <nav th:replace="~{fragments/nav :: nav (${warehouse.name})}"></nav>
     <main class="container mx-auto my-4">
-        <form th:method="POST" th:action="@{/warehouse/update/{id}(id=${warehouse.id})}" class="flex flex-col gap-8">
+        <form th:method="POST" th:action="@{/warehouse/update/{id}(id=${warehouse.id})}"
+              class="flex flex-col gap-8 mb-4">
             <input type="hidden" th:field="${warehouse.id}">
             <div class="flex gap-4" th:object="${updateWarehouseDTO}">
                 <div>
@@ -46,6 +47,81 @@
                 <button type="submit" class="btn" th:text="#{button.edit}">수정</button>
             </div>
         </form>
+
+        <table th:if="${items.size() == 0}" th:text="#{none.item}">
+            없음
+        </table>
+
+        <table th:if="${items.size() > 0}" class="min-w-full border-collapse table-fixed border">
+            <thead>
+            <tr>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">#</th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.name}">이름
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.price}">가격
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.quantity}">수량
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.createdAt}"
+                >생성일
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.updatedAt}">수정일
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">품목 삭제
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}" class="border-t border-gray hover:bg-gray">
+                <td th:data-warehouse-id="${item.id}" th:text="${item.id}"
+                    class="py-2 px-4 hover:text-blue"></td>
+                <td th:data-name="${item.name}" th:text="${item.name}"
+                    class="py-2 px-4 hover:text-blue"></td>
+                <td th:data-name="${item.price}" th:text="${#numbers.formatInteger(item.price, 0, 'COMMA')}"
+                    class="py-2 px-4 hover:text-blue"></td>
+                <td th:data-name="${item.quantity}" th:text="${#numbers.formatInteger(item.quantity, 0, 'COMMA')}"
+                    class="py-2 px-4 hover:text-blue"></td>
+                <td class="py-2 px-4 hover:text-blue"
+                    th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <th:block>
+                    <td class="py-2 px-4 hover:text-blue" th:if="${item.updatedAt != null}"
+                        th:text="${#temporals.format(item.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td class="py-2 px-4 hover:text-blue" th:if="${item.updatedAt == null}" th:text="#{none}">
+                        없음
+                    </td>
+                </th:block>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
+            <div class="flex space-x-2">
+                <a th:if="${startPage > 1}"
+                   th:href="@{/logistics(page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price})}"
+                   class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
+                   th:text="#{button.previous}">
+                    이전
+                </a>
+
+                <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                   th:text="${page}"
+                   th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price})}"
+                   th:class="${page == search.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
+                </a>
+
+                <a th:if="${endPage < totalPages}"
+                   th:href="@{/logistics(page=${endPage + 1}, size=${search.size}, name=${search.name} price=${search.price})}"
+                   class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
+                   th:text="#{button.next}">
+                    다음
+                </a>
+            </div>
+        </div>
     </main>
 </body>
 </html>

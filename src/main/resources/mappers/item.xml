@@ -58,4 +58,10 @@
         WHERE id = #{id}
     </update>
 
+    <select id="findItemsByWarehouseId" resultType="Item">
+        SELECT i.*
+        FROM items i
+        INNER JOIN warehouses w ON i.warehouse_id = w.id
+        AND w.id = #{warehouseId}
+    </select>
 </mapper>
