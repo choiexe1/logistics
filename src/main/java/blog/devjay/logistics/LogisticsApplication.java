@@ -18,5 +18,4 @@ public class LogisticsApplication {
     public InitData initData(UserRepository userRepository, WarehouseRepository warehouseRepository) {
         return new InitData(userRepository, warehouseRepository);
     }
-    
 }

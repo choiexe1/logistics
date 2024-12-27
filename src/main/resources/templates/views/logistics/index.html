@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head(~{::title})}">
-    <title th:text="#{title.warehouse.list}"></title>
+    <title th:text="#{title.logistics.list}"></title>
 </head>
 <body>
-    <nav th:replace="~{fragments/nav :: nav (#{title.warehouse.list})}"></nav>
+    <nav th:replace="~{fragments/nav :: nav (#{title.logistics.list})}"></nav>
     <main class="container mx-auto my-4">
         <div class="overflow-x-auto">
             <div class="flex items-center">
-                <form th:object="${searchForm}" th:action method="GET"
+                <form th:object="${search}" th:action method="GET"
                       class="flex items-center space-x-4 mb-6">
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="flex flex-col flex-grow">
@@ -19,9 +19,10 @@
                         </div>
 
                         <div class="flex flex-col flex-grow">
-                            <label th:for="location" class="text-white font-semibold mb-2" th:text="#{label.location}">이름</label>
+                            <label th:for="price" class="text-white font-semibold mb-2"
+                                   th:text="#{label.price}">이름</label>
                             <input type="text" th:placeholder="#{placeholder.search}"
-                                   th:field="*{location}" class="p-2">
+                                   th:field="*{price}" class="p-2">
                         </div>
 
                         <div class="flex flex-col flex-grow">
@@ -73,31 +74,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="warehouse : ${warehouses}" class="border-t border-gray hover:bg-gray">
-                    <td th:data-warehouse-id="${warehouse.id}" th:text="${warehouse.id}"
+                <tr th:each="item : ${items}" class="border-t border-gray hover:bg-gray">
+                    <td th:data-warehouse-id="${item.id}" th:text="${item.id}"
                         class="py-2 px-4 hover:text-blue"></td>
-                    <td th:data-name="${warehouse.name}" th:text="${warehouse.name}"
+                    <td th:data-name="${item.name}" th:text="${item.name}"
                         class="py-2 px-4 hover:text-blue"></td>
-                    <td th:data-name="${warehouse.location}" th:text="${warehouse.location}"
+                    <td th:data-name="${item.price}" th:text="${item.price}"
                         class="py-2 px-4 hover:text-blue"></td>
                     <td class="py-2 px-4 hover:text-blue"
-                        th:text="${#temporals.format(warehouse.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                        th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                     <th:block>
-                        <td class="py-2 px-4 hover:text-blue" th:if="${warehouse.updatedAt != null}"
-                            th:text="${#temporals.format(warehouse.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td class="py-2 px-4 hover:text-blue" th:if="${warehouse.updatedAt == null}" th:text="#{none}">
+                        <td class="py-2 px-4 hover:text-blue" th:if="${item.updatedAt != null}"
+                            th:text="${#temporals.format(item.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td class="py-2 px-4 hover:text-blue" th:if="${item.updatedAt == null}" th:text="#{none}">
                             없음
                         </td>
                     </th:block>
-                    <td class="py-2 px-4 flex">
-                        <a class="btn" th:href="@{/warehouse/{id}(id=${warehouse.id})}"
-                           th:text="#{label.viewWarehouse}">창고 확인</a>
-                    </td>
                     <td class="py-2 px-4">
                         <form
-                                th:action="@{/warehouse/delete/{id}(id=${warehouse.id})}"
+                                th:action="@{/logistics/delete/{id}(id=${item.id})}"
                                 method="POST">
-                            <button type="submit" class="btn" onclick="return confirm('창고를 삭제 하시겠습니까?')">창고 삭제</button>
+                            <button type="submit" class="btn" onclick="return confirm('품목을 삭제 하시겠습니까?')">품목 삭제</button>
                         </form>
                     </td>
                 </tr>
@@ -107,7 +104,7 @@
             <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
                 <div class="flex space-x-2">
                     <a th:if="${startPage > 1}"
-                       th:href="@{/warehouse(page=${startPage - 5}, size=${searchForm.size}, name=${searchForm.name}, location=${searchForm.location})}"
+                       th:href="@{/logistics(page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price})}"
                        class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                        th:text="#{button.previous}">
                         이전
@@ -115,12 +112,12 @@
 
                     <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
                        th:text="${page}"
-                       th:href="@{/warehouse(page=${page}, size=${searchForm.size}, name=${searchForm.name}, location=${searchForm.location})}"
+                       th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price})}"
                        th:class="${page == searchForm.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
                     </a>
 
                     <a th:if="${endPage < totalPages}"
-                       th:href="@{/warehouse(page=${endPage + 1}, size=${searchForm.size}, name=${searchForm.name}, location=${searchForm.location})}"
+                       th:href="@{/logistics(page=${endPage + 1}, size=${search.size}, name=${search.name} price=${search.price})}"
                        class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                        th:text="#{button.next}">
                         다음

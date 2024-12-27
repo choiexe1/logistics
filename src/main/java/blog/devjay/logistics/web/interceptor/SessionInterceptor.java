@@ -10,7 +10,6 @@ import blog.devjay.logistics.domain.user.UserStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,7 +32,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         User user = (User) session.getAttribute(SESSION_ID);
         UserStatus status = user.getStatus();
 
-        if (!isActivateUser(request, response, status)) {
+        if (!isActivateUser(status)) {
             return false;
         }
 
@@ -57,8 +56,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private boolean isActivateUser(HttpServletRequest request, HttpServletResponse response, UserStatus status)
-            throws IOException {
+    private boolean isActivateUser(UserStatus status) {
 
         if (status == UserStatus.SUSPENDED) {
             throw new UserSuspendedException();
@@ -77,14 +75,14 @@ public class SessionInterceptor implements HandlerInterceptor {
         User user = (User) request.getAttribute("user");
 
         if (modelAndView != null) {
-            setModelAndView(user, request, modelAndView);
+            setRequestAttribute(user, request);
         }
     }
 
-    private void setModelAndView(User user, HttpServletRequest request, ModelAndView modelAndView) {
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("isEditor", user.getRole() == Role.EDITOR);
-        modelAndView.addObject("isAdmin", user.getRole() == Role.ADMIN);
-        modelAndView.addObject("uri", request.getRequestURI());
+    private void setRequestAttribute(User user, HttpServletRequest request) {
+        request.setAttribute("currentUser", user);
+        request.setAttribute("isEditor", user.getRole() == Role.EDITOR);
+        request.setAttribute("isAdmin", user.getRole() == Role.ADMIN);
+        request.setAttribute("uri", request.getRequestURI());
     }
 }
