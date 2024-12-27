@@ -13,11 +13,12 @@
 
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="flex flex-col flex-grow">
-                            <label th:for="orderBy" class="text-white font-semibold mb-2"
+                            <label th:for="warehouseId" class="text-white font-semibold mb-2"
+                                   th:text="#{select.item.warehouse}"
                             >창고로 검색</label>
                             <select th:field="*{warehouseId}"
                                     class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
-                                <option value="" selected>창고 선택</option>
+                                <option value="" th:text="#{option.warehouse}" selected>창고 선택</option>
                                 <option th:each="warehouse : ${warehouses}"
                                         th:value="${warehouse.id}"
                                         th:text="${warehouse.name}">창고
@@ -96,7 +97,8 @@
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{label.warehouse}">창고
                     </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">품목 삭제
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{button.delete}">품목 삭제
                     </th>
                 </tr>
                 </thead>
@@ -125,7 +127,9 @@
                         <form
                                 th:action="@{/logistics/delete/{id}(id=${item.id})}"
                                 method="POST">
-                            <button type="submit" class="btn" onclick="return confirm('품목을 삭제 하시겠습니까?')">품목 삭제</button>
+                            <button type="submit" class="btn" onclick="return confirm('품목을 삭제 하시겠습니까?')"
+                                    th:text="#{button.delete}" }>품목 삭제
+                            </button>
                         </form>
                     </td>
                 </tr>

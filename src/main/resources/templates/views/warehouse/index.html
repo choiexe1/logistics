@@ -68,7 +68,9 @@
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{label.viewWarehouse}">창고 확인
                     </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">창고 삭제
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{button.delete}">
+                        창고 삭제
                     </th>
                 </tr>
                 </thead>
@@ -97,7 +99,9 @@
                         <form
                                 th:action="@{/warehouse/delete/{id}(id=${warehouse.id})}"
                                 method="POST">
-                            <button type="submit" class="btn" onclick="return confirm('창고를 삭제 하시겠습니까?')">창고 삭제</button>
+                            <button type="submit" class="btn" onclick="return confirm('창고를 삭제 하시겠습니까?')"
+                                    th:text="#{button.delete}">창고 삭제
+                            </button>
                         </form>
                     </td>
                 </tr>
