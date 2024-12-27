@@ -11,8 +11,8 @@ public class CreateItemDTO {
     private String name;
 
     @Positive
-    private int price;
+    private Integer price;
 
     @PositiveOrZero
-    private int quantity;
+    private Integer quantity;
 }

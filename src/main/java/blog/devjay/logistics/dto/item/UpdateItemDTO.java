@@ -7,6 +7,6 @@ public class UpdateItemDTO {
     private Long id;
     private Long warehouseId;
     private String name;
-    private int price;
-    private int quantity;
+    private Integer price;
+    private Integer quantity;
 }

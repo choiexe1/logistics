@@ -9,5 +9,5 @@ import lombok.Setter;
 public class SearchItemDTO extends AbstractPaginable {
     private Long warehouseId;
     private String name;
-    private int price;
+    private Integer price;
 }
