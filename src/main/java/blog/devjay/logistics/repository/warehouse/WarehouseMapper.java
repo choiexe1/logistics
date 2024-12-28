@@ -9,23 +9,24 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface WarehouseMapper extends WarehouseRepository {
+    @Override
     Long save(Warehouse warehouse);
 
+    @Override
     Optional<Warehouse> findById(Long id);
 
-    Optional<Warehouse> findByName(String name);
-
-    Optional<Warehouse> findByLocation(String location);
-
-    List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO);
-
+    @Override
     List<Warehouse> findAll();
 
+    @Override
+    List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO);
+
+    @Override
     int findAllCount(SearchWarehouseDTO searchWarehouseDTO);
 
-    int findAllCount();
-
+    @Override
     void update(Long id, UpdateWarehouseDTO updateWarehouseDTO);
 
+    @Override
     void delete(Long id);
 }

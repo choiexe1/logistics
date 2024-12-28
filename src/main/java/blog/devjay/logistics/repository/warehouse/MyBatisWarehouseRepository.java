@@ -14,46 +14,41 @@ import org.springframework.stereotype.Repository;
 @Primary
 @RequiredArgsConstructor
 public class MyBatisWarehouseRepository implements WarehouseRepository {
-    private final WarehouseMapper mapper;
+    private final WarehouseMapper warehouseMapper;
 
     @Override
     public Long save(Warehouse warehouse) {
-        mapper.save(warehouse);
+        warehouseMapper.save(warehouse);
         return warehouse.getId();
     }
 
     @Override
     public Optional<Warehouse> findById(Long id) {
-        return mapper.findById(id);
+        return warehouseMapper.findById(id);
     }
 
     @Override
     public int findAllCount(SearchWarehouseDTO searchWarehouseDTO) {
-        return mapper.findAllCount(searchWarehouseDTO);
-    }
-
-    @Override
-    public Optional<Warehouse> findByName(String name) {
-        return mapper.findByName(name);
+        return warehouseMapper.findAllCount(searchWarehouseDTO);
     }
 
     @Override
     public List<Warehouse> findAll() {
-        return mapper.findAll();
+        return warehouseMapper.findAll();
     }
 
     @Override
     public List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO) {
-        return new ArrayList<>(mapper.findAll(searchWarehouseDTO));
+        return new ArrayList<>(warehouseMapper.findAll(searchWarehouseDTO));
     }
 
     @Override
     public void update(Long id, UpdateWarehouseDTO updateWarehouseDTO) {
-        mapper.update(id, updateWarehouseDTO);
+        warehouseMapper.update(id, updateWarehouseDTO);
     }
 
     @Override
     public void delete(Long id) {
-        mapper.delete(id);
+        warehouseMapper.delete(id);
     }
 }
