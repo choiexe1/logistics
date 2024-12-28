@@ -98,6 +98,9 @@
                         th:text="#{label.warehouse}">창고
                     </th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{button.view}">품목 확인
+                    </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{button.delete}">품목 삭제
                     </th>
                 </tr>
@@ -124,10 +127,15 @@
                     <td th:text="${item.warehouseId == null ? '없음' : item.warehouseId}"
                         class="py-2 px-4 hover:text-blue"></td>
                     <td class="py-2 px-4">
+                        <a th:href="@{/logistics/{id}(id=${item.id})}" class="btn"
+                           th:text="#{button.view}" }>품목 확인
+                        </a>
+                    </td>
+                    <td class="py-2 px-4">
                         <form
                                 th:action="@{/logistics/delete/{id}(id=${item.id})}"
                                 method="POST">
-                            <button type="submit" class="btn" onclick="return confirm('품목을 삭제 하시겠습니까?')"
+                            <button type="submit" class="btn" th:onclick="return confirm('품목을 삭제 하시겠습니까?')"
                                     th:text="#{button.delete}" }>품목 삭제
                             </button>
                         </form>

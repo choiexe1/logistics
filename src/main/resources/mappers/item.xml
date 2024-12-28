@@ -49,10 +49,10 @@
     <update id="update">
         UPDATE items
         <set>
-            <if test="price != null">price = #{price},</if>
-            <if test="warehouseId != null">warehouse_id = #{warehouseId},</if>
-            <if test="name != null">name = #{name},</if>
-            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="updateItemDTO.price != null">price = #{updateItemDTO.price},</if>
+            <if test="updateItemDTO.warehouseId != null">warehouse_id = #{updateItemDTO.warehouseId},</if>
+            <if test="updateItemDTO.name != null">name = #{updateItemDTO.name},</if>
+            <if test="updateItemDTO.quantity != null">quantity = #{updateItemDTO.quantity},</if>
             updated_at = CURRENT_TIMESTAMP
         </set>
         WHERE id = #{id}
@@ -64,4 +64,10 @@
         INNER JOIN warehouses w ON i.warehouse_id = w.id
         AND w.id = #{warehouseId}
     </select>
+
+    <delete id="delete">
+        delete
+        from items
+        where id = #{id}
+    </delete>
 </mapper>
