@@ -9,21 +9,30 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper extends UserRepository {
-    Long save(User user);
-
-    Optional<User> findById(Long id);
-
+    @Override
     Optional<User> findByUsername(String username);
 
+    @Override
+    void updateRecentLoginAt(Long userId);
+
+    @Override
+    Long save(User user);
+
+    @Override
+    Optional<User> findById(Long id);
+
+    @Override
     List<User> findAll();
 
+    @Override
     List<User> findAll(SearchUserDTO searchUserDTO);
 
-    int findAllCount();
-
+    @Override
     int findAllCount(SearchUserDTO searchUserDTO);
-    
+
+    @Override
     void update(Long id, UpdateUserDTO updateUserDTO);
 
-    void updateRecentLoginAt(Long userId);
+    @Override
+    void delete(Long id);
 }

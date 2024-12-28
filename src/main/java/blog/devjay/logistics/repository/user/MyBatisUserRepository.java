@@ -30,6 +30,11 @@ public class MyBatisUserRepository implements UserRepository {
     }
 
     @Override
+    public List<User> findAll() {
+        return mapper.findAll();
+    }
+
+    @Override
     public Optional<User> findByUsername(String username) {
         return mapper.findByUsername(username);
     }
@@ -47,6 +52,11 @@ public class MyBatisUserRepository implements UserRepository {
     @Override
     public void update(Long id, UpdateUserDTO updateUserDTO) {
         mapper.update(id, updateUserDTO);
+    }
+
+    @Override
+    public void delete(Long id) {
+        mapper.delete(id);
     }
 
     @Override
