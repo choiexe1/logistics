@@ -16,13 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class UserService {
+public class UserService implements IService<User, Long, SearchUserDTO, UpdateUserDTO> {
     private final UserRepository userRepository;
 
-    public Long register(User user) {
+    @Override
+    public Long create(User user) {
         return userRepository.save(user);
     }
 
+    @Override
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
 
@@ -33,10 +35,21 @@ public class UserService {
         throw new NotFoundException("유저를 찾을 수 없습니다.");
     }
 
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.delete(id);
+    }
+
+    @Override
     public List<User> findAll(SearchUserDTO searchUserDTO) {
         return userRepository.findAll(searchUserDTO);
     }
-
+    
     public User findByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
 
@@ -47,11 +60,13 @@ public class UserService {
         throw new NotFoundException("유저를 찾을 수 없습니다.");
     }
 
+    @Override
     public int findAllCount(SearchUserDTO searchUserDTO) {
         return userRepository.findAllCount(searchUserDTO);
     }
 
-    public void updateUser(Long id, UpdateUserDTO updateUserDTO) {
+    @Override
+    public void update(Long id, UpdateUserDTO updateUserDTO) {
         userRepository.update(id, updateUserDTO);
     }
 

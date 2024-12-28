@@ -14,13 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class WarehouseService {
+public class WarehouseService implements IService<Warehouse, Long, SearchWarehouseDTO, UpdateWarehouseDTO> {
     private final WarehouseRepository warehouseRepository;
 
+    @Override
     public Long create(Warehouse warehouse) {
         return warehouseRepository.save(warehouse);
     }
 
+    @Override
     public Warehouse findById(Long id) {
         Optional<Warehouse> optional = warehouseRepository.findById(id);
 
@@ -31,22 +33,27 @@ public class WarehouseService {
         return optional.get();
     }
 
+    @Override
     public List<Warehouse> findAll(SearchWarehouseDTO searchWarehouseDTO) {
         return warehouseRepository.findAll(searchWarehouseDTO);
     }
 
+    @Override
     public List<Warehouse> findAll() {
         return warehouseRepository.findAll();
     }
 
+    @Override
     public int findAllCount(SearchWarehouseDTO searchWarehouseDTO) {
         return warehouseRepository.findAllCount(searchWarehouseDTO);
     }
 
+    @Override
     public void update(Long id, UpdateWarehouseDTO updateWarehouseDTO) {
         warehouseRepository.update(id, updateWarehouseDTO);
     }
 
+    @Override
     public void delete(Long id) {
         warehouseRepository.delete(id);
     }

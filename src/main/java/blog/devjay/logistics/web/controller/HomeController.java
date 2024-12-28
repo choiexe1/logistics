@@ -96,7 +96,7 @@ public class HomeController {
         User user = new User(form.getUsername(), BcryptUtils.hashPw(form.getPassword()));
 
         try {
-            userService.register(user);
+            userService.create(user);
         } catch (DuplicateKeyException e) {
             bindingResult.rejectValue("username", "user.username.exist");
             log.warn("회원가입 실패: {}", e.getMessage());
