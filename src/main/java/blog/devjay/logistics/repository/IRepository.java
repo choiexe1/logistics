@@ -3,10 +3,10 @@ package blog.devjay.logistics.repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface IRepository<T, ID, SearchDTO, UpdateDTO> {
-    ID save(T t);
+public interface IRepository<T, IDType, SearchDTO, UpdateDTO> {
+    IDType save(T t);
 
-    Optional<T> findById(ID id);
+    Optional<T> findById(IDType id);
 
     List<T> findAll();
 
@@ -14,7 +14,7 @@ public interface IRepository<T, ID, SearchDTO, UpdateDTO> {
 
     int findAllCount(SearchDTO searchDTO);
 
-    void update(ID id, UpdateDTO updateDTO);
+    void update(IDType id, UpdateDTO updateDTO);
 
-    void delete(ID id);
+    void delete(IDType id);
 }
