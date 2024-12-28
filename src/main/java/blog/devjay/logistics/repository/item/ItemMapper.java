@@ -10,6 +10,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ItemMapper extends ItemRepository {
     @Override
+    List<Item> findItemsByWarehouseId(Long warehouseId);
+
+    @Override
     Long save(Item item);
 
     @Override
@@ -22,11 +25,11 @@ public interface ItemMapper extends ItemRepository {
     List<Item> findAll(SearchItemDTO searchItemDTO);
 
     @Override
-    int findAllCount();
-
-    @Override
     int findAllCount(SearchItemDTO searchItemDTO);
 
     @Override
-    void update(UpdateItemDTO updateItemDTO);
+    void update(Long id, UpdateItemDTO updateItemDTO);
+
+    @Override
+    void delete(Long id);
 }

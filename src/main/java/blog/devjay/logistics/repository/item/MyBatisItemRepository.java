@@ -17,6 +17,16 @@ public class MyBatisItemRepository implements ItemRepository {
     private final ItemMapper itemMapper;
 
     @Override
+    public void update(Long id, UpdateItemDTO updateItemDTO) {
+        itemMapper.update(id, updateItemDTO);
+    }
+
+    @Override
+    public void delete(Long id) {
+        itemMapper.delete(id);
+    }
+
+    @Override
     public Long save(Item item) {
         itemMapper.save(item);
 
@@ -44,17 +54,8 @@ public class MyBatisItemRepository implements ItemRepository {
     }
 
     @Override
-    public int findAllCount() {
-        return itemMapper.findAllCount();
-    }
-
-    @Override
     public int findAllCount(SearchItemDTO searchItemDTO) {
         return itemMapper.findAllCount(searchItemDTO);
     }
 
-    @Override
-    public void update(UpdateItemDTO updateItemDTO) {
-        itemMapper.update(updateItemDTO);
-    }
 }
