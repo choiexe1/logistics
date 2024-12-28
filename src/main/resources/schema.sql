@@ -32,5 +32,7 @@ CREATE TABLE items (
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                        updated_at TIMESTAMP DEFAULT NULL,
                        PRIMARY KEY (id),
-                       CONSTRAINT fk_warehouse FOREIGN KEY (warehouse_id) REFERENCES warehouses(id)
+                       CONSTRAINT fk_warehouse FOREIGN KEY (warehouse_id)
+                                                  REFERENCES warehouses(id)
+                                                  ON DELETE CASCADE
 );
