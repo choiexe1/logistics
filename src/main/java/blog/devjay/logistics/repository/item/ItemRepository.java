@@ -7,5 +7,5 @@ import blog.devjay.logistics.repository.IRepository;
 import java.util.List;
 
 public interface ItemRepository extends IRepository<Item, Long, SearchItemDTO, UpdateItemDTO> {
-    List<Item> findItemsByWarehouseId(Long warehouseId);
+    List<Item> findItemsByWarehouseId(Long warehouseId, SearchItemDTO searchItemDTO);
 }

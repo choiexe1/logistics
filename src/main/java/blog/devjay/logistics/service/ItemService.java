@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 public class ItemService implements IService<Item, Long, SearchItemDTO, UpdateItemDTO> {
     private final ItemRepository itemRepository;
 
-    public List<Item> findItemsByWarehouseId(Long warehouseId) {
-        return itemRepository.findItemsByWarehouseId(warehouseId);
+    public List<Item> findItemsByWarehouseId(Long warehouseId, SearchItemDTO searchItemDTO) {
+        return itemRepository.findItemsByWarehouseId(warehouseId, searchItemDTO);
     }
 
     @Override

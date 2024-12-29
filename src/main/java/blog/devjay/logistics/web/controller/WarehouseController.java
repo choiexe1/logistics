@@ -2,6 +2,7 @@ package blog.devjay.logistics.web.controller;
 
 import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.warehouse.Warehouse;
+import blog.devjay.logistics.dto.item.SearchItemDTO;
 import blog.devjay.logistics.dto.warehouse.CreateWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
@@ -45,7 +46,8 @@ public class WarehouseController {
     }
 
     @GetMapping("/{warehouseId}")
-    public String warehouseInfoView(Model model, @PathVariable("warehouseId") Long warehouseId) {
+    public String warehouseInfoView(Model model, @PathVariable("warehouseId") Long warehouseId,
+                                    @ModelAttribute("search") SearchItemDTO searchItemDTO) {
 
         try {
             Warehouse warehouse = warehouseService.findById(warehouseId);
@@ -53,9 +55,16 @@ public class WarehouseController {
             dto.setName(warehouse.getName());
             dto.setLocation(warehouse.getLocation());
 
-            model.addAttribute("items", itemService.findItemsByWarehouseId(warehouseId));
+            model.addAttribute("items", itemService.findItemsByWarehouseId(warehouseId, searchItemDTO));
             model.addAttribute("warehouse", warehouse);
             model.addAttribute("updateWarehouseDTO", dto);
+
+            PaginationUtil paginationUtil = new PaginationUtil(searchItemDTO, itemService.findAllCount(searchItemDTO));
+            model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
+            model.addAttribute("totalPages", paginationUtil.getTotalPages());
+            model.addAttribute("startPage", paginationUtil.getStartPage());
+            model.addAttribute("endPage", paginationUtil.getEndPage());
+
             return "views/warehouse/info";
         } catch (NotFoundException e) {
             return "redirect:/warehouse";

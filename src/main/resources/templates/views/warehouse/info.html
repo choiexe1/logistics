@@ -48,9 +48,60 @@
             </div>
         </form>
 
+        <div class="flex items-center">
+            <form th:object="${search}" th:action method="GET" class="flex items-center space-x-4 mb-6">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="flex flex-col flex-grow">
+                        <label th:for="name" class="text-white font-semibold mb-2"
+                               th:text="#{label.name}">이름</label>
+                        <input type="text" th:placeholder="#{placeholder.search}"
+                               th:field="*{name}" class="p-2">
+                    </div>
+
+                    <div class="flex flex-col flex-grow">
+                        <label th:for="price" class="text-white font-semibold mb-2"
+                               th:text="#{label.min.price}">최소 가격</label>
+                        <input type="text" th:placeholder="#{placeholder.search}"
+                               th:field="*{price}" class="p-2">
+                    </div>
+
+                    <div class="flex flex-col flex-grow">
+                        <label th:for="orderBy" class="text-white font-semibold mb-2"
+                               th:text="#{label.item.price.orderby}">가격 기준 정렬</label>
+                        <select th:field="*{orderBy}"
+                                class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                            <option value="ASC" selected th:text="#{label.item.price.order.lower}">가격 낮은 순</option>
+                            <option value="DESC" th:text="#{label.item.price.order.higher}">가격 높은 순</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col flex-grow">
+                        <label for="size" class="text-white font-semibold mb-2" th:text="#{label.result}">결과 수</label>
+                        <select name="size" id="size" th:field="*{size}"
+                                class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                            <option th:each="rows : ${rowsPerPage}"
+                                    th:value="${rows}"
+                                    th:text="${rows}"
+                                    th:selected="${pageSize == rows}">결과 수
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col w-auto mt-auto">
+                        <button type="submit"
+                                th:text="#{button.search}"
+                                class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                            검색
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <table th:if="${items.size() == 0}" th:text="#{none.item}">
             없음
         </table>
+
 
         <table th:if="${items.size() > 0}" class="min-w-full border-collapse table-fixed border">
             <thead>
@@ -100,7 +151,7 @@
         <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
             <div class="flex space-x-2">
                 <a th:if="${startPage > 1}"
-                   th:href="@{/logistics(page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price})}"
+                   th:href="@{/warehouse/{warehouseId}(warehouseId=${warehouse.id}, page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                    th:text="#{button.previous}">
                     이전
@@ -108,12 +159,12 @@
 
                 <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
                    th:text="${page}"
-                   th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price})}"
+                   th:href="@{/warehouse/{warehouseId}(warehouseId=${warehouse.id}, page=${page}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
                    th:class="${page == search.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
                 </a>
 
                 <a th:if="${endPage < totalPages}"
-                   th:href="@{/logistics(page=${endPage + 1}, size=${search.size}, name=${search.name} price=${search.price})}"
+                   th:href="@{/warehouse/{warehouseId}(warehouseId=${warehouse.id}, page=${endPage + 1}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                    th:text="#{button.next}">
                     다음

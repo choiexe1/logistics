@@ -69,7 +69,22 @@
         SELECT i.*
         FROM items i
         INNER JOIN warehouses w ON i.warehouse_id = w.id
-        AND w.id = #{warehouseId}
+        WHERE w.id = #{warehouseId}
+        <if test="searchItemDTO.name != null">
+            AND LOWER(i.name) LIKE concat('%', LOWER(#{searchItemDTO.name}), '%')
+        </if>
+        <if test="searchItemDTO.price != null">
+            AND i.price >= #{searchItemDTO.price}
+        </if>
+        <choose>
+            <when test="searchItemDTO.orderBy == 'DESC'">
+                ORDER BY i.price DESC
+            </when>
+            <otherwise>
+                ORDER BY i.price ASC
+            </otherwise>
+        </choose>
+        LIMIT #{searchItemDTO.size} OFFSET #{searchItemDTO.size} * (#{searchItemDTO.page} - 1)
     </select>
 
     <delete id="delete">

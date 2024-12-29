@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ItemMapper extends ItemRepository {
     @Override
-    List<Item> findItemsByWarehouseId(Long warehouseId);
+    List<Item> findItemsByWarehouseId(Long warehouseId, SearchItemDTO searchItemDTO);
 
     @Override
     Long save(Item item);

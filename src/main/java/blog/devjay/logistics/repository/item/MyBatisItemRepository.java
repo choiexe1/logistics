@@ -34,8 +34,8 @@ public class MyBatisItemRepository implements ItemRepository {
     }
 
     @Override
-    public List<Item> findItemsByWarehouseId(Long warehouseId) {
-        return itemMapper.findItemsByWarehouseId(warehouseId);
+    public List<Item> findItemsByWarehouseId(Long warehouseId, SearchItemDTO searchItemDTO) {
+        return itemMapper.findItemsByWarehouseId(warehouseId, searchItemDTO);
     }
 
     @Override
