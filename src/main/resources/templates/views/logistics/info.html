@@ -9,7 +9,7 @@
         <form th:action="@{/logistics/update/{id}(id=${item.id})}" th:method="POST" class="flex flex-col gap-8 mb-4">
             <input type="hidden" name="id" th:value="${item.id}">
 
-            <div class="flex gap-4">
+            <div class="flex gap-4" th:if="${warehouse != null}">
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="warehouseId" th:text="#{label.warehouseId}"></label>

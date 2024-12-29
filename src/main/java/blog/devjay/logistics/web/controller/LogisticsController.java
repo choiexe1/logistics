@@ -1,5 +1,6 @@
 package blog.devjay.logistics.web.controller;
 
+import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.item.Item;
 import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.dto.item.CreateItemDTO;
@@ -96,7 +97,11 @@ public class LogisticsController {
             model.addAttribute("warehouses", warehouseService.findAll());
         }
         if (!model.containsAttribute("warehouse")) {
-            model.addAttribute("warehouse", warehouseService.findById(item.getWarehouseId()));
+            try {
+                model.addAttribute("warehouse", warehouseService.findById(item.getWarehouseId()));
+            } catch (NotFoundException e) {
+                model.addAttribute("warehouse", null);
+            }
         }
 
         return "views/logistics/info";

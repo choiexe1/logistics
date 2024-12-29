@@ -36,6 +36,10 @@
         @apply outline-none border-blue
     }
 
+    input[type="checkbox"] {
+        @apply w-4 h-4 accent-orange rounded-md cursor-pointer
+    }
+
     input:hover {
         @apply border-blue
     }
