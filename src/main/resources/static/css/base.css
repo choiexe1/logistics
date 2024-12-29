@@ -40,6 +40,12 @@
         @apply w-4 h-4 accent-orange rounded-md cursor-pointer
     }
 
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
     input:hover {
         @apply border-blue
     }
