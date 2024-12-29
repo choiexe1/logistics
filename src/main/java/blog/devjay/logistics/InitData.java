@@ -73,7 +73,7 @@ public class InitData {
     void initItems() {
         List<Item> items = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 25; i++) {
             Item item = new Item(i % 2 == 0 ? 1L : 2L, "item" + i, i * 1000, 10);
             items.add(item);
         }

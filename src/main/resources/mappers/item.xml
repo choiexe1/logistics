@@ -27,7 +27,14 @@
                 AND warehouse_id = #{warehouseId}
             </if>
         </where>
-        ORDER BY price ${orderBy}
+        <choose>
+            <when test="orderBy == 'DESC'">
+                ORDER BY price DESC
+            </when>
+            <otherwise>
+                ORDER BY price ASC
+            </otherwise>
+        </choose>
         LIMIT #{size} OFFSET #{size} * (#{page} - 1)
     </select>
 

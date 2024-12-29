@@ -147,7 +147,7 @@
             <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
                 <div class="flex space-x-2">
                     <a th:if="${startPage > 1}"
-                       th:href="@{/logistics(page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price})}"
+                       th:href="@{/logistics(page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
                        class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                        th:text="#{button.previous}">
                         이전
@@ -155,12 +155,12 @@
 
                     <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
                        th:text="${page}"
-                       th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price})}"
+                       th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
                        th:class="${page == search.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
                     </a>
 
                     <a th:if="${endPage < totalPages}"
-                       th:href="@{/logistics(page=${endPage + 1}, size=${search.size}, name=${search.name} price=${search.price})}"
+                       th:href="@{/logistics(page=${endPage + 1}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
                        class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                        th:text="#{button.next}">
                         다음
