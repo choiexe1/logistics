@@ -8,7 +8,6 @@ import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
 import blog.devjay.logistics.service.ItemService;
 import blog.devjay.logistics.service.WarehouseService;
-import blog.devjay.logistics.web.utils.PaginationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -32,16 +31,9 @@ public class WarehouseController {
     private final ItemService itemService;
 
     @GetMapping
-    public String indexView(Model model, @ModelAttribute("searchForm") SearchWarehouseDTO dto,
-                            BindingResult bindingResult) {
-        PaginationUtil paginationUtil = new PaginationUtil(dto, warehouseService.findAllCount(dto));
+    public String indexView(Model model, @ModelAttribute("searchForm") SearchWarehouseDTO dto) {
         model.addAttribute("warehouses", warehouseService.findAll(dto));
-
-        model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
-        model.addAttribute("totalPages", paginationUtil.getTotalPages());
-        model.addAttribute("startPage", paginationUtil.getStartPage());
-        model.addAttribute("endPage", paginationUtil.getEndPage());
-
+        dto.setPagination(model, warehouseService.findAllCount(dto));
         return "views/warehouse/index";
     }
 
@@ -58,13 +50,7 @@ public class WarehouseController {
             model.addAttribute("items", itemService.findItemsByWarehouseId(warehouseId, searchItemDTO));
             model.addAttribute("warehouse", warehouse);
             model.addAttribute("updateWarehouseDTO", dto);
-
-            PaginationUtil paginationUtil = new PaginationUtil(searchItemDTO, itemService.findAllCount(searchItemDTO));
-            model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
-            model.addAttribute("totalPages", paginationUtil.getTotalPages());
-            model.addAttribute("startPage", paginationUtil.getStartPage());
-            model.addAttribute("endPage", paginationUtil.getEndPage());
-
+            searchItemDTO.setPagination(model, itemService.findAllCount(searchItemDTO));
             return "views/warehouse/info";
         } catch (NotFoundException e) {
             return "redirect:/warehouse";

@@ -8,7 +8,6 @@ import blog.devjay.logistics.dto.user.SearchUserDTO;
 import blog.devjay.logistics.dto.user.UpdateUserDTO;
 import blog.devjay.logistics.service.LogService;
 import blog.devjay.logistics.service.UserService;
-import blog.devjay.logistics.web.utils.PaginationUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,14 +35,7 @@ public class AdminController {
         model.addAttribute("userStatus", UserStatus.values());
         model.addAttribute("userRole", Role.values());
         model.addAttribute("users", userService.findAll(dto));
-
-        int totalPageCount = userService.findAllCount(dto);
-
-        PaginationUtil paginationUtil = new PaginationUtil(dto, totalPageCount);
-        model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
-        model.addAttribute("totalPages", paginationUtil.getTotalPages());
-        model.addAttribute("startPage", paginationUtil.getStartPage());
-        model.addAttribute("endPage", paginationUtil.getEndPage());
+        dto.setPagination(model, userService.findAllCount(dto));
 
         return "views/admin/users";
     }
@@ -59,13 +51,7 @@ public class AdminController {
         List<Log> logs = logService.findAll(searchLogDTO);
 
         model.addAttribute("logs", logs);
-
-        PaginationUtil paginationUtil = new PaginationUtil(searchLogDTO, logService.findAllCount(searchLogDTO));
-        model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
-        model.addAttribute("totalPages", paginationUtil.getTotalPages());
-        model.addAttribute("startPage", paginationUtil.getStartPage());
-        model.addAttribute("endPage", paginationUtil.getEndPage());
-
+        searchLogDTO.setPagination(model, logService.findAllCount(searchLogDTO));
         return "views/admin/logs";
     }
 }

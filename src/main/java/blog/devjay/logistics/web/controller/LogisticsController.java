@@ -8,7 +8,6 @@ import blog.devjay.logistics.dto.item.SearchItemDTO;
 import blog.devjay.logistics.dto.item.UpdateItemDTO;
 import blog.devjay.logistics.service.ItemService;
 import blog.devjay.logistics.service.WarehouseService;
-import blog.devjay.logistics.web.utils.PaginationUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +39,7 @@ public class LogisticsController {
         model.addAttribute("warehouses", warehouses);
         model.addAttribute("items", itemService.findAll(dto));
         int totalPageCount = itemService.findAllCount(dto);
-
-        PaginationUtil paginationUtil = new PaginationUtil(dto, totalPageCount);
-        model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
-        model.addAttribute("totalPages", paginationUtil.getTotalPages());
-        model.addAttribute("startPage", paginationUtil.getStartPage());
-        model.addAttribute("endPage", paginationUtil.getEndPage());
+        dto.setPagination(model, totalPageCount);
 
         return "views/logistics/index";
     }
