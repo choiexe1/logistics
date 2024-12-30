@@ -35,7 +35,6 @@ public class LogisticsController {
 
     @GetMapping
     public String index(Model model, @ModelAttribute("search") SearchItemDTO dto) {
-
         List<Warehouse> warehouses = warehouseService.findAll();
 
         model.addAttribute("warehouses", warehouses);

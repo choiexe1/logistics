@@ -24,7 +24,14 @@
                 AND price >= #{price}
             </if>
             <if test="warehouseId != null">
-                AND warehouse_id = #{warehouseId}
+                <choose>
+                    <when test="warehouseId == 0">
+                        AND warehouse_id IS NULL
+                    </when>
+                    <otherwise>
+                        AND warehouse_id = #{warehouseId}
+                    </otherwise>
+                </choose>
             </if>
         </where>
         <choose>

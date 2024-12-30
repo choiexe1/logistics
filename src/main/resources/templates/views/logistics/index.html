@@ -19,6 +19,7 @@
                             <select th:field="*{warehouseId}"
                                     class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
                                 <option value="" th:text="#{option.warehouse}" selected>창고 선택</option>
+                                <option value="0" th:text="#{none}">없음</option>
                                 <option th:each="warehouse : ${warehouses}"
                                         th:value="${warehouse.id}"
                                         th:text="${warehouse.name}">창고
