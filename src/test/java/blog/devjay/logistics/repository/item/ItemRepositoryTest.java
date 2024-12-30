@@ -80,10 +80,9 @@ class ItemRepositoryTest {
         // WHEN
         UpdateItemDTO updateItemDTO = new UpdateItemDTO();
         updateItemDTO.setName("TEST");
-        updateItemDTO.setId(id);
         updateItemDTO.setWarehouseId(warehouseId);
 
-        itemRepository.update(updateItemDTO);
+        itemRepository.update(id, updateItemDTO);
 
         Item updatedItem = itemRepository.findById(id).get();
 

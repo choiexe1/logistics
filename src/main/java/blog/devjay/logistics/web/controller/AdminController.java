@@ -1,11 +1,15 @@
 package blog.devjay.logistics.web.controller;
 
+import blog.devjay.logistics.domain.log.Log;
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.UserStatus;
+import blog.devjay.logistics.dto.log.SearchLogDTO;
 import blog.devjay.logistics.dto.user.SearchUserDTO;
 import blog.devjay.logistics.dto.user.UpdateUserDTO;
+import blog.devjay.logistics.service.LogService;
 import blog.devjay.logistics.service.UserService;
 import blog.devjay.logistics.web.utils.PaginationUtil;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 public class AdminController {
     private final UserService userService;
+    private final LogService logService;
 
     @GetMapping("/users")
     public String usersView(Model model,
@@ -47,5 +52,20 @@ public class AdminController {
     @ResponseBody
     public void updateUser(@PathVariable("userId") Long userId, @RequestBody UpdateUserDTO dto) {
         userService.update(userId, dto);
+    }
+
+    @GetMapping("/logs")
+    public String logView(Model model, @ModelAttribute SearchLogDTO searchLogDTO) {
+        List<Log> logs = logService.findAll(searchLogDTO);
+
+        model.addAttribute("logs", logs);
+
+        PaginationUtil paginationUtil = new PaginationUtil(searchLogDTO, logService.findAllCount(searchLogDTO));
+        model.addAttribute("rowsPerPage", paginationUtil.rowsPerPage());
+        model.addAttribute("totalPages", paginationUtil.getTotalPages());
+        model.addAttribute("startPage", paginationUtil.getStartPage());
+        model.addAttribute("endPage", paginationUtil.getEndPage());
+
+        return "views/admin/logs";
     }
 }

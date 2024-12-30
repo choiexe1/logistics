@@ -46,20 +46,6 @@ class WarehouseRepositoryTest {
     }
 
     @Test
-    @DisplayName("이름으로 창고가 조회되어야 한다.")
-    void findByName() {
-        // GIVEN
-        Warehouse warehouse = createWarehouse("창고1");
-        Long id = warehouseRepository.save(warehouse);
-
-        // WHEN
-        Warehouse findWarehouse = warehouseRepository.findByName("창고1").get();
-
-        // THEN
-        Assertions.assertThat(findWarehouse.getName()).isEqualTo(warehouse.getName());
-    }
-
-    @Test
     @DisplayName("위치로 창고가 조회되어야 한다.")
     void findByLocation() {
         // GIVEN
@@ -67,7 +53,7 @@ class WarehouseRepositoryTest {
         Long id = warehouseRepository.save(warehouse);
 
         // WHEN
-        Warehouse findWarehouse = warehouseRepository.findByName("창고1").get();
+        Warehouse findWarehouse = warehouseRepository.findById(id).get();
 
         // THEN
         Assertions.assertThat(findWarehouse.getName()).isEqualTo(warehouse.getName());

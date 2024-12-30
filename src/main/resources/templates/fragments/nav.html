@@ -63,7 +63,9 @@
                 <a th:href="@{/admin/users}" class="list-item"
                    th:text="#{title.admin.users}">사용자 관리</a>
             </li>
-            <li><a th:href="@{/admin/log}" th:text="#{title.admin.log}">로그</a></li>
+            <li th:class="${uri == '/admin/logs'} ? 'selected'">
+                <a th:href="@{/admin/logs}" th:text="#{title.admin.log}">로그</a>
+            </li>
         </ul>
     </th:block>
 </nav>
