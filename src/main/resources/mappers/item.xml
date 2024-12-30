@@ -64,7 +64,14 @@
         UPDATE items
         <set>
             <if test="updateItemDTO.price != null">price = #{updateItemDTO.price},</if>
-            <if test="updateItemDTO.warehouseId != null">warehouse_id = #{updateItemDTO.warehouseId},</if>
+            <choose>
+                <when test="updateItemDTO.warehouseId == 0">
+                    warehouse_id = null,
+                </when>
+                <otherwise>
+                    <if test="updateItemDTO.warehouseId != null">warehouse_id = #{updateItemDTO.warehouseId},</if>
+                </otherwise>
+            </choose>
             <if test="updateItemDTO.name != null">name = #{updateItemDTO.name},</if>
             <if test="updateItemDTO.quantity != null">quantity = #{updateItemDTO.quantity},</if>
             updated_at = CURRENT_TIMESTAMP

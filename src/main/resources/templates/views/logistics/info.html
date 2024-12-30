@@ -36,6 +36,7 @@
                         <label class="text-white font-semibold" th:text="#{label.changeWarehouse}">창고 변경</label>
                         <select th:field="*{warehouseId}" class="border-gray-light bg-black p-1.5 rounded-sm border">
                             <option value="" th:text="#{option.warehouse}" selected>창고 선택</option>
+                            <option value="0" th:text="#{none}">없음</option>
                             <option th:each="wh : ${warehouses}"
                                     th:value="${wh.id}"
                                     th:text="${wh.name}">창고
