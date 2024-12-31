@@ -16,14 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SessionInterceptor implements HandlerInterceptor {
-    private final static String[] ADMIN_AUTH_LIST = {"/admin"};
-    private final static String[] EDITOR_AUTH_LIST = {"/warehouse"};
+public class AuthorizationInterceptor implements HandlerInterceptor {
+    private final static String[] ADMIN_AUTH_LIST = {"/admin", "/admin/*"};
+    private final static String[] EDITOR_AUTH_LIST = {"/warehouse", "/warehouse/*", "/logistics/delete/*"};
 
 
     @Override
@@ -69,22 +68,5 @@ public class SessionInterceptor implements HandlerInterceptor {
         }
 
         return true;
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response,
-                           Object handler, ModelAndView modelAndView) throws Exception {
-        User user = (User) request.getAttribute("user");
-
-        if (modelAndView != null) {
-            setModelAndView(user, request);
-        }
-    }
-
-    private void setModelAndView(User user, HttpServletRequest request) {
-        request.setAttribute("currentUser", user);
-        request.setAttribute("isEditor", user.getRole() == Role.EDITOR);
-        request.setAttribute("isAdmin", user.getRole() == Role.ADMIN);
-        request.setAttribute("uri", request.getRequestURI());
     }
 }

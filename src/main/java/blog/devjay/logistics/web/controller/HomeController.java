@@ -8,6 +8,7 @@ import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.dto.user.LoginDTO;
 import blog.devjay.logistics.dto.user.RegisterDTO;
 import blog.devjay.logistics.service.UserService;
+import blog.devjay.logistics.web.SessionManager;
 import blog.devjay.logistics.web.argumentresolver.CurrentUser;
 import blog.devjay.logistics.web.utils.BcryptUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,6 +54,7 @@ public class HomeController {
         }
 
         try {
+            // 사용자 정보 조회
             User user = userService.findByUsername(form.getUsername());
             boolean isMatched = BcryptUtils.checkPw(form.getPassword(), user.getPassword());
 
@@ -61,6 +63,7 @@ public class HomeController {
                 return "views/login";
             }
 
+            // 로그인 성공 시 세션 설정
             setSession(request, user);
             userService.updateRecentLoginAt(user.getId());
 
@@ -75,7 +78,10 @@ public class HomeController {
     @PostMapping("/logout")
     public String logout(HttpServletRequest request, @CurrentUser User user) {
         HttpSession session = request.getSession(false);
-        session.invalidate();
+        if (session != null) {
+            SessionManager.remove(user.getUsername());
+            session.invalidate();
+        }
 
         return "redirect:/login";
     }
@@ -108,12 +114,9 @@ public class HomeController {
     }
 
     private void setSession(HttpServletRequest request, User user) {
-        HttpSession existingSession = request.getSession(false);
-        if (existingSession != null) {
-            existingSession.invalidate();
-        }
+        HttpSession session = request.getSession(true);
+        session.setAttribute(SESSION_ID, user);
 
-        HttpSession newSession = request.getSession(true);
-        newSession.setAttribute(SESSION_ID, user);
+        SessionManager.set(user.getUsername(), session);
     }
 }
