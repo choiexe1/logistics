@@ -153,7 +153,7 @@
                 <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
                     <div class="flex space-x-2">
                         <a th:if="${startPage > 1}"
-                           th:href="@{${url}(#maps.toQueryString(search))}"
+                           th:href="@{${url}(page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
                            class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                            th:text="#{button.previous}">
                             이전
@@ -166,7 +166,7 @@
                         </a>
 
                         <a th:if="${endPage < totalPages}"
-                           th:href="@{${url}(#maps.toQueryString(search))}"
+                           th:href="@{${url}(page=${endPage + 1}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy}, warehouseId=${search.warehouseId})}"
                            class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                            th:text="#{button.next}">
                             다음

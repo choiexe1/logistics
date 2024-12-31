@@ -65,7 +65,7 @@ public class InitData {
         List<Warehouse> warehouses = new ArrayList<>();
 
         for (int i = 1; i <= 2; i++) {
-            Warehouse warehouse = new Warehouse("Warehouse " + i,
+            Warehouse warehouse = new Warehouse("Warehouse" + i,
                     i % 2 == 0 ? "Seoul" : "Paju");
             warehouses.add(warehouse);
         }
