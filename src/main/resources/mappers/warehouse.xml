@@ -32,9 +32,8 @@
                 AND LOWER(location) like concat('%', LOWER(#{location}), '%')
             </if>
         </where>
-        <if test="size != null and page != null">
-            LIMIT #{size}
-            OFFSET #{size} * (#{page} - 1)
+        <if test="size != null and offset != null">
+            LIMIT #{size} OFFSET #{offset}
         </if>
     </select>
 

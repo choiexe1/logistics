@@ -10,10 +10,12 @@ public abstract class AbstractPaginable implements SearchDTO {
     private static final int PAGE_RANGE = MAX_PAGE - 1;
     private int size = 10;
     private int page = 1;
+    private int offset;
     private int totalPageCount;
 
     public void setPagination(Model model, int totalPageCount) {
         this.totalPageCount = totalPageCount;
+        this.offset = size * (page - 1);
 
         model.addAttribute("rowsPerPage", rowsPerPage());
         model.addAttribute("totalPages", getTotalPages());

@@ -13,6 +13,13 @@
         WHERE id = #{id}
     </select>
 
+    <select id="findByIdForUpdate" resultType="Item">
+        SELECT *
+        FROM items
+        WHERE id = #{id}
+        FOR UPDATE
+    </select>
+
     <select id="findAll" resultType="Item">
         SELECT *
         FROM items
@@ -42,8 +49,8 @@
                 ORDER BY price ASC
             </otherwise>
         </choose>
-        <if test="size != null">
-            LIMIT #{size} OFFSET #{size} * (#{page} - 1)
+        <if test="size != null and offset != null">
+            LIMIT #{size} OFFSET #{offset}
         </if>
     </select>
 
@@ -107,7 +114,7 @@
                 ORDER BY i.price ASC
             </otherwise>
         </choose>
-        LIMIT #{searchItemDTO.size} OFFSET #{searchItemDTO.size} * (#{searchItemDTO.page} - 1)
+        LIMIT #{searchItemDTO.size} OFFSET #{searchItemDTO.offset}
     </select>
 
     <delete id="delete">

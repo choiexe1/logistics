@@ -32,8 +32,8 @@ public class WarehouseController {
 
     @GetMapping
     public String indexView(Model model, @ModelAttribute("searchForm") SearchWarehouseDTO dto) {
-        model.addAttribute("warehouses", warehouseService.findAll(dto));
         dto.setPagination(model, warehouseService.findAllCount(dto));
+        model.addAttribute("warehouses", warehouseService.findAll(dto));
         return "views/warehouse/index";
     }
 

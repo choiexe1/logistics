@@ -44,8 +44,8 @@
                 ORDER BY created_at ASC
             </otherwise>
         </choose>
-        <if test="size != null">
-            LIMIT #{size} OFFSET #{size} * (#{page} - 1)
+        <if test="size != null and offset != null">
+            LIMIT #{size} OFFSET #{offset}
         </if>
     </select>
 

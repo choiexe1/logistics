@@ -15,6 +15,8 @@ public interface ItemMapper extends ItemRepository {
     @Override
     Long save(Item item);
 
+    Optional<Item> findByIdForUpdate(Long id);
+
     @Override
     Optional<Item> findById(Long id);
 

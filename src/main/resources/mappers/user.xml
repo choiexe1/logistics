@@ -36,7 +36,9 @@
                 AND role = #{role}
             </if>
         </where>
-        LIMIT #{size} OFFSET #{size} * (#{page} - 1)
+        <if test="size != null and offset != null">
+            LIMIT #{size} OFFSET #{offset}
+        </if>
     </select>
 
     <select id="findAllCount" resultType="int">

@@ -9,14 +9,26 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ItemService implements IService<Item, Long, SearchItemDTO, UpdateItemDTO> {
     private final ItemRepository itemRepository;
 
     public List<Item> findItemsByWarehouseId(Long warehouseId, SearchItemDTO searchItemDTO) {
         return itemRepository.findItemsByWarehouseId(warehouseId, searchItemDTO);
+    }
+
+    public Item findByIdForUpdate(Long id) {
+        Optional<Item> optional = itemRepository.findByIdForUpdate(id);
+
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+
+        throw new NotFoundException("아이템을 찾을 수 없습니다.");
     }
 
     @Override
@@ -26,8 +38,10 @@ public class ItemService implements IService<Item, Long, SearchItemDTO, UpdateIt
 
     @Override
     public void update(Long id, UpdateItemDTO dto) {
-        itemRepository.update(id, dto);
+        Item item = findByIdForUpdate(id);
+        itemRepository.update(item.getId(), dto);
     }
+
 
     @Override
     public Long create(Item item) {

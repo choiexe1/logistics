@@ -37,9 +37,9 @@ public class LogisticsController {
         List<Warehouse> warehouses = warehouseService.findAll();
 
         model.addAttribute("warehouses", warehouses);
-        model.addAttribute("items", itemService.findAll(dto));
         int totalPageCount = itemService.findAllCount(dto);
         dto.setPagination(model, totalPageCount);
+        model.addAttribute("items", itemService.findAll(dto));
 
         return "views/logistics/index";
     }

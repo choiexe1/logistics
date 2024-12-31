@@ -35,8 +35,9 @@ public class AdminController {
                             @ModelAttribute("searchUserForm") SearchUserDTO dto) {
         model.addAttribute("userStatus", UserStatus.values());
         model.addAttribute("userRole", Role.values());
-        model.addAttribute("users", userService.findAll(dto));
         dto.setPagination(model, userService.findAllCount(dto));
+
+        model.addAttribute("users", userService.findAll(dto));
 
         return "views/admin/users";
     }
@@ -49,10 +50,10 @@ public class AdminController {
 
     @GetMapping("/logs")
     public String logView(Model model, @ModelAttribute SearchLogDTO searchLogDTO) {
-        List<Log> logs = logService.findAll(searchLogDTO);
-        model.addAttribute("logs", logs);
         model.addAttribute("responseStatus", ResponseStatus.values());
         searchLogDTO.setPagination(model, logService.findAllCount(searchLogDTO));
+        List<Log> logs = logService.findAll(searchLogDTO);
+        model.addAttribute("logs", logs);
         return "views/admin/logs";
     }
 }

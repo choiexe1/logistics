@@ -27,6 +27,11 @@ public class MyBatisItemRepository implements ItemRepository {
     }
 
     @Override
+    public Optional<Item> findByIdForUpdate(Long id) {
+        return itemMapper.findByIdForUpdate(id);
+    }
+
+    @Override
     public Long save(Item item) {
         itemMapper.save(item);
 
