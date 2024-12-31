@@ -35,7 +35,7 @@ CREATE TABLE items (
    PRIMARY KEY (id),
    CONSTRAINT fk_warehouse FOREIGN KEY (warehouse_id)
                               REFERENCES warehouses(id)
-                              ON DELETE CASCADE
+                              ON DELETE SET NULL
 );
 
 CREATE TABLE logs (
@@ -44,8 +44,11 @@ CREATE TABLE logs (
     url TEXT,
     method TEXT,
     parameters TEXT,
-    status int,
-    exception VARCHAR,
+    status VARCHAR,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
+
+CREATE INDEX idx_logs_created_at ON logs (created_at);
+CREATE INDEX idx_logs_status ON logs (status);
+CREATE INDEX idx_logs_status_created_at ON logs (status, created_at);

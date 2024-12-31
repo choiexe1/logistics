@@ -44,7 +44,31 @@
     input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
-      }
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(27%) sepia(99%) saturate(1706%) hue-rotate(193deg) brightness(100%) contrast(85%);
+    }
+
+    .leading {
+        @apply space-y-2 mt-6
+    }
+
+    .leading h1 {
+        @apply text-xl leading-tight
+    }
+
+    .leading p {
+        @apply leading-relaxed
+    }
+
+    .leading p a {
+            @apply text-blue hover:link
+    }
+
+    .leading ul {
+        @apply list-inside list-disc leading-relaxed
+    }
 
     input:hover {
         @apply border-blue
