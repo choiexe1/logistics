@@ -1,8 +1,9 @@
 package blog.devjay.logistics.config;
 
 import blog.devjay.logistics.web.argumentresolver.CurrentUserArgumentResolver;
-import blog.devjay.logistics.web.interceptor.AuthInterceptor;
-import blog.devjay.logistics.web.interceptor.SessionInterceptor;
+import blog.devjay.logistics.web.interceptor.AuthenticationInterceptor;
+import blog.devjay.logistics.web.interceptor.AuthorizationInterceptor;
+import blog.devjay.logistics.web.interceptor.ModelInterceptor;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +19,15 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthInterceptor())
+        registry.addInterceptor(new AuthenticationInterceptor())
                 .excludePathPatterns(AUTH_WHITELIST)
                 .order(1);
-        registry.addInterceptor(new SessionInterceptor())
+        registry.addInterceptor(new AuthorizationInterceptor())
                 .excludePathPatterns(AUTH_WHITELIST)
                 .order(2);
+        registry.addInterceptor(new ModelInterceptor())
+                .excludePathPatterns(AUTH_WHITELIST)
+                .order(3);
     }
 
     @Override
