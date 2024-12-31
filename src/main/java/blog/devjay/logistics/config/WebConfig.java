@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
     private final static List<String> AUTH_WHITELIST =
-            List.of("/login", "/logout", "/register", "/css/*", "/error", "*.ico");
+            List.of("/login", "/logout", "/register", "/css/*", "/error", "/favicon.png");
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
