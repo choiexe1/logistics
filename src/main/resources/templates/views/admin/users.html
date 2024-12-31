@@ -8,7 +8,7 @@
     <main class="container mx-auto my-4">
         <div class="overflow-x-auto">
             <div class="flex items-center">
-                <form th:object="${searchUserForm}" th:action="@{/admin/users}" method="GET"
+                <form th:object="${searchUserForm}" th:action method="GET"
                       class="flex items-center space-x-4 mb-6">
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="flex flex-col flex-grow">
@@ -141,7 +141,10 @@
                         </td>
                     </th:block>
                     <td class="py-2 px-4 flex">
-                        <a class="btn" th:text="#{label.viewLog}">로그 확인</a>
+                        <a class="btn" th:text="#{label.viewLog}"
+                           th:with="url='/admin/logs'"
+                           th:href="@{${url}(username=${user.username})}"
+                        >로그 확인</a>
                     </td>
                 </tr>
                 </tbody>
@@ -150,7 +153,7 @@
             <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
                 <div class="flex space-x-2">
                     <a th:if="${startPage > 1}"
-                       th:href="@{/admin/users(page=${startPage - 5}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
+                       th:href="@{/admin(page=${startPage - 5}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
                        class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                        th:text="#{button.previous}">
                         이전
@@ -158,12 +161,12 @@
 
                     <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
                        th:text="${page}"
-                       th:href="@{/admin/users(page=${page}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
+                       th:href="@{/admin(page=${page}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
                        th:class="${page == searchUserForm.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
                     </a>
 
                     <a th:if="${endPage < totalPages}"
-                       th:href="@{/admin/users(page=${endPage + 1}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
+                       th:href="@{/admin(page=${endPage + 1}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
                        class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                        th:text="#{button.next}">
                         다음

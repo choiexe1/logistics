@@ -12,14 +12,14 @@
                     <div class="flex flex-col gap-2">
                         <label for="name" th:text="#{label.name}"></label>
                         <input type="text" id="name" th:field="*{name}">
-                        <p class="error" th:errors="*{name}">오류</p>
+                        <p class="error break-words max-w-xs" th:errors="*{name}">오류</p>
                     </div>
                 </div>
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="location" th:text="#{label.location}"></label>
                         <input type="text" id="location" th:field="*{location}">
-                        <p class="error" th:errors="*{location}">오류</p>
+                        <p class="error break-words max-w-xs" th:errors="*{location}">오류</p>
                     </div>
                 </div>
             </div>

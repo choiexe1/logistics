@@ -14,20 +14,17 @@ public class Log {
     private String url;
     private String method;
     private String parameters;
-    private int status;
-    private String exception;
+    private ResponseStatus status;
     private LocalDateTime createdAt;
 
     public Log() {
     }
 
-    public Log(String username, String url, String method, String parameters, int status,
-               String exception) {
+    public Log(String username, String url, String method, String parameters, ResponseStatus status) {
         this.username = username;
         this.url = url;
-        this.method = method;
+        this.method = method.toUpperCase();
         this.parameters = parameters;
         this.status = status;
-        this.exception = exception;
     }
 }

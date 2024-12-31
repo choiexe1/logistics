@@ -1,11 +1,14 @@
 package blog.devjay.logistics;
 
 import blog.devjay.logistics.domain.item.Item;
+import blog.devjay.logistics.domain.log.Log;
+import blog.devjay.logistics.domain.log.ResponseStatus;
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.domain.user.UserStatus;
 import blog.devjay.logistics.domain.warehouse.Warehouse;
 import blog.devjay.logistics.repository.item.ItemRepository;
+import blog.devjay.logistics.repository.log.LogRepository;
 import blog.devjay.logistics.repository.user.UserRepository;
 import blog.devjay.logistics.repository.warehouse.WarehouseRepository;
 import blog.devjay.logistics.web.utils.BcryptUtils;
@@ -20,12 +23,14 @@ public class InitData {
     private final UserRepository userRepository;
     private final WarehouseRepository warehouseRepository;
     private final ItemRepository itemRepository;
+    private final LogRepository logRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     void init() {
         initUsers();
         initWarehouses();
         initItems();
+        initLog();
     }
 
     void initUsers() {
@@ -80,6 +85,19 @@ public class InitData {
 
         for (Item item : items) {
             itemRepository.save(item);
+        }
+    }
+
+    void initLog() {
+        List<Log> logs = new ArrayList<>();
+
+        for (int i = 1; i <= 20; i++) {
+            Log log = new Log("test", "/test" + i, "GET", null, ResponseStatus.FAIL);
+            logs.add(log);
+        }
+
+        for (Log log : logs) {
+            logRepository.save(log);
         }
     }
 }

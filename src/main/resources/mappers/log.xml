@@ -3,8 +3,8 @@
 <mapper namespace="blog.devjay.logistics.repository.log.LogMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO logs (username, url, method, parameters)
-        VALUES (#{username}, #{url}, #{method}, #{parameters}, #{status}, #{exception})
+        INSERT INTO logs (username, url, method, parameters, status)
+        VALUES (#{username}, #{url}, #{method}, #{parameters}, #{status})
     </insert>
 
     <select id="findById" resultType="Log">
@@ -28,6 +28,12 @@
             </if>
             <if test="status != null">
                 AND status = #{status}
+            </if>
+            <if test="startDate != null">
+                AND created_at &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND created_at &lt;= concat(#{endDate}, ' 23:59:59')
             </if>
         </where>
         <choose>
@@ -58,12 +64,12 @@
             <if test="status != null">
                 AND status = #{status}
             </if>
+            <if test="startDate != null">
+                AND created_at &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND created_at &lt;= concat(#{endDate}, ' 23:59:59')
+            </if>
         </where>
     </select>
-
-    <delete id="delete">
-        DELETE
-        FROM logs
-        WHERE id = #{id}
-    </delete>
 </mapper>

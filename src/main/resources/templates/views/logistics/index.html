@@ -101,9 +101,11 @@
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{button.view}">품목 확인
                     </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{button.delete}">품목 삭제
-                    </th>
+                    <th:block th:if="${!isUser}">
+                        <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                            th:text="#{button.delete}">품목 삭제
+                        </th>
+                    </th:block>
                 </tr>
                 </thead>
                 <tbody>
@@ -132,54 +134,47 @@
                            th:text="#{button.view}" }>품목 확인
                         </a>
                     </td>
-                    <td class="py-2 px-4">
-                        <form
-                                th:action="@{/logistics/delete/{id}(id=${item.id})}"
-                                method="POST">
-                            <button type="submit" class="btn" th:onclick="return confirm('품목을 삭제 하시겠습니까?')"
-                                    th:text="#{button.delete}" }>품목 삭제
-                            </button>
-                        </form>
-                    </td>
+                    <th:block th:if="${!isUser}">
+                        <td class="py-2 px-4">
+                            <form
+                                    th:action="@{/logistics/delete/{id}(id=${item.id})}"
+                                    method="POST">
+                                <button type="submit" class="btn" th:onclick="return confirm('품목을 삭제 하시겠습니까?')"
+                                        th:text="#{button.delete}" }>품목 삭제
+                                </button>
+                            </form>
+                        </td>
+                    </th:block>
                 </tr>
                 </tbody>
             </table>
 
-            <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
-                <div class="flex space-x-2">
-                    <a th:if="${startPage > 1}"
-                       th:href="@{/logistics(page=${startPage - 5}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
-                       class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
-                       th:text="#{button.previous}">
-                        이전
-                    </a>
+            <th:block th:with="url='/logistics'">
+                <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
+                    <div class="flex space-x-2">
+                        <a th:if="${startPage > 1}"
+                           th:href="@{${url}(#maps.toQueryString(search))}"
+                           class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
+                           th:text="#{button.previous}">
+                            이전
+                        </a>
 
-                    <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
-                       th:text="${page}"
-                       th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
-                       th:class="${page == search.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
-                    </a>
+                        <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                           th:text="${page}"
+                           th:href="@{/logistics(page=${page}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy}, warehouseId=${search.warehouseId})}"
+                           th:class="${page == search.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
+                        </a>
 
-                    <a th:if="${endPage < totalPages}"
-                       th:href="@{/logistics(page=${endPage + 1}, size=${search.size}, name=${search.name}, price=${search.price}, orderBy=${search.orderBy})}"
-                       class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
-                       th:text="#{button.next}">
-                        다음
-                    </a>
+                        <a th:if="${endPage < totalPages}"
+                           th:href="@{${url}(#maps.toQueryString(search))}"
+                           class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
+                           th:text="#{button.next}">
+                            다음
+                        </a>
+                    </div>
                 </div>
-            </div>
+            </th:block>
         </div>
     </main>
-    <script>
-        function restrictInput(event) {
-            const key = event.key;
-
-            if (/[a-zA-Z]/.test(key)) {
-              event.preventDefault();
-              return false;
-            }
-            return true;
-          }
-    </script>
 </body>
 </html>

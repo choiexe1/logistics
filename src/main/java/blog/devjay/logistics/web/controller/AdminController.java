@@ -1,6 +1,7 @@
 package blog.devjay.logistics.web.controller;
 
 import blog.devjay.logistics.domain.log.Log;
+import blog.devjay.logistics.domain.log.ResponseStatus;
 import blog.devjay.logistics.domain.user.Role;
 import blog.devjay.logistics.domain.user.UserStatus;
 import blog.devjay.logistics.dto.log.SearchLogDTO;
@@ -29,7 +30,7 @@ public class AdminController {
     private final UserService userService;
     private final LogService logService;
 
-    @GetMapping("/users")
+    @GetMapping
     public String usersView(Model model,
                             @ModelAttribute("searchUserForm") SearchUserDTO dto) {
         model.addAttribute("userStatus", UserStatus.values());
@@ -49,8 +50,8 @@ public class AdminController {
     @GetMapping("/logs")
     public String logView(Model model, @ModelAttribute SearchLogDTO searchLogDTO) {
         List<Log> logs = logService.findAll(searchLogDTO);
-
         model.addAttribute("logs", logs);
+        model.addAttribute("responseStatus", ResponseStatus.values());
         searchLogDTO.setPagination(model, logService.findAllCount(searchLogDTO));
         return "views/admin/logs";
     }

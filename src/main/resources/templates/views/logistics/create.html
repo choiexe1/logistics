@@ -13,21 +13,21 @@
                     <div class="flex flex-col gap-2">
                         <label for="name" th:text="#{label.name}"></label>
                         <input type="text" id="name" th:field="*{name}">
-                        <p class="error" th:errors="*{name}">오류</p>
+                        <p class="error break-words max-w-xs" th:errors="*{name}">오류</p>
                     </div>
                 </div>
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="price" th:text="#{label.price}"></label>
                         <input type="text" id="price" th:field="*{price}">
-                        <p class="error" th:errors="*{price}">오류</p>
+                        <p class="error break-words max-w-xs" th:errors="*{price}">오류</p>
                     </div>
                 </div>
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="quantity" th:text="#{label.quantity}"></label>
                         <input type="text" id="quantity" th:field="*{quantity}">
-                        <p class="error" th:errors="*{quantity}">오류</p>
+                        <p class="error break-words max-w-xs" th:errors="*{quantity}">오류</p>
                     </div>
                 </div>
             </div>

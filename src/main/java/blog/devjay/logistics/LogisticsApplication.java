@@ -1,6 +1,7 @@
 package blog.devjay.logistics;
 
 import blog.devjay.logistics.repository.item.ItemRepository;
+import blog.devjay.logistics.repository.log.LogRepository;
 import blog.devjay.logistics.repository.user.UserRepository;
 import blog.devjay.logistics.repository.warehouse.WarehouseRepository;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +18,7 @@ public class LogisticsApplication {
     @Bean
     @Profile("local")
     public InitData initData(UserRepository userRepository, WarehouseRepository warehouseRepository,
-                             ItemRepository itemRepository) {
-        return new InitData(userRepository, warehouseRepository, itemRepository);
+                             ItemRepository itemRepository, LogRepository logRepository) {
+        return new InitData(userRepository, warehouseRepository, itemRepository, logRepository);
     }
 }

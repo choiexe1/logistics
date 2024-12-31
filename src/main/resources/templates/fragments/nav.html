@@ -3,7 +3,7 @@
         <li>
             <a th:href="@{/}"
                th:class="${uri == '/' ? 'selected' : ''}"
-               th:text="#{title.home}">홈</a>
+               th:text="#{title.intro}">소개</a>
         </li>
         <li><a th:href="@{/logistics}"
                th:class="${uri == '/logistics' ? 'selected' : ''}"
@@ -15,7 +15,7 @@
                th:text="#{title.warehouse}">창고 관리</a>
         </li>
         <li th:if="${isAdmin}"><a
-                th:href="@{/admin/users}"
+                th:href="@{/admin}"
                 th:class="${#strings.startsWith(uri, '/admin') ? 'selected' : ''}"
                 th:text="#{title.admin}">관리자 패널</a>
         </li>
@@ -59,8 +59,8 @@
 
     <th:block th:if="${#strings.startsWith(uri, '/admin')}">
         <ul class="flex gap-4 my-4">
-            <li th:class="${uri == '/admin/users'} ? 'selected'">
-                <a th:href="@{/admin/users}" class="list-item"
+            <li th:class="${uri == '/admin'} ? 'selected'">
+                <a th:href="@{/admin}" class="list-item"
                    th:text="#{title.admin.users}">사용자 관리</a>
             </li>
             <li th:class="${uri == '/admin/logs'} ? 'selected'">

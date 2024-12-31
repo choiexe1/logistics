@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head(~{::title})}">
-    <title th:text="#{title.admin.users}"></title>
+    <title th:text="#{title.admin.log}"></title>
 </head>
 <body>
-    <nav th:replace="~{fragments/nav :: nav (#{title.admin.users})}"></nav>
+    <nav th:replace="~{fragments/nav :: nav (#{title.admin.log})}"></nav>
     <main class="container mx-auto my-4">
         <div class="overflow-x-auto">
             <div class="flex items-center">
-                <form th:object="${searchLogDTO}" th:action method="GET"
-                      class="flex items-center space-x-4 mb-6">
-                    <div class="flex items-center space-x-4 mb-6">
+                <form th:object="${searchLogDTO}" th:action method="GET" class="flex flex-col space-y-4 mb-4">
+                    <!-- First Row -->
+                    <div class="flex items-center space-x-4">
                         <div class="flex flex-col flex-grow">
                             <label class="text-white font-semibold mb-2" th:text="#{label.username}">유저네임</label>
                             <input type="text" placeholder="검색" th:placeholder="#{placeholder.search}" class="p-2"
@@ -23,15 +23,51 @@
                                    th:field="*{url}">
                         </div>
 
-
                         <div class="flex flex-col flex-grow">
-                            <label for="method" class="text-white font-semibold mb-2">Method</label>
+                            <label for="method" class="text-white font-semibold mb-2"
+                                   th:text="#{label.method}">Method</label>
                             <select name="method" id="method" th:field="*{method}"
                                     class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
                                 <option value="" selected th:text="#{select.method}">메소드 선택</option>
-                                <option value="get">GET</option>
-                                <option value="post">POST</option>
-                                <option value="put">put</option>
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-col flex-grow">
+                            <label for="status" class="text-white font-semibold mb-2"
+                                   th:text="#{label.log.result}">상태</label>
+                            <select name="status" id="status" th:field="*{status}"
+                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                                <option value="" selected th:text="#{select.responseStatus}">응답 상태</option>
+                                <option th:each="status : ${responseStatus}"
+                                        th:value="${status}"
+                                        th:text="${status}">상태
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Second Row -->
+                    <div class="flex items-center space-x-4">
+                        <div class="flex flex-col">
+                            <label class="text-white font-semibold mb-2" th:text="#{label.startDate}">시작 날짜</label>
+                            <input type="date" th:field="*{startDate}" class="p-2">
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label class="text-white font-semibold mb-2" th:text="#{label.endDate}">종료 날짜</label>
+                            <input type="date" th:field="*{endDate}" class="p-2">
+                        </div>
+
+                        <div class="flex flex-col flex-grow">
+                            <label th:for="orderBy" class="text-white font-semibold mb-2"
+                                   th:text="#{label.log.date.order}">날짜 기준 정렬</label>
+                            <select th:field="*{orderBy}"
+                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                                <option value="ASC" selected th:text="#{label.log.asc}">오래된 순</option>
+                                <option value="DESC" th:text="#{label.log.desc}">최신 순</option>
                             </select>
                         </div>
 
@@ -48,7 +84,7 @@
                             </select>
                         </div>
 
-                        <div class="flex flex-col w-auto mt-auto">
+                        <div class="flex flex-col w-auto self-end">
                             <button type="submit"
                                     th:text="#{button.search}"
                                     class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
@@ -67,16 +103,17 @@
                         th:text="#{label.username}">유저네임
                     </th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">URL</th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">Method</th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">Parameters</th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.status}">상태
+                        th:text="#{label.method}">Method
+                    </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{label.parameter}">Parameters
+                    </th>
+                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                        th:text="#{label.log.result}">Status
                     </th>
                     <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
                         th:text="#{label.createdAt}">생성일
-                    </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.log}">로그
                     </th>
                 </tr>
                 </thead>
@@ -86,13 +123,11 @@
                     <td th:text="${log.username}" class="py-2 px-4 hover:text-blue"></td>
                     <td th:text="${log.url}" class="py-2 px-4 hover:text-blue"></td>
                     <td th:text="${log.method}" class="py-2 px-4 hover:text-blue"></td>
-                    <td th:text="${log.parameters}" class="py-2 px-4 hover:text-blue"></td>
-                    <td th:text="${log.status}" class="py-2 px-4 hover:text-blue"></td>
-                    <td th:text="${log.exception}" class="py-2 px-4 hover:text-blue"></td>
+                    <td th:text="${log.parameters} == null ? #{none} : ${log.parameters}"
+                        class="py-2 px-4 hover:text-blue"></td>
+                    <td th:text="${log.status} == null ? #{none} : ${log.status}"
+                        class="py-2 px-4 hover:text-blue"></td>
                     <td class="py-2 px-4" th:text="${#temporals.format(log.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td class="py-2 px-4 flex">
-                        <a class="btn" th:text="#{label.viewLog}">로그 확인</a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -101,7 +136,7 @@
                 <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
                     <div class="flex space-x-2">
                         <a th:if="${startPage > 1}"
-                           th:href="@{${url}(page=${startPage - 5}, size=${searchLogDTO.size}, username=${searchLogDTO.username}, url=${searchLogDTO.url}, method=${searchLogDTO.method})}"
+                           th:href="@{${url}(#maps.toQueryString(searchLogDTO))}"
                            class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                            th:text="#{button.previous}">
                             이전
@@ -109,12 +144,12 @@
 
                         <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
                            th:text="${page}"
-                           th:href="@{${url}(page=${page}, size=${searchLogDTO.size}, username=${searchLogDTO.username}, url=${searchLogDTO.url}, method=${searchLogDTO.method})}"
+                           th:href="@{${url}(page=${page}, size=${searchLogDTO.size}, username=${searchLogDTO.username}, url=${searchLogDTO.url}, method=${searchLogDTO.method}, startDate=${searchLogDTO.startDate}, endDate=${searchLogDTO.endDate})}"
                            th:class="${page == searchLogDTO.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
                         </a>
 
                         <a th:if="${endPage < totalPages}"
-                           th:href="@{${url}(page=${endPage + 1}, size=${searchLogDTO.size}, username=${searchLogDTO.username}, url=${searchLogDTO.url}, method=${searchLogDTO.method})}"
+                           th:href="@{${url}(#maps.toQueryString(searchLogDTO))}"
                            class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
                            th:text="#{button.next}">
                             다음
