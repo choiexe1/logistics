@@ -103,8 +103,8 @@
                     <td class="py-2 px-4">
                         <select class="bg-transparent text-white"
                                 onchange="changeUserStatus(this)"
-                                th:disabled="${user.id == currentUser.id}"
-                                th:class="${user.id == currentUser.id} ? 'text-gray-light'">
+                                th:disabled="${user.role.toString() == 'ADMIN'}"
+                                th:class="${user.role.toString() == 'ADMIN'} ? 'text-gray-light'">
                             <option th:each="status : ${userStatus}"
                                     th:value="${status}"
                                     th:text="${status}"
@@ -115,8 +115,8 @@
                     <td class="py-2 px-4">
                         <select class="bg-transparent text-white"
                                 onchange="changeUserRole(this)"
-                                th:disabled="${user.id == currentUser.id}"
-                                th:class="${user.id == currentUser.id} ? 'text-gray-light'"
+                                th:disabled="${user.role.toString() == 'ADMIN'}"
+                                th:class="${user.role.toString() == 'ADMIN'} ? 'text-gray-light'"
                         >
                             <option th:each="role : ${userRole}"
                                     th:value="${role}"
