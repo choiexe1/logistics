@@ -77,6 +77,10 @@
     input:disabled {
         @apply text-gray-light hover:border-gray-light
     }
+
+    option {
+        @apply bg-black text-white
+    }
 }
 
 @layer utilities {
