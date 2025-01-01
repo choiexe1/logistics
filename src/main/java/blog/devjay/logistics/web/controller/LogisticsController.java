@@ -124,8 +124,17 @@ public class LogisticsController {
 
         try {
             itemService.update(itemId, dto);
-        } catch (RuntimeException e) {
-            log.error("e", e);
+        } catch (DuplicateKeyException e) {
+            Item item = itemService.findById(itemId);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateItemDTO",
+                    bindingResult);
+            redirectAttributes.addFlashAttribute("updateItemDTO", dto);
+            redirectAttributes.addFlashAttribute("item", item);
+            redirectAttributes.addFlashAttribute("warehouses", warehouseService.findAll());
+            redirectAttributes.addFlashAttribute("warehouse", warehouseService.findById(item.getWarehouseId()));
+
+            bindingResult.rejectValue("name", "item.name.exist");
+
             return "redirect:/logistics/{itemId}";
         }
 
