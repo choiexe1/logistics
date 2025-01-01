@@ -19,6 +19,20 @@
 이 프로젝트의 최종 목표로 스프링 AOP를 활용해 관심사를 분리하고 사용자들의 행위를 로깅하는 기능을 구현하려고 합니다.
 따라서 최근에는 프록시를 학습하고 있습니다.
 
+## 프로젝트 구조
+
+```mermaid
+graph LR
+
+subgraph Interceptors
+	AuthenticationInterceptor --> AuthorizationInterceptor --> ModelInterceptor
+end
+
+Client --> ServletContainer --> DispatcherServlet --> AuthenticationInterceptor
+
+ModelInterceptor --> Controller --> Service --> Repository
+```
+
 ## 사용 기술
 
 - Spring Boot
