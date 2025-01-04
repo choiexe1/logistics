@@ -20,7 +20,8 @@ public class Log {
     public Log() {
     }
 
-    public Log(String username, String url, String method, String parameters, ResponseStatus status) {
+    public Log(String username, String url, String method, String parameters,
+               ResponseStatus status) {
         this.username = username;
         this.url = url;
         this.method = method.toUpperCase();

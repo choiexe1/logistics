@@ -4,62 +4,63 @@
     <title th:text="#{title.intro}"></title>
 </head>
 <body>
-    <nav th:replace="~{fragments/nav :: nav (#{title.intro})}"></nav>
-    <main class="container mx-auto my-4 pb-16">
-        <section class="leading">
-            <h1>사용 기술</h1>
-            <p>Spring Boot, Spring Web, Bean Validation, MyBatis, Thymeleaf, TailwindCSS, Javascript, H2
-                Database</p>
-            <a target="_blank" class="inline-block text-blue hover:link" href="https://devjay.blog">개인 블로그</a> |
-            <a target="_blank" class="inline-block text-blue hover:link" href="https://github.com/choiexe1">깃허브</a>
-        </section>
-        <section class="leading">
-            <h1>세부 사항</h1>
-            <p>스프링 메시지를 적극 활용하여 웹 사이트를 <a>국제화</a>했습니다. HTTP 요청 헤더 Accept-Language에 따라 웹 사이트의 언어가
-                변경됩니다. 프로젝트 소개 페이지는 제외입니다.</p>
-            <p><a>관리자 패널 - 사용자 관리</a>에서 사용자의 상태나 역할을 변경할 땐 SPA와 유사하게 동작하도록 구현 했습니다.</p>
-            <p>유저의 상태가 비활성화(DEACTIVATE) 또는 일시 중지(SUSPENDED)로 변경되면 로그인은 가능하지만 삭제(DELETED)로
-                변경되면 로그인 할 수 없습니다. 데이터베이스에서 지워지는 것은 아니고 논리적으로 삭제 됩니다.</p>
-            <p>컨테이너가 삭제되면 해당 컨테이너와 연관 관계에 있는 아이템들의 FK는 모두 <a>NULL</a>로 변경됩니다.</p>
-            <p>서비스 레이어가 다른 레이어에 최소한만 의존하도록 구현 했습니다.</p>
-            <p>컨트롤러와 서비스가 인터페이스에 의존하도록 구현했습니다. 따라서 구현이 변경되어도 <a>사이드 이펙트</a>를 최소화 합니다.</p>
-            <p>세션 매니저를 구현해서 중복 로그인을 방지합니다.</p>
-            <p>CSS Framework인 <a>TailwindCSS</a>를 사용해서 웹 사이트 전반에 손쉽게 공통된 디자인을 적용했습니다.</p>
-        </section>
-        <section class="leading">
-            <h1>테스트용 계정</h1>
-            <p>테스트용 계정을 초기화 해두었습니다. 유저네임과 패스워드는 동일합니다. 예를 들면 회원 <a>user</a>의 패스워드는 <a>user</a>로 초기화 합니다.</p>
-            <ul>
-                <li>user: User 회원 등급의 계정입니다.</li>
-                <li>editor: Editor 회원 등급의 계정입니다.</li>
-                <li>admin: Admin 회원 등급의 계정입니다.</li>
-                <li>test: Admin 회원 등급의 계정입니다.</li>
-            </ul>
-        </section>
-        <section class="leading">
-            <h1>스프링 인터셉터</h1>
-            <p>아직 스프링 시큐리티 사용이 미흡해서 서블릿 세션과 스프링 인터셉터를 기반으로 인증/인가를 관리합니다.</p>
-            <p>인터셉터가 적용되는 순서는 다음과 같습니다.</p>
-            <ul>
-                <li>AuthenticationInterceptor: 요청에 세션이 존재하는지의 여부를 체크해서 요청을 처리합니다.</li>
-                <li>AuthorizationInterception: 요청자가 접근할 수 있는 컨트롤러인지 권한을 체크합니다.</li>
-                <li>ModelInterceptor: 뷰에서 전역으로 사용되는 공통 모델을 초기화 합니다.</li>
-            </ul>
-        </section>
-        <section class="leading">
-            <h1>공통 에러 처리</h1>
-            <p>스프링 부트 기본 에러 처리를 사용하고, 유저가 <a>비활성화</a>되거나 <a>일시 중지</a>된 계정에 대한 에러 페이지 처리는 메세지를 전달해야 하므로
-                <a>GlobalControllerAdvice</a>에 위임 합니다.</p>
-        </section>
-        <section class="leading">
-            <h1>역할 기반 접근 제어 (RBAC)</h1>
-            <p>회원 등급은 다음과 같이 세 가지로 나뉘며, 등급에 따라 기능에 대한 접근을 제어합니다.</p>
-            <ul>
-                <li>User: 물류 관리 페이지에 접근할 수 있으며, 아이템 생성 및 조회만 가능합니다. 아이템 삭제 버튼은 보이지 않습니다.</li>
-                <li>Editor: User 기능 포함, 창고 관리와 관련된 모든 기능을 사용할 수 있습니다.</li>
-                <li>Admin: 모든 기능을 자유롭게 사용할 수 있습니다.</li>
-            </ul>
-        </section>
-    </main>
+<nav th:replace="~{fragments/nav :: nav (#{title.intro})}"></nav>
+<main class="container mx-auto my-4 pb-16">
+    <section class="leading">
+        <h1>사용 기술</h1>
+        <p>Spring Boot, Spring Web, Bean Validation, MyBatis, Thymeleaf, TailwindCSS, Javascript, H2
+            Database</p>
+        <a target="_blank" class="inline-block text-blue hover:link" href="https://devjay.blog">개인 블로그</a> |
+        <a target="_blank" class="inline-block text-blue hover:link" href="https://github.com/choiexe1">깃허브</a>
+    </section>
+    <section class="leading">
+        <h1>세부 사항</h1>
+        <p>스프링 메시지를 적극 활용하여 웹 사이트를 <a>국제화</a>했습니다. HTTP 요청 헤더 Accept-Language에 따라 웹 사이트의 언어가
+            변경됩니다. 프로젝트 소개 페이지는 제외입니다.</p>
+        <p>스프링 AOP로 어노테이션 기반 AOP를 적용 했습니다. 특정 컨트롤러에 요청을 로깅합니다. 관리자 패널의 로그 페이지에서 확인할 수 있습니다.</p>
+        <p><a>관리자 패널 - 사용자 관리</a>에서 사용자의 상태나 역할을 변경할 땐 SPA와 유사하게 동작하도록 구현 했습니다.</p>
+        <p>유저의 상태가 비활성화(DEACTIVATE) 또는 일시 중지(SUSPENDED)로 변경되면 로그인은 가능하지만 삭제(DELETED)로
+            변경되면 로그인 할 수 없습니다. 데이터베이스에서 지워지는 것은 아니고 논리적으로 삭제 됩니다.</p>
+        <p>컨테이너가 삭제되면 해당 컨테이너와 연관 관계에 있는 아이템들의 FK는 모두 <a>NULL</a>로 변경됩니다.</p>
+        <p>서비스 레이어가 다른 레이어에 최소한만 의존하도록 구현 했습니다.</p>
+        <p>컨트롤러와 서비스가 인터페이스에 의존하도록 구현했습니다. 따라서 구현이 변경되어도 <a>사이드 이펙트</a>를 최소화 합니다.</p>
+        <p>세션 매니저를 구현해서 중복 로그인을 방지합니다.</p>
+        <p>CSS Framework인 <a>TailwindCSS</a>를 사용해서 웹 사이트 전반에 손쉽게 공통된 디자인을 적용했습니다.</p>
+    </section>
+    <section class="leading">
+        <h1>테스트용 계정</h1>
+        <p>테스트용 계정을 초기화 해두었습니다. 유저네임과 패스워드는 동일합니다. 예를 들면 회원 <a>user</a>의 패스워드는 <a>user</a>로 초기화 합니다.</p>
+        <ul>
+            <li>user: User 회원 등급의 계정입니다.</li>
+            <li>editor: Editor 회원 등급의 계정입니다.</li>
+            <li>admin: Admin 회원 등급의 계정입니다.</li>
+            <li>test: Admin 회원 등급의 계정입니다.</li>
+        </ul>
+    </section>
+    <section class="leading">
+        <h1>스프링 인터셉터</h1>
+        <p>아직 스프링 시큐리티 사용이 미흡해서 서블릿 세션과 스프링 인터셉터를 기반으로 인증/인가를 관리합니다.</p>
+        <p>인터셉터가 적용되는 순서는 다음과 같습니다.</p>
+        <ul>
+            <li>AuthenticationInterceptor: 요청에 세션이 존재하는지의 여부를 체크해서 요청을 처리합니다.</li>
+            <li>AuthorizationInterception: 요청자가 접근할 수 있는 컨트롤러인지 권한을 체크합니다.</li>
+            <li>ModelInterceptor: 뷰에서 전역으로 사용되는 공통 모델을 초기화 합니다.</li>
+        </ul>
+    </section>
+    <section class="leading">
+        <h1>공통 에러 처리</h1>
+        <p>스프링 부트 기본 에러 처리를 사용하고, 유저가 <a>비활성화</a>되거나 <a>일시 중지</a>된 계정에 대한 에러 페이지 처리는 메세지를 전달해야 하므로
+            <a>GlobalControllerAdvice</a>에 위임 합니다.</p>
+    </section>
+    <section class="leading">
+        <h1>역할 기반 접근 제어 (RBAC)</h1>
+        <p>회원 등급은 다음과 같이 세 가지로 나뉘며, 등급에 따라 기능에 대한 접근을 제어합니다.</p>
+        <ul>
+            <li>User: 물류 관리 페이지에 접근할 수 있으며, 아이템 생성 및 조회만 가능합니다. 아이템 삭제 버튼은 보이지 않습니다.</li>
+            <li>Editor: User 기능 포함, 창고 관리와 관련된 모든 기능을 사용할 수 있습니다.</li>
+            <li>Admin: 모든 기능을 자유롭게 사용할 수 있습니다.</li>
+        </ul>
+    </section>
+</main>
 </body>
 </html>

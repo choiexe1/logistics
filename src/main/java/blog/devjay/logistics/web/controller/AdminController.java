@@ -9,6 +9,7 @@ import blog.devjay.logistics.dto.user.SearchUserDTO;
 import blog.devjay.logistics.dto.user.UpdateUserDTO;
 import blog.devjay.logistics.service.LogService;
 import blog.devjay.logistics.service.UserService;
+import blog.devjay.logistics.web.aop.annotation.Logging;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,10 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/admin")
@@ -42,10 +41,17 @@ public class AdminController {
         return "views/admin/users";
     }
 
-    @PutMapping("/users/{userId}")
-    @ResponseBody
-    public void updateUser(@PathVariable("userId") Long userId, @RequestBody UpdateUserDTO dto) {
-        userService.update(userId, dto);
+    @Logging
+    @PostMapping("/users/{userId}")
+    public String updateUser(@PathVariable("userId") Long userId, UpdateUserDTO dto) {
+
+        try {
+            userService.update(userId, dto);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/admin";
     }
 
     @GetMapping("/logs")

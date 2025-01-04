@@ -123,7 +123,7 @@
                     <td th:text="${log.username}" class="py-2 px-4 hover:text-blue"></td>
                     <td th:text="${log.url}" class="py-2 px-4 hover:text-blue"></td>
                     <td th:text="${log.method}" class="py-2 px-4 hover:text-blue"></td>
-                    <td th:text="${log.parameters} == null ? #{none} : ${log.parameters}"
+                    <td th:text="${#strings.isEmpty(log.parameters)} ? #{none} : ${log.parameters}"
                         class="py-2 px-4 hover:text-blue"></td>
                     <td th:text="${log.status} == null ? #{none} : ${log.status}"
                         class="py-2 px-4 hover:text-blue"></td>

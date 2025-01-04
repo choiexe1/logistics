@@ -8,6 +8,7 @@ import blog.devjay.logistics.dto.warehouse.SearchWarehouseDTO;
 import blog.devjay.logistics.dto.warehouse.UpdateWarehouseDTO;
 import blog.devjay.logistics.service.ItemService;
 import blog.devjay.logistics.service.WarehouseService;
+import blog.devjay.logistics.web.aop.annotation.Logging;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -39,17 +40,16 @@ public class WarehouseController {
 
     @GetMapping("/{warehouseId}")
     public String warehouseInfoView(Model model, @PathVariable("warehouseId") Long warehouseId,
-                                    @ModelAttribute("search") SearchItemDTO searchItemDTO) {
+                                    @ModelAttribute("search") SearchItemDTO searchItemDTO,
+                                    @ModelAttribute("updateWarehouseDTO") UpdateWarehouseDTO dto) {
 
         try {
             Warehouse warehouse = warehouseService.findById(warehouseId);
-            UpdateWarehouseDTO dto = new UpdateWarehouseDTO();
             dto.setName(warehouse.getName());
             dto.setLocation(warehouse.getLocation());
 
             model.addAttribute("items", itemService.findItemsByWarehouseId(warehouseId, searchItemDTO));
             model.addAttribute("warehouse", warehouse);
-            model.addAttribute("updateWarehouseDTO", dto);
             searchItemDTO.setPagination(model, itemService.findAllCount(searchItemDTO));
             return "views/warehouse/info";
         } catch (NotFoundException e) {
@@ -57,6 +57,7 @@ public class WarehouseController {
         }
     }
 
+    @Logging
     @PostMapping("/update/{warehouseId}")
     public String updateWarehouse(@PathVariable("warehouseId") Long warehouseId,
                                   @Validated @ModelAttribute("updateWarehouseDTO") UpdateWarehouseDTO dto,
@@ -68,21 +69,21 @@ public class WarehouseController {
 
         try {
             warehouseService.update(warehouseId, dto);
-        } catch (Exception e) {
-            log.error("e", e);
+            redirectAttributes.addAttribute("warehouseId", warehouseId);
+            return "redirect:/warehouse/{warehouseId}";
+        } catch (DuplicateKeyException e) {
+            bindingResult.rejectValue("name", "warehouse.name.exist");
             return "views/warehouse/info";
         }
-
-        redirectAttributes.addAttribute("warehouseId", warehouseId);
-
-        return "redirect:/warehouse/{warehouseId}";
     }
+
 
     @GetMapping("/create")
     public String createView(@ModelAttribute("warehouse") CreateWarehouseDTO dto) {
         return "views/warehouse/create";
     }
 
+    @Logging
     @PostMapping("/create")
     public String create(@Validated @ModelAttribute("warehouse") CreateWarehouseDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -102,6 +103,7 @@ public class WarehouseController {
         return "redirect:/warehouse";
     }
 
+    @Logging
     @PostMapping("/delete/{warehouseId}")
     public String delete(@PathVariable("warehouseId") Long warehouseId) {
         try {

@@ -30,7 +30,6 @@ public class InitData {
         initUsers();
         initWarehouses();
         initItems();
-        initLog();
     }
 
     void initUsers() {

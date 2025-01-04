@@ -4,256 +4,284 @@
     <title th:text="#{title.admin.users}"></title>
 </head>
 <body>
-    <nav th:replace="~{fragments/nav :: nav (#{title.admin.users})}"></nav>
-    <main class="container mx-auto my-4">
-        <div class="overflow-x-auto">
-            <div class="flex items-center">
-                <form th:object="${searchUserForm}" th:action method="GET"
-                      class="flex items-center space-x-4 mb-6">
-                    <div class="flex items-center space-x-4 mb-6">
-                        <div class="flex flex-col flex-grow">
-                            <label class="text-white font-semibold mb-2" th:text="#{label.username}">유저네임</label>
-                            <input type="text" placeholder="검색" th:placeholder="#{placeholder.search}" class="p-2"
-                                   th:field="*{username}">
-                        </div>
-
-                        <div class="flex flex-col flex-grow">
-                            <label for="status" class="text-white font-semibold mb-2"
-                                   th:text="#{label.user.status}">상태</label>
-                            <select name="status" id="status" th:field="*{status}"
-                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
-                                <option value="" selected th:text="#{select.user.status}">상태 선택</option>
-                                <option th:each="status : ${userStatus}"
-                                        th:value="${status}"
-                                        th:text="${status}">상태
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="flex flex-col flex-grow">
-                            <label for="role" class="text-white font-semibold mb-2"
-                                   th:text="#{label.user.role}">역할</label>
-                            <select name="role" id="role" th:field="*{role}"
-                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
-                                <option value="" selected th:text="#{select.user.role}">역할 선택</option>
-                                <option th:each="role : ${userRole}"
-                                        th:value="${role}"
-                                        th:text="${role}">역할
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="flex flex-col flex-grow">
-                            <label for="size" class="text-white font-semibold mb-2" th:text="#{label.result}">결과
-                                수</label>
-                            <select name="size" id="size" th:field="*{size}"
-                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
-                                <option th:each="rows : ${rowsPerPage}"
-                                        th:value="${rows}"
-                                        th:text="${rows}"
-                                        th:selected="${pageSize == rows}">결과 수
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="flex flex-col w-auto mt-auto">
-                            <button type="submit"
-                                    th:text="#{button.search}"
-                                    class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
-                                검색
-                            </button>
-                        </div>
+<nav th:replace="~{fragments/nav :: nav (#{title.admin.users})}"></nav>
+<main class="container mx-auto my-4">
+    <div class="overflow-x-auto">
+        <div class="flex items-center">
+            <form th:object="${searchUserForm}" th:action method="GET"
+                  class="flex items-center space-x-4 mb-6">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="flex flex-col flex-grow">
+                        <label class="text-white font-semibold mb-2" th:text="#{label.username}">유저네임</label>
+                        <input type="text" placeholder="검색" th:placeholder="#{placeholder.search}" class="p-2"
+                               th:field="*{username}">
                     </div>
-                </form>
-            </div>
 
-            <table class="min-w-full border-collapse table-fixed border">
-                <thead>
-                <tr>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">#</th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.username}">유저네임
-                    </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.user.status}">상태
-                    </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.user.role}">역할
-                    </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.createdAt}"
-                    >생성일
-                    </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.updatedAt}">수정일
-                    </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.recentLogin}">최근 접속
-                    </th>
-                    <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
-                        th:text="#{label.log}">로그
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user : ${users}" class="border-t border-gray hover:bg-gray">
-                    <td th:data-user-id="${user.id}" th:text="${user.id}" class="py-2 px-4 hover:text-blue"></td>
-                    <td th:data-username="${user.username}" th:text="${user.username}"
-                        class="py-2 px-4 hover:text-blue"></td>
-                    <td class="py-2 px-4">
-                        <select class="bg-transparent text-white"
-                                onchange="changeUserStatus(this)"
-                                th:disabled="${user.role.toString() == 'ADMIN'}"
-                                th:class="${user.role.toString() == 'ADMIN'} ? 'text-gray-light'">
+                    <div class="flex flex-col flex-grow">
+                        <label for="status" class="text-white font-semibold mb-2"
+                               th:text="#{label.user.status}">상태</label>
+                        <select name="status" id="status" th:field="*{status}"
+                                class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                            <option value="" selected th:text="#{select.user.status}">상태 선택</option>
                             <option th:each="status : ${userStatus}"
                                     th:value="${status}"
-                                    th:text="${status}"
-                                    th:selected="${status == user.status}">상태
+                                    th:text="${status}">상태
                             </option>
                         </select>
-                    </td>
-                    <td class="py-2 px-4">
-                        <select class="bg-transparent text-white"
-                                onchange="changeUserRole(this)"
-                                th:disabled="${user.role.toString() == 'ADMIN'}"
-                                th:class="${user.role.toString() == 'ADMIN'} ? 'text-gray-light'"
-                        >
+                    </div>
+
+                    <div class="flex flex-col flex-grow">
+                        <label for="role" class="text-white font-semibold mb-2"
+                               th:text="#{label.user.role}">역할</label>
+                        <select name="role" id="role" th:field="*{role}"
+                                class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                            <option value="" selected th:text="#{select.user.role}">역할 선택</option>
                             <option th:each="role : ${userRole}"
                                     th:value="${role}"
-                                    th:text="${role}"
-                                    th:selected="${role == user.role}">역할
+                                    th:text="${role}">역할
                             </option>
                         </select>
-                    </td>
-                    <td class="py-2 px-4" th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-                    <th:block>
-                        <td class="py-2 px-4" th:if="${user.updatedAt != null}"
-                            th:text="${#temporals.format(user.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td class="py-2 px-4" th:if="${user.updatedAt == null}" th:text="#{none}">
-                            없음
-                        </td>
-                    </th:block>
-                    <th:block>
-                        <td class="py-2 px-4" th:if="${user.recentLoginAt != null}"
-                            th:text="${#temporals.format(user.recentLoginAt, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td class="py-2 px-4" th:if="${user.recentLoginAt == null}" th:text="#{none}">
-                            없음
-                        </td>
-                    </th:block>
-                    <td class="py-2 px-4 flex">
-                        <a class="btn" th:text="#{label.viewLog}"
-                           th:with="url='/admin/logs'"
-                           th:href="@{${url}(username=${user.username})}"
-                        >로그 확인</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </div>
 
-            <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
-                <div class="flex space-x-2">
-                    <a th:if="${startPage > 1}"
-                       th:href="@{/admin(page=${startPage - 5}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
-                       class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
-                       th:text="#{button.previous}">
-                        이전
-                    </a>
+                    <div class="flex flex-col flex-grow">
+                        <label for="size" class="text-white font-semibold mb-2" th:text="#{label.result}">결과
+                            수</label>
+                        <select name="size" id="size" th:field="*{size}"
+                                class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                            <option th:each="rows : ${rowsPerPage}"
+                                    th:value="${rows}"
+                                    th:text="${rows}"
+                                    th:selected="${pageSize == rows}">결과 수
+                            </option>
+                        </select>
+                    </div>
 
-                    <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
-                       th:text="${page}"
-                       th:href="@{/admin(page=${page}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
-                       th:class="${page == searchUserForm.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
-                    </a>
-
-                    <a th:if="${endPage < totalPages}"
-                       th:href="@{/admin(page=${endPage + 1}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
-                       class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
-                       th:text="#{button.next}">
-                        다음
-                    </a>
+                    <div class="flex flex-col w-auto mt-auto">
+                        <button type="submit"
+                                th:text="#{button.search}"
+                                class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black">
+                            검색
+                        </button>
+                    </div>
                 </div>
+            </form>
+        </div>
+
+        <table class="min-w-full border-collapse table-fixed border">
+            <thead>
+            <tr>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray">#</th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.username}">유저네임
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.user.status}">상태
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.user.role}">역할
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.createdAt}"
+                >생성일
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.updatedAt}">수정일
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.recentLogin}">최근 접속
+                </th>
+                <th class="py-2 px-4 text-left font-bold text-gray-light border-b border-gray"
+                    th:text="#{label.log}">로그
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}" class="border-t border-gray hover:bg-gray">
+                <td th:data-user-id="${user.id}" th:text="${user.id}" class="py-2 px-4 hover:text-blue"></td>
+                <td th:data-username="${user.username}" th:text="${user.username}"
+                    class="py-2 px-4 hover:text-blue"></td>
+                <td class="py-2 px-4">
+                    <select class="bg-transparent text-white"
+                            onchange="changeUserStatus(this)"
+                            th:disabled="${user.role.toString() == 'ADMIN'}"
+                            th:class="${user.role.toString() == 'ADMIN'} ? 'text-gray-light'">
+                        <option th:each="status : ${userStatus}"
+                                th:value="${status}"
+                                th:text="${status}"
+                                th:selected="${status == user.status}">상태
+                        </option>
+                    </select>
+                </td>
+                <td class="py-2 px-4">
+                    <select class="bg-transparent text-white"
+                            onchange="changeUserRole(this)"
+                            th:disabled="${user.role.toString() == 'ADMIN'}"
+                            th:class="${user.role.toString() == 'ADMIN'} ? 'text-gray-light'"
+                    >
+                        <option th:each="role : ${userRole}"
+                                th:value="${role}"
+                                th:text="${role}"
+                                th:selected="${role == user.role}">역할
+                        </option>
+                    </select>
+                </td>
+                <td class="py-2 px-4" th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <th:block>
+                    <td class="py-2 px-4" th:if="${user.updatedAt != null}"
+                        th:text="${#temporals.format(user.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td class="py-2 px-4" th:if="${user.updatedAt == null}" th:text="#{none}">
+                        없음
+                    </td>
+                </th:block>
+                <th:block>
+                    <td class="py-2 px-4" th:if="${user.recentLoginAt != null}"
+                        th:text="${#temporals.format(user.recentLoginAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td class="py-2 px-4" th:if="${user.recentLoginAt == null}" th:text="#{none}">
+                        없음
+                    </td>
+                </th:block>
+                <td class="py-2 px-4 flex">
+                    <a class="btn" th:text="#{label.viewLog}"
+                       th:with="url='/admin/logs'"
+                       th:href="@{${url}(username=${user.username})}"
+                    >로그 확인</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="flex justify-center mt-6" th:if="${totalPages > 0}">
+            <div class="flex space-x-2">
+                <a th:if="${startPage > 1}"
+                   th:href="@{/admin(page=${startPage - 5}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
+                   class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
+                   th:text="#{button.previous}">
+                    이전
+                </a>
+
+                <a th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                   th:text="${page}"
+                   th:href="@{/admin(page=${page}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
+                   th:class="${page == searchUserForm.page ? 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black bg-blue' : 'p-2 border border-gray rounded-sm hover:bg-white hover:text-black'}">
+                </a>
+
+                <a th:if="${endPage < totalPages}"
+                   th:href="@{/admin(page=${endPage + 1}, size=${searchUserForm.size}, role=${searchUserForm.role}, status=${searchUserForm.status}, username=${searchUserForm.username})}"
+                   class="p-2 border border-gray rounded-sm hover:bg-white hover:text-black"
+                   th:text="#{button.next}">
+                    다음
+                </a>
             </div>
         </div>
-    </main>
-    <script th:inline="javascript">
-        const fetchUserChange = async (body, lang) => {
-            const message = fetchMessageResolver()
+    </div>
+</main>
+<script th:inline="javascript">
+    const fetchUserChange = async (body, lang) => {
+        const message = fetchMessageResolver()
 
-            try {
-                const response = await fetch(`/admin/users/${body.id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(body)
-                });
+        try {
+            const response = await fetch(`/admin/users/${body.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
 
-                if (response.ok) {
-                    alert(message.success);
-                    location.reload()
-                } else {
-                    alert(message.fail);
-                    location.reload()
-                }
-
-            } catch (error) {
-                alert(message.networkError);
+            if (response.ok) {
+                alert(message.success);
+                location.reload()
+            } else {
+                alert(message.fail);
                 location.reload()
             }
+
+        } catch (error) {
+            alert(message.networkError);
+            location.reload()
         }
+    }
 
-        const changeUserStatus = async (element) => {
-            const row = element.closest('tr');
-            const status = element.value;
-            const userIdElement = row.querySelector('[data-user-id]');
-            const usernameElement = row.querySelector('[data-username]');
-            const username = usernameElement.dataset.username;
-            const acceptLanguage = navigator.language;
-            let confirmMessage;
+const changeUserStatus = (element) => {
+    const row = element.closest('tr');
+    const status = element.value;
+    const userIdElement = row.querySelector('[data-user-id]');
+    const usernameElement = row.querySelector('[data-username]');
+    const username = usernameElement.dataset.username;
+    let confirmMessage;
 
-            if (navigator.language === "ko") {
-                confirmMessage = confirm(`${username}의 상태를 ${status}로 변경하시겠습니까?`)
-            }
+    if (navigator.language === "ko") {
+        confirmMessage = confirm(`${username}의 상태를 ${status}로 변경하시겠습니까?`)
+    }
 
-            if (navigator.language.startsWith("en")) {
-                confirmMessage = confirm(`Do you want to change the status of ${username} to ${status}?`)
-            }
+    if (navigator.language.startsWith("en")) {
+        confirmMessage = confirm(`Do you want to change the status of ${username} to ${status}?`)
+    }
 
-            const body = {
-                id: userIdElement.dataset.userId,
-                status,
-            };
+    if (confirmMessage) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/admin/users/' + userIdElement.dataset.userId;
 
-            if (confirmMessage) return fetchUserChange(body);
-            else {
-                location.reload();
-            }
-        }
+        const statusField = document.createElement('input');
+        statusField.type = 'hidden';
+        statusField.name = 'status';
+        statusField.value = status;
+        form.appendChild(statusField);
 
-        const changeUserRole = async (element) => {
-            const row = element.closest('tr');
-            const role = element.value;
-            const userIdElement = row.querySelector('[data-user-id]');
-            const usernameElement = row.querySelector('[data-username]');
-            const username = usernameElement.dataset.username;
-            let confirmMessage;
+        const userIdField = document.createElement('input');
+        userIdField.type = 'hidden';
+        userIdField.name = 'userId';
+        userIdField.value = userIdElement.dataset.userId;
+        form.appendChild(userIdField);
 
-            if (navigator.language === "ko") {
-                confirmMessage = confirm(`${username}의 역할을 ${role}로 변경하시겠습니까?`)
-            }
+        document.body.appendChild(form);
+        form.submit();
+    } else {
+        location.reload();
+    }
+}
 
-            if (navigator.language.startsWith("en")) {
-                confirmMessage = confirm(`Do you want to change the role of ${username} to ${role}?`)
-            }
+const changeUserRole = (element) => {
+    const row = element.closest('tr');
+    const role = element.value;
+    const userIdElement = row.querySelector('[data-user-id]');
+    const usernameElement = row.querySelector('[data-username]');
+    const username = usernameElement.dataset.username;
+    let confirmMessage;
 
-            const body = {
-                id: userIdElement.dataset.userId,
-                role: role,
-            }
+    if (navigator.language === "ko") {
+        confirmMessage = confirm(`${username}의 역할을 ${role}로 변경하시겠습니까?`)
+    }
 
-            if (confirmMessage) return fetchUserChange(body);
-            else return location.reload();
-        }
-    </script>
+    if (navigator.language.startsWith("en")) {
+        confirmMessage = confirm(`Do you want to change the role of ${username} to ${role}?`)
+    }
+
+    if (confirmMessage) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/admin/users/' + userIdElement.dataset.userId;
+
+        const roleField = document.createElement('input');
+        roleField.type = 'hidden';
+        roleField.name = 'role';
+        roleField.value = role;
+        form.appendChild(roleField);
+
+        const userIdField = document.createElement('input');
+        userIdField.type = 'hidden';
+        userIdField.name = 'userId';
+        userIdField.value = userIdElement.dataset.userId;
+        form.appendChild(userIdField);
+
+        document.body.appendChild(form);
+        form.submit();
+    } else {
+        location.reload();
+    }
+}
+
+</script>
 </body>
 </html>

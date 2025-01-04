@@ -38,8 +38,7 @@ public class ItemService implements IService<Item, Long, SearchItemDTO, UpdateIt
 
     @Override
     public void update(Long id, UpdateItemDTO dto) {
-        Item item = findByIdForUpdate(id);
-        itemRepository.update(item.getId(), dto);
+        itemRepository.update(id, dto);
     }
 
 

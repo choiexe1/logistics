@@ -79,17 +79,19 @@
     <update id="update">
         UPDATE items
         <set>
-            <if test="updateItemDTO.price != null">price = #{updateItemDTO.price},</if>
+            <if test="updateItemDTO.price != null">price = #{updateItemDTO.price}</if>
             <choose>
-                <when test="updateItemDTO.warehouseId == 0">
+                <when test="updateItemDTO.warehouseId == 0 || updatedItemDTO.warehouseId == ''">
                     warehouse_id = null,
                 </when>
                 <otherwise>
-                    <if test="updateItemDTO.warehouseId != null">warehouse_id = #{updateItemDTO.warehouseId},</if>
+                    <if test="updateItemDTO.warehouseId != null">
+                        warehouse_id = #{updateItemDTO.warehouseId}
+                    </if>
                 </otherwise>
             </choose>
-            <if test="updateItemDTO.name != null">name = #{updateItemDTO.name},</if>
-            <if test="updateItemDTO.quantity != null">quantity = #{updateItemDTO.quantity},</if>
+            <if test="updateItemDTO.name != null">name = #{updateItemDTO.name}</if>
+            <if test="updateItemDTO.quantity != null">quantity = #{updateItemDTO.quantity}</if>
             updated_at = CURRENT_TIMESTAMP
         </set>
         WHERE id = #{id}

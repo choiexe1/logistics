@@ -8,6 +8,7 @@ import blog.devjay.logistics.dto.item.SearchItemDTO;
 import blog.devjay.logistics.dto.item.UpdateItemDTO;
 import blog.devjay.logistics.service.ItemService;
 import blog.devjay.logistics.service.WarehouseService;
+import blog.devjay.logistics.web.aop.annotation.Logging;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,7 @@ public class LogisticsController {
         return "views/logistics/create";
     }
 
+    @Logging
     @PostMapping("/create")
     public String create(@Validated @ModelAttribute("createItemDTO") CreateItemDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -100,6 +102,7 @@ public class LogisticsController {
         return "views/logistics/info";
     }
 
+    @Logging
     @PostMapping("/update/{itemId}")
     public String updateItem(@PathVariable("itemId") Long itemId,
                              @Validated @ModelAttribute("updateItemDTO") UpdateItemDTO dto,
@@ -141,6 +144,7 @@ public class LogisticsController {
         return "redirect:/logistics/{itemId}";
     }
 
+    @Logging
     @PostMapping("/delete/{itemId}")
     public String delete(@PathVariable("itemId") Long itemId) {
         try {
