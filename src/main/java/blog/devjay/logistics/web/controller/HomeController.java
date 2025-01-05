@@ -1,12 +1,12 @@
 package blog.devjay.logistics.web.controller;
 
 
-import static blog.devjay.logistics.web.SessionConst.SESSION_ID;
-
+import blog.devjay.logistics.domain.exception.AuthenticationException;
 import blog.devjay.logistics.domain.exception.NotFoundException;
 import blog.devjay.logistics.domain.user.User;
 import blog.devjay.logistics.dto.user.LoginDTO;
 import blog.devjay.logistics.dto.user.RegisterDTO;
+import blog.devjay.logistics.service.AuthService;
 import blog.devjay.logistics.service.UserService;
 import blog.devjay.logistics.web.SessionManager;
 import blog.devjay.logistics.web.argumentresolver.CurrentUser;
@@ -26,11 +26,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static blog.devjay.logistics.web.SessionConst.SESSION_ID;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
     private final UserService userService;
+    private final AuthService authService;
 
     @GetMapping("/")
     public String indexView(@CurrentUser User user, Model model) {
@@ -54,23 +57,17 @@ public class HomeController {
         }
 
         try {
-            // 사용자 정보 조회
-            User user = userService.findByUsername(form.getUsername());
-            boolean isMatched = BcryptUtils.checkPw(form.getPassword(), user.getPassword());
+            User user = authService.authenticate(form.getUsername(), form.getPassword());
 
-            if (!isMatched) {
-                bindingResult.rejectValue("password", "user.password");
-                return "views/login";
-            }
-
-            // 로그인 성공 시 세션 설정
             setSession(request, user);
             userService.updateRecentLoginAt(user.getId());
 
             return "redirect:" + redirectURL;
-
         } catch (NotFoundException e) {
             bindingResult.rejectValue("username", "user.username");
+            return "views/login";
+        } catch (AuthenticationException e) {
+            bindingResult.rejectValue("password", "user.password");
             return "views/login";
         }
     }
