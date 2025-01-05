@@ -4,73 +4,74 @@
     <title th:text="${item.name}"></title>
 </head>
 <body>
-    <nav th:replace="~{fragments/nav :: nav (${item.name})}"></nav>
-    <main class="container mx-auto my-4">
-        <form th:action="@{/logistics/update/{id}(id=${item.id})}" th:method="POST" class="flex flex-col gap-8 mb-4">
-            <input type="hidden" name="id" th:value="${item.id}">
+<nav th:replace="~{fragments/nav :: nav (${item.name})}"></nav>
+<main class="container mx-auto my-4">
+    <form th:action="@{/logistics/update/{id}(id=${item.id})}" th:method="POST" class="flex flex-col gap-8 mb-4">
+        <input type="hidden" name="id" th:value="${item.id}">
 
-            <div class="flex gap-4" th:if="${warehouse != null}">
-                <div>
-                    <div class="flex flex-col gap-2">
-                        <label for="warehouseId" th:text="#{label.warehouseId}"></label>
-                        <input type="text" id="warehouseId" th:value="${warehouse.id}" disabled>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex flex-col gap-2">
-                        <label for="warehouseName" th:text="#{label.name}"></label>
-                        <input type="text" id="warehouseName" th:value="${warehouse.name}" disabled>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex flex-col gap-2">
-                        <label for="location" th:text="#{label.location}"></label>
-                        <input type="text" id="location" th:value="${warehouse.location}" disabled>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex gap-4" th:object="${updateItemDTO}">
-                <div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-white font-semibold" th:text="#{label.changeWarehouse}">창고 변경</label>
-                        <select th:field="*{warehouseId}" class="border-gray-light bg-black p-1.5 rounded-sm border">
-                            <option value="" th:text="#{option.warehouse}" selected>창고 선택</option>
-                            <option value="0" th:text="#{none}">없음</option>
-                            <option th:each="wh : ${warehouses}"
-                                    th:value="${wh.id}"
-                                    th:text="${wh.name}">창고
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex flex-col gap-2">
-                        <label for="name" th:text="#{label.name}"></label>
-                        <input type="text" th:field="*{name}">
-                        <p class="error" th:errors="*{name}">오류</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex flex-col gap-2">
-                        <label for="price" th:text="#{label.price}"></label>
-                        <input type="text" th:field="*{price}">
-                        <p class="error" th:errors="*{price}">오류</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex flex-col gap-2">
-                        <label for="quantity" th:text="#{label.quantity}"></label>
-                        <input type="text" th:field="*{quantity}">
-                        <p class="error" th:errors="*{quantity}">오류</p>
-                    </div>
-                </div>
-            </div>
-
+        <div class="flex gap-4" th:if="${warehouse != null}">
             <div>
-                <button type="submit" class="btn" th:text="#{button.edit}">수정</button>
+                <div class="flex flex-col gap-2">
+                    <label for="warehouseId" th:text="#{label.warehouseId}"></label>
+                    <input type="text" id="warehouseId" th:value="${warehouse.id}" disabled>
+                </div>
             </div>
-        </form>
-    </main>
+            <div>
+                <div class="flex flex-col gap-2">
+                    <label for="warehouseName" th:text="#{label.name}"></label>
+                    <input type="text" id="warehouseName" th:value="${warehouse.name}" disabled>
+                </div>
+            </div>
+            <div>
+                <div class="flex flex-col gap-2">
+                    <label for="location" th:text="#{label.location}"></label>
+                    <input type="text" id="location" th:value="${warehouse.location}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex gap-4" th:object="${updateItemDTO}">
+            <div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-white font-semibold" th:text="#{label.changeWarehouse}">창고 변경</label>
+                    <select th:field="*{warehouseId}" class="border-gray-light bg-black p-1.5 rounded-sm border">
+                        <option value="" th:text="#{option.warehouse}" selected>창고 선택</option>
+                        <option value="0" th:text="#{none}">없음</option>
+                        <option th:each="wh : ${warehouses}"
+                                th:value="${wh.id}"
+                                th:text="${wh.name}">창고
+                        </option>
+                    </select>
+                    <p class="error" th:errors="*{warehouseId}">오류</p>
+                </div>
+            </div>
+            <div>
+                <div class="flex flex-col gap-2">
+                    <label for="name" th:text="#{label.name}"></label>
+                    <input type="text" th:field="*{name}">
+                    <p class="error" th:errors="*{name}">오류</p>
+                </div>
+            </div>
+            <div>
+                <div class="flex flex-col gap-2">
+                    <label for="price" th:text="#{label.price}"></label>
+                    <input type="text" th:field="*{price}">
+                    <p class="error" th:errors="*{price}">오류</p>
+                </div>
+            </div>
+            <div>
+                <div class="flex flex-col gap-2">
+                    <label for="quantity" th:text="#{label.quantity}"></label>
+                    <input type="text" th:field="*{quantity}">
+                    <p class="error" th:errors="*{quantity}">오류</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn" th:text="#{button.edit}">수정</button>
+        </div>
+    </form>
+</main>
 </body>
 </html>

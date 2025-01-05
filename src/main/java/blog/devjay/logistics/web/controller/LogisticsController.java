@@ -9,7 +9,6 @@ import blog.devjay.logistics.dto.item.UpdateItemDTO;
 import blog.devjay.logistics.service.ItemService;
 import blog.devjay.logistics.service.WarehouseService;
 import blog.devjay.logistics.web.aop.annotation.Logging;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -17,12 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -84,7 +81,6 @@ public class LogisticsController {
             model.addAttribute("updateItemDTO", dto);
         }
 
-        // Flash Attribute에 없는 경우에만 추가
         if (!model.containsAttribute("item")) {
             model.addAttribute("item", item);
         }
@@ -113,31 +109,15 @@ public class LogisticsController {
 
         if (bindingResult.hasErrors()) {
             log.error("error = {}", bindingResult.getAllErrors());
-
-            Item item = itemService.findById(itemId);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateItemDTO",
-                    bindingResult);
-            redirectAttributes.addFlashAttribute("updateItemDTO", dto);
-            redirectAttributes.addFlashAttribute("item", item);
-            redirectAttributes.addFlashAttribute("warehouses", warehouseService.findAll());
-            redirectAttributes.addFlashAttribute("warehouse", warehouseService.findById(item.getWarehouseId()));
-
-            return "redirect:/logistics/{itemId}";
+            return "views/logistics/info";
         }
 
         try {
             itemService.update(itemId, dto);
         } catch (DuplicateKeyException e) {
-            Item item = itemService.findById(itemId);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateItemDTO",
-                    bindingResult);
-            redirectAttributes.addFlashAttribute("updateItemDTO", dto);
-            redirectAttributes.addFlashAttribute("item", item);
-            redirectAttributes.addFlashAttribute("warehouses", warehouseService.findAll());
-            redirectAttributes.addFlashAttribute("warehouse", warehouseService.findById(item.getWarehouseId()));
-
             bindingResult.rejectValue("name", "item.name.exist");
-
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateItemDTO", bindingResult);
+            redirectAttributes.addFlashAttribute("updateItemDTO", dto);
             return "redirect:/logistics/{itemId}";
         }
 

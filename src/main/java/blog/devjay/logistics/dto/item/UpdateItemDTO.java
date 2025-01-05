@@ -9,7 +9,6 @@ import lombok.Data;
 
 @Data
 public class UpdateItemDTO implements UpdateDTO {
-    @NotNull
     private Long warehouseId;
 
     @NotBlank
