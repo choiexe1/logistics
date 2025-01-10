@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PROJECT_DIR=$(pwd)
-JAR_FILE="my-project-0.0.1-SNAPSHOT.jar"
+JAR_FILE="logistics-0.0.1-SNAPSHOT.jar"
 LOG_FILE="$PROJECT_DIR/output.log"
 PID_FILE="$PROJECT_DIR/application.pid"
 JAR_PATH="$PROJECT_DIR/build/libs/$JAR_FILE"
